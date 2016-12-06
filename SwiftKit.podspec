@@ -17,4 +17,10 @@ Pod::Spec.new do |spec|
     spec.requires_arc = true
 
     spec.source_files = ['SwiftKit/**/*.swift']
+
+    spec.frameworks = 'Foundation'
+    spec.dependency 'SwiftKit/DataMapper'
+    spec.dependency 'Alamofire', '~> 4.0'
+    spec.dependency 'HTTPStatusCodes', '~> 3.1'
+    spec.dependency 'SwiftyJSON'
 end

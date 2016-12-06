@@ -1,10 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, ‘8.0’
+platform :ios, '8.0'
 use_frameworks!
 
 def shared
     pod 'Alamofire', '~> 4.0'
     pod 'HTTPStatusCodes', '~> 3.1'
+    pod 'SwiftyJSON'
     pod 'DataMapper', '~> 0.1’
 end
 
