@@ -31,6 +31,7 @@
 		DC2B5DBB1DF4192600F9C9D7 /* RequestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5DBA1DF4192600F9C9D7 /* RequestLogging.swift */; };
 		DC2B5DBE1DF4194600F9C9D7 /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18640EBA1C58378C00A9AC22 /* RequestLogger.swift */; };
 		DC2B5DC21DF421BE00F9C9D7 /* Enhancement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5DC11DF421BE00F9C9D7 /* Enhancement.swift */; };
+		DC4690B41E3698DA001C8540 /* Router+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690B31E3698DA001C8540 /* Router+Request.swift */; };
 		DC4D91991DC5E8100095A348 /* String+UrlSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484B61BA8C054004CB09A /* String+UrlSafe.swift */; };
 		DC99DCE71DF4242000DD866C /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCE61DF4242000DD866C /* HttpMethod.swift */; };
 		DC99DCEF1DF46CB200DD866C /* RequestLoggerTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */; };
@@ -41,13 +42,6 @@
 		DC99DCFD1DF5E67100DD866C /* InputEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCFC1DF5E67100DD866C /* InputEncoder.swift */; };
 		DC99DCFF1DF5E89D00DD866C /* InputEncodingWithEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCFE1DF5E89D00DD866C /* InputEncodingWithEncoder.swift */; };
 		DC99DD011DF6BC9000DD866C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD001DF6BC9000DD866C /* Router.swift */; };
-		DC99DD0E1DF7606400DD866C /* Router+RequestVoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD0D1DF7606400DD866C /* Router+RequestVoid.swift */; };
-		DC99DD101DF761E500DD866C /* Router+RequestSupportedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD0F1DF761E500DD866C /* Router+RequestSupportedType.swift */; };
-		DC99DD121DF7641E00DD866C /* Router+RequestValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD111DF7641E00DD866C /* Router+RequestValue.swift */; };
-		DC99DD141DF7657200DD866C /* Router+RequestArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD131DF7657200DD866C /* Router+RequestArray.swift */; };
-		DC99DD161DF765D200DD866C /* Router+RequestOptionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD151DF765D200DD866C /* Router+RequestOptionalArray.swift */; };
-		DC99DD181DF7663100DD866C /* Router+RequestOptionalDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD171DF7663100DD866C /* Router+RequestOptionalDictionary.swift */; };
-		DC99DD1A1DF7668700DD866C /* Router+RequestDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD191DF7668700DD866C /* Router+RequestDictionary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +99,8 @@
 		DC2B5DBA1DF4192600F9C9D7 /* RequestLogging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogging.swift; sourceTree = "<group>"; };
 		DC2B5DC11DF421BE00F9C9D7 /* Enhancement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enhancement.swift; sourceTree = "<group>"; };
 		DC4690AE1E3697E1001C8540 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC4690B11E3698C3001C8540 /* RouterRequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterRequestGenerator.swift; sourceTree = "<group>"; };
+		DC4690B31E3698DA001C8540 /* Router+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+Request.swift"; sourceTree = "<group>"; };
 		DC99DCE61DF4242000DD866C /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLoggerTimestamp.swift; sourceTree = "<group>"; };
 		DC99DCF11DF4990D00DD866C /* EndpointProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProvider.swift; sourceTree = "<group>"; };
@@ -119,13 +115,6 @@
 		DC99DD041DF6F6D000DD866C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		DC99DD051DF6F6D000DD866C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		DC99DD061DF6F6D000DD866C /* SwiftKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftKit.podspec; sourceTree = SOURCE_ROOT; };
-		DC99DD0D1DF7606400DD866C /* Router+RequestVoid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestVoid.swift"; path = "RouterExtensions/Router+RequestVoid.swift"; sourceTree = "<group>"; };
-		DC99DD0F1DF761E500DD866C /* Router+RequestSupportedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestSupportedType.swift"; path = "RouterExtensions/Router+RequestSupportedType.swift"; sourceTree = "<group>"; };
-		DC99DD111DF7641E00DD866C /* Router+RequestValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestValue.swift"; path = "RouterExtensions/Router+RequestValue.swift"; sourceTree = "<group>"; };
-		DC99DD131DF7657200DD866C /* Router+RequestArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestArray.swift"; path = "RouterExtensions/Router+RequestArray.swift"; sourceTree = "<group>"; };
-		DC99DD151DF765D200DD866C /* Router+RequestOptionalArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestOptionalArray.swift"; path = "RouterExtensions/Router+RequestOptionalArray.swift"; sourceTree = "<group>"; };
-		DC99DD171DF7663100DD866C /* Router+RequestOptionalDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestOptionalDictionary.swift"; path = "RouterExtensions/Router+RequestOptionalDictionary.swift"; sourceTree = "<group>"; };
-		DC99DD191DF7668700DD866C /* Router+RequestDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RequestDictionary.swift"; path = "RouterExtensions/Router+RequestDictionary.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +149,7 @@
 		18E484A91BA8C054004CB09A /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				DC4690B31E3698DA001C8540 /* Router+Request.swift */,
 				18E484AF1BA8C054004CB09A /* Request.swift */,
 				18E484B21BA8C054004CB09A /* RequestPerformer.swift */,
 				18E484B31BA8C054004CB09A /* Response.swift */,
@@ -170,7 +160,6 @@
 				DC2B5DAB1DF415B500F9C9D7 /* RequestEnhancer */,
 				DC2B5DB91DF418B100F9C9D7 /* RequestLogger */,
 				DC2B5DAE1DF4182B00F9C9D7 /* ResponseVerifier */,
-				DC99DD0C1DF75BC000DD866C /* RouterExtensions */,
 				DC2B5DA91DF4156900F9C9D7 /* Utils */,
 			);
 			path = Router;
@@ -195,6 +184,7 @@
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				DC99DCE51DF4235F00DD866C /* AlamofireRequestPerformer */,
 				18E484A91BA8C054004CB09A /* Router */,
+				DC4690B01E3698C3001C8540 /* RouterRequestGenerator */,
 				DC4690AE1E3697E1001C8540 /* Info.plist */,
 				18E4845C1BA8BFB1004CB09A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
@@ -311,6 +301,14 @@
 			path = RequestLogger;
 			sourceTree = "<group>";
 		};
+		DC4690B01E3698C3001C8540 /* RouterRequestGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				DC4690B11E3698C3001C8540 /* RouterRequestGenerator.swift */,
+			);
+			path = RouterRequestGenerator;
+			sourceTree = "<group>";
+		};
 		DC99DCE51DF4235F00DD866C /* AlamofireRequestPerformer */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,20 +362,6 @@
 				DC99DCF51DF5707400DD866C /* StandardInputEncoding.swift */,
 			);
 			path = InputEncoding;
-			sourceTree = "<group>";
-		};
-		DC99DD0C1DF75BC000DD866C /* RouterExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				DC99DD131DF7657200DD866C /* Router+RequestArray.swift */,
-				DC99DD191DF7668700DD866C /* Router+RequestDictionary.swift */,
-				DC99DD151DF765D200DD866C /* Router+RequestOptionalArray.swift */,
-				DC99DD171DF7663100DD866C /* Router+RequestOptionalDictionary.swift */,
-				DC99DD0F1DF761E500DD866C /* Router+RequestSupportedType.swift */,
-				DC99DD111DF7641E00DD866C /* Router+RequestValue.swift */,
-				DC99DD0D1DF7606400DD866C /* Router+RequestVoid.swift */,
-			);
-			name = RouterExtensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -575,16 +559,13 @@
 			files = (
 				DC2B5D7B1DF4108F00F9C9D7 /* InputEncoding.swift in Sources */,
 				DC99DCF21DF4990D00DD866C /* EndpointProvider.swift in Sources */,
-				DC99DD161DF765D200DD866C /* Router+RequestOptionalArray.swift in Sources */,
 				DC2B5DBB1DF4192600F9C9D7 /* RequestLogging.swift in Sources */,
 				DC2B5D841DF4111A00F9C9D7 /* Header.swift in Sources */,
 				DC2B5DAD1DF415D000F9C9D7 /* RequestEnhancerPriority.swift in Sources */,
 				DC2B5D861DF4113C00F9C9D7 /* HeaderRequestEnhancer.swift in Sources */,
 				DC2B5DB01DF4183E00F9C9D7 /* StatusCodeRangeVerifier.swift in Sources */,
-				DC99DD0E1DF7606400DD866C /* Router+RequestVoid.swift in Sources */,
 				DC2B5DB41DF4186000F9C9D7 /* RequestModifier.swift in Sources */,
 				DC2B5D8E1DF4135D00F9C9D7 /* ContentTypeHeader.swift in Sources */,
-				DC99DD141DF7657200DD866C /* Router+RequestArray.swift in Sources */,
 				DC99DD011DF6BC9000DD866C /* Router.swift in Sources */,
 				DC2B5DC21DF421BE00F9C9D7 /* Enhancement.swift in Sources */,
 				DC2B5DB71DF4187700F9C9D7 /* URL+appendingPathComponentWithoutSlash.swift in Sources */,
@@ -601,16 +582,13 @@
 				DC99DCF61DF5707400DD866C /* StandardInputEncoding.swift in Sources */,
 				DC99DCE71DF4242000DD866C /* HttpMethod.swift in Sources */,
 				DC2B5D7A1DF4108800F9C9D7 /* EncodeParametersForURL.swift in Sources */,
-				DC99DD1A1DF7668700DD866C /* Router+RequestDictionary.swift in Sources */,
+				DC4690B41E3698DA001C8540 /* Router+Request.swift in Sources */,
 				DC2B5DB11DF4184700F9C9D7 /* ResponseVerifier.swift in Sources */,
 				DC99DCFF1DF5E89D00DD866C /* InputEncodingWithEncoder.swift in Sources */,
 				DC2B5DB21DF4185C00F9C9D7 /* Response.swift in Sources */,
-				DC99DD121DF7641E00DD866C /* Router+RequestValue.swift in Sources */,
 				DC99DCFD1DF5E67100DD866C /* InputEncoder.swift in Sources */,
 				DC2B5D901DF4137200F9C9D7 /* AcceptHeader.swift in Sources */,
-				DC99DD101DF761E500DD866C /* Router+RequestSupportedType.swift in Sources */,
 				DC4D91991DC5E8100095A348 /* String+UrlSafe.swift in Sources */,
-				DC99DD181DF7663100DD866C /* Router+RequestOptionalDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
