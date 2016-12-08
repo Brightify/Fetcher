@@ -68,7 +68,7 @@ extension Router {
     private func run<IN>(endpoint: Endpoint<IN, SupportedType>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<SupportedType> = response.map { $0 }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -143,7 +143,7 @@ extension Router {
     private func run<IN>(endpoint: Endpoint<IN, Void>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<Void>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<Void> = response.map { _ in Void() }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -218,7 +218,7 @@ extension Router {
     private func run<IN, OUT: Deserializable>(endpoint: Endpoint<IN, OUT>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<OUT?>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<OUT?> = response.map { self.objectMapper.deserialize($0) }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -293,7 +293,7 @@ extension Router {
     private func run<IN, OUT: Deserializable>(endpoint: Endpoint<IN, [OUT]>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<[OUT]>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<[OUT]> = response.map { self.objectMapper.deserialize($0) ?? [] }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -368,7 +368,7 @@ extension Router {
     private func run<IN, OUT: Deserializable>(endpoint: Endpoint<IN, [OUT?]>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<[OUT?]>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<[OUT?]> = response.map { self.objectMapper.deserialize($0) ?? [] }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -443,7 +443,7 @@ extension Router {
     private func run<IN, OUT: Deserializable>(endpoint: Endpoint<IN, [String: OUT]>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<[String: OUT]>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<[String: OUT]> = response.map { self.objectMapper.deserialize($0) ?? [:] }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
@@ -518,7 +518,7 @@ extension Router {
     private func run<IN, OUT: Deserializable>(endpoint: Endpoint<IN, [String: OUT?]>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<[String: OUT?]>) -> ()) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
-            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
+            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in
                 let mappedResponse: Response<[String: OUT?]> = response.map { self.objectMapper.deserialize($0) ?? [:] }
                 self.callbackQueue.async { callback(mappedResponse) }
             })
