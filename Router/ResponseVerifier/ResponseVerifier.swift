@@ -6,8 +6,9 @@
 //  Copyright © 2015 Brightify. All rights reserved.
 //
 
-// TODO ?
+import DataMapper
+
 public protocol ResponseVerifier {
 
-    func verify<T>(response: Response<T>) -> Bool
+    func verify(response: Response<SupportedType>) -> Bool
 }
