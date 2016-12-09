@@ -32,6 +32,7 @@
 		DC2B5DBE1DF4194600F9C9D7 /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18640EBA1C58378C00A9AC22 /* RequestLogger.swift */; };
 		DC2B5DC21DF421BE00F9C9D7 /* Enhancement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5DC11DF421BE00F9C9D7 /* Enhancement.swift */; };
 		DC4690B41E3698DA001C8540 /* Router+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690B31E3698DA001C8540 /* Router+Request.swift */; };
+		DC4690B61E369982001C8540 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690B51E369982001C8540 /* ErrorHandler.swift */; };
 		DC4D91991DC5E8100095A348 /* String+UrlSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484B61BA8C054004CB09A /* String+UrlSafe.swift */; };
 		DC99DCE71DF4242000DD866C /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCE61DF4242000DD866C /* HttpMethod.swift */; };
 		DC99DCEF1DF46CB200DD866C /* RequestLoggerTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */; };
@@ -101,6 +102,7 @@
 		DC4690AE1E3697E1001C8540 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC4690B11E3698C3001C8540 /* RouterRequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterRequestGenerator.swift; sourceTree = "<group>"; };
 		DC4690B31E3698DA001C8540 /* Router+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+Request.swift"; sourceTree = "<group>"; };
+		DC4690B51E369982001C8540 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		DC99DCE61DF4242000DD866C /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLoggerTimestamp.swift; sourceTree = "<group>"; };
 		DC99DCF11DF4990D00DD866C /* EndpointProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProvider.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		18E484A91BA8C054004CB09A /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				DC4690B51E369982001C8540 /* ErrorHandler.swift */,
 				DC4690B31E3698DA001C8540 /* Router+Request.swift */,
 				18E484AF1BA8C054004CB09A /* Request.swift */,
 				18E484B21BA8C054004CB09A /* RequestPerformer.swift */,
@@ -572,6 +575,7 @@
 				DC2B5D891DF412A200F9C9D7 /* Headers.swift in Sources */,
 				DC2B5DBE1DF4194600F9C9D7 /* RequestLogger.swift in Sources */,
 				DC99DCF41DF5628100DD866C /* Methods.swift in Sources */,
+				DC4690B61E369982001C8540 /* ErrorHandler.swift in Sources */,
 				DC2B5D8C1DF4134D00F9C9D7 /* CustomHeader.swift in Sources */,
 				DC99DCFB1DF57D3A00DD866C /* Endpoint.swift in Sources */,
 				DC2B5DB81DF4187A00F9C9D7 /* RequestEnhancer.swift in Sources */,

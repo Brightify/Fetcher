@@ -6,7 +6,7 @@
 //  Copyright © 2015 Brightify. All rights reserved.
 //
 
-import Foundation
+import DataMapper
 
 // TODO Delegate rest?
 public struct Request {
