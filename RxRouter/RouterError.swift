@@ -8,8 +8,11 @@
 
 import DataMapper
 
+// TODO Review + better names.
 public enum RouterError: Error {
-    case invalidStatusCode(Response<SupportedType>)
-    case requestError(Error, Response<SupportedType>)
+    case invalidStatusCode()
+    case requestError(Error)
+    case customError(Error)
+    case nilValue
     case unknownError
 }
