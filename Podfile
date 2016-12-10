@@ -6,6 +6,8 @@ def shared
     pod 'Alamofire', '~> 4.0'
     pod 'HTTPStatusCodes', '~> 3.1'
     pod 'SwiftyJSON'
+    pod 'RxSwift'
+    pod 'Result'
     pod 'DataMapper', '~> 0.1’
 end
 
