@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import DataMapper
+
 public struct CompositeErrorHandler: ErrorHandler {
     
     private let handlers: [ErrorHandler]

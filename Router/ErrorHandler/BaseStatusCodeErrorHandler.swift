@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import DataMapper
+
 open class BaseStatusCodeErrorHandler: ErrorHandler {
     
     private let codes: Set<Int>
