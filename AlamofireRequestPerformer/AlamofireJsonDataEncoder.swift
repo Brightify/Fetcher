@@ -14,6 +14,9 @@ public struct AlamofireJsonDataEncoder: DataEncoder {
     
     private let serializer = JsonSerializer()
     
+    public init() {
+    }
+    
     public func encodeToQueryString(input: SupportedType, to request: inout Request) {
         guard let url = request.url, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
         
