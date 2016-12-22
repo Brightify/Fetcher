@@ -10,9 +10,7 @@ import DataMapper
 
 // TODO Review + better names.
 public enum RouterError: Error {
-    case invalidStatusCode()
     case requestError(Error)
-    case customError(Error)
+    case invalidStatusCode
     case nilValue
-    case unknownError
 }
