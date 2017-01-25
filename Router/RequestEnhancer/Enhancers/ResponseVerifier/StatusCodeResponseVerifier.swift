@@ -25,6 +25,6 @@ public struct StatusCodeResponseVerifier: ResponseVerifier {
     }
     
     public func verify(response: Response<SupportedType>) -> RouterError? {
-        return response.statusCode.map { codes.contains($0.rawValue) } == false ? .invalidStatusCode : nil
+        return (response.rawResponse?.statusCode).map(codes.contains) == false ? .invalidStatusCode : nil
     }
 }

@@ -30,7 +30,7 @@ for output in outputTypes {
             genericSigniture = "<IN: Serializable, OUT: Deserializable>"
         }
         
-        if input.isSupportedType {
+        if input.isSupportedType || input.isData {
             inputProvider = "input"
         } else if input.isVoid {
             inputProvider = ".null"
@@ -38,7 +38,7 @@ for output in outputTypes {
             inputProvider = "self.objectMapper.serialize(input)"
         }
         
-        if output.isSupportedType {
+        if output.isSupportedType || output.isData {
             outputProvider = "$0"
         } else if output.isVoid {
             outputProvider = "_ in Void()"

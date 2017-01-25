@@ -18,10 +18,14 @@ extension String {
         return self == "SupportedType"
     }
     
+    var isData: Bool {
+        return self == "Data"
+    }
+    
     var isKnownType: Bool {
-        return isVoid || isSupportedType
+        return isVoid || isSupportedType || isData
     }
 }
 
-let inputTypes = ["SupportedType", "Void", "IN", "IN?", "[IN]", "[IN]?", "[IN?]", "[IN?]?", "[String: IN]", "[String: IN]?", "[String: IN?]", "[String: IN?]?"]
-let outputTypes = ["SupportedType", "Void", "OUT", "[OUT]", "[OUT?]", "[String: OUT]", "[String: OUT?]"]
+let inputTypes = ["SupportedType", "Void", "Data", "IN", "IN?", "[IN]", "[IN]?", "[IN?]", "[IN?]?", "[String: IN]", "[String: IN]?", "[String: IN?]", "[String: IN?]?"]
+let outputTypes = ["SupportedType", "Void", "Data", "OUT", "[OUT]", "[OUT?]", "[String: OUT]", "[String: OUT?]"]

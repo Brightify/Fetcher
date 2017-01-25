@@ -29,3 +29,14 @@ public enum RequestEnhancerPriority {
         }
     }
 }
+
+extension RequestEnhancerPriority {
+    
+    var less: RequestEnhancerPriority {
+        return .custom(value: value - 1)
+    }
+    
+    var more: RequestEnhancerPriority {
+        return .custom(value: value + 1)
+    }
+}
