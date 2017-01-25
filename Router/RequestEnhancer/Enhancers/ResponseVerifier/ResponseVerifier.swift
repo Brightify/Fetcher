@@ -8,20 +8,7 @@
 
 import DataMapper
 
-public protocol ResponseVerifier: RequestEnhancer {
+public protocol ResponseVerifier: RequestModifier {
 
     func verify(response: Response<SupportedType>) -> RouterError?
-}
-
-extension ResponseVerifier {
-    
-    public var priority: RequestEnhancerPriority {
-        return .max
-    }
-    
-    public func deenhance(response: inout Response<SupportedType>) {
-        if let error = verify(response: response) {
-            response = response.flatMap { _ in .failure(error) }
-        }
-    }
 }

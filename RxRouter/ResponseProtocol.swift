@@ -7,7 +7,6 @@
 //
 
 import Result
-import HTTPStatusCodes
 
 /// Protocol used as generic constraint in extensions.
 public protocol ResponseProtocol {

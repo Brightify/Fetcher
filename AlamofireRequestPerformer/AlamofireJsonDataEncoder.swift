@@ -9,7 +9,6 @@
 import Alamofire
 import DataMapper
 
-// TODO Review
 public struct AlamofireJsonDataEncoder: DataEncoder {
     
     private let serializer = JsonSerializer()
@@ -18,42 +17,38 @@ public struct AlamofireJsonDataEncoder: DataEncoder {
     }
     
     public func encodeToQueryString(input: SupportedType, to request: inout Request) {
-        guard let url = request.url, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
-        
-        let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + encodeParametersForURL(input)
-        components.percentEncodedQuery = percentEncodedQuery
-        request.url = components.url
+        encode(using: .queryString, input: input, to: &request)
     }
     
     public func encodeToHttpBody(input: SupportedType, to request: inout Request) {
         request.httpBody = serializer.serialize(input)
         request.modifiers.append(Headers.ContentType.applicationJson)
+        request.modifiers.append(Headers.Charset.utf8)
     }
     
     public func encodeCustom(input: SupportedType, to request: inout Request, inputEncoding: InputEncoding) {
         if inputEncoding is FormInputEncoding {
-            if !request.modifiers.contains(where: { $0 is Headers.ContentType }) {
-                request.modifiers.append(Headers.ContentType.applicationFormUrlencoded)
-            }
-            
-            request.httpBody = encodeParametersForURL(input).data(using: String.Encoding.utf8, allowLossyConversion: false)
+            encode(using: .httpBody, input: input, to: &request)
+            request.modifiers.append(Headers.ContentType.applicationFormUrlencoded)
+            request.modifiers.append(Headers.Charset.utf8)
         } else {
-            preconditionFailure("Unknown input encoding \(inputEncoding).")
+            fatalError("Unknown input encoding \(inputEncoding).")
         }
     }
     
     public func decode(response: Response<Data>) -> Response<SupportedType> {
         return response.map(serializer.deserialize)
     }
-
-    private func encodeParametersForURL(_ parameters: SupportedType) -> String {
-        // FIXME implement
-        return "" /*serializer.typedSerialize(parameters)
-            .sorted { $0.0 < $1.0 }
-            .map { ($0, $1.rawValue) }
-            .map(URLEncoding.queryString.queryComponents)
-            .reduce([]) { $0 + $1 }
-            .map { "\($0)=\($1)" }
-            .joined(separator: "&")*/
+    
+    private func encode(using urlEncoding: URLEncoding, input: SupportedType, to request: inout Request) {
+        guard let dictionary = input.dictionary else {
+            assertionFailure("Input data has to be in format [String: Any].")
+            return
+        }
+        
+        let data = dictionary.mapValue { serializer.typedSerialize($0) }
+        
+        // Iqnore error from Alamofire because it is handled elsewhere (program already crashed if there is a problem).
+        request.urlRequest = (try? urlEncoding.encode(request.urlRequest, with: data)) ?? request.urlRequest
     }
 }

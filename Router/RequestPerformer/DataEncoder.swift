@@ -22,6 +22,6 @@ public protocol DataEncoder {
 extension DataEncoder {
     
     public func encodeCustom(input: SupportedType, to request: inout Request, inputEncoding: InputEncoding) {
-        preconditionFailure("Unknown input encoding \(inputEncoding).")
+        fatalError("Unknown input encoding \(inputEncoding).")
     }
 }

@@ -10,8 +10,8 @@ extension Headers {
     
     public struct Custom: Header {
         
-        public var name: String
-        public var value: String
+        public let name: String
+        public let value: String
         
         public init(_ name: String, _ value: String) {
             self.name = name

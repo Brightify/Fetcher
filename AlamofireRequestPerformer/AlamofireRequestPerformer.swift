@@ -7,7 +7,6 @@
 //
 
 import Alamofire
-import HTTPStatusCodes
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     
@@ -39,7 +38,6 @@ public struct AlamofireRequestPerformer: RequestPerformer {
         
         let response = Response<Data>(
             result: result,
-            statusCode: data.response?.statusCodeValue,
             rawResponse: data.response,
             rawData: data.data,
             request: request)

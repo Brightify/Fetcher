@@ -1,5 +1,5 @@
 //
-//  BaseUrlRequestModifier.swift
+//  BaseUrl.swift
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 22.12.16.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct BaseUrlRequestModifier: RequestModifier {
+public struct BaseUrl: RequestModifier {
 
-    public static let Ignore = BaseUrlRequestModifier(baseUrl: nil, priority: .max)
+    public static let Ignore = BaseUrl(baseUrl: nil, priority: .max)
     
     internal let baseUrl: String?
     internal let priority: RequestEnhancerPriority

@@ -10,10 +10,10 @@ import Foundation
 
 internal struct BaseUrlRequestEnhancer: RequestEnhancer {
     
-    internal let priority = RequestEnhancerPriority.max
+    internal static let priority = RequestEnhancerPriority.max
     
     internal func enhance(request: inout Request) {
-        let modifier = request.modifiers.flatMap { $0 as? BaseUrlRequestModifier }.sorted { $0.priority.value > $1.priority.value }.first
+        let modifier = request.modifiers.flatMap { $0 as? BaseUrl }.sorted { $0.priority.value > $1.priority.value }.first
         if let url = request.url, var baseUrl = modifier?.baseUrl {
 
             var component = url.absoluteString

@@ -10,7 +10,9 @@ import DataMapper
 
 public protocol RequestEnhancer {
 
-    var priority: RequestEnhancerPriority { get }
+    static var priority: RequestEnhancerPriority { get }
+    
+    var instancePriority: RequestEnhancerPriority? { get }
     
     func enhance(request: inout Request)
     
@@ -19,8 +21,12 @@ public protocol RequestEnhancer {
 
 extension RequestEnhancer {
     
-    public var priority: RequestEnhancerPriority {
+    public static var priority: RequestEnhancerPriority {
         return .normal
+    }
+    
+    public var instancePriority: RequestEnhancerPriority? {
+        return nil
     }
     
     public func enhance(request: inout Request) {

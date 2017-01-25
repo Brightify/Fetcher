@@ -22,10 +22,9 @@ public final class RequestLogger: RequestEnhancer {
     
     public func deenhance(response: inout Response<SupportedType>) {
         let modifiers = response.request.modifiers.flatMap { $0 as? RequestLogging }
-        guard modifiers.count > 0 else { return }
-        
-        let options = modifiers.reduce(RequestLogging.disabled) { acc, element in acc.union(element) }
-        guard !options.isEmpty else { return }
+        let options = modifiers.count == 0 ? defaultOptions : modifiers.reduce(RequestLogging.disabled) { acc, element in acc.union(element) }
+
+        guard options != .disabled else { return }
         
         print("----- Begin of request log -----")
         
@@ -45,7 +44,7 @@ public final class RequestLogger: RequestEnhancer {
         
         if options.contains(.responseCode) {
             print("\nResponse status code: ", terminator: "")
-            if let statusCode = response.statusCode?.rawValue {
+            if let statusCode = response.rawResponse?.statusCode {
                 print(statusCode)
             } else {
                 print("unknown")
@@ -65,8 +64,13 @@ public final class RequestLogger: RequestEnhancer {
         }
         
         if options.contains(.requestBody) {
-            print("\n Request body: ", terminator: "")
-            if let requestBody = response.request.httpBody.flatMap({ NSString(data: $0 as Data, encoding: String.Encoding.utf8.rawValue) }) {
+            print("\nRequest body: ", terminator: "")
+            if let requestBody = response.request.httpBody {
+                if let requestBodyText = String(data: requestBody, encoding: .utf8) {
+                    print(requestBodyText)
+                } else {
+                    print("unknown format")
+                }
                 print(requestBody)
             } else {
                 print("empty")
@@ -75,7 +79,7 @@ public final class RequestLogger: RequestEnhancer {
         
         if options.contains(.responseHeaders) {
             print("\nResponse headers:", terminator: "")
-            if let headers = (response.rawResponse as? HTTPURLResponse)?.allHeaderFields, !headers.isEmpty {
+            if let headers = response.rawResponse?.allHeaderFields, !headers.isEmpty {
                 print("")
                 headers.forEach { name, value in
                     print("\t\(name): \(value)")
@@ -86,11 +90,11 @@ public final class RequestLogger: RequestEnhancer {
         }
         
         if options.contains(.responseBody) {
-            print("\n Response body: ", terminator: "")
-            if let responseBody = response.rawData.flatMap({ NSString(data: $0 as Data, encoding: String.Encoding.utf8.rawValue) }) {
+            print("\nResponse body: ", terminator: "")
+            if let responseBody = response.rawString {
                 print(responseBody)
             } else {
-                print(" empty")
+                print("empty")
             }
         }
         

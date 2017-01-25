@@ -8,6 +8,7 @@
 
 import Quick
 import Nimble
+import DataMapper
 @testable import SwiftKit
 
 fileprivate struct UserProfile: Mappable {
@@ -34,8 +35,8 @@ fileprivate struct UserProfile: Mappable {
 
 fileprivate struct TestEnhancer: RequestEnhancer {
     fileprivate struct TestModifier: RequestModifier { }
-    
-    fileprivate let priority: RequestEnhancerPriority
+        
+    fileprivate let instancePriority: RequestEnhancerPriority?
     
     private let onRequest: () -> Void
     private let onResponse: () -> Void
@@ -43,7 +44,7 @@ fileprivate struct TestEnhancer: RequestEnhancer {
     fileprivate init(onRequest: @escaping () -> Void, onResponse: @escaping () -> Void, priority: RequestEnhancerPriority = .normal) {
         self.onRequest = onRequest
         self.onResponse = onResponse
-        self.priority = priority
+        self.instancePriority = priority
     }
     
     fileprivate func enhance(request: inout Request) {

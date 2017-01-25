@@ -25,10 +25,10 @@ open class BaseStatusCodeErrorHandler: ErrorHandler {
     }
     
     public final func canResolveError(response: Response<SupportedType>) -> Bool {
-        return response.statusCode.map { codes.contains($0.rawValue) } ?? false
+        return (response.rawResponse?.statusCode).map(codes.contains) ?? false
     }
     
     open func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) -> Void {
-        preconditionFailure("Not implemented.")
+        fatalError("Not implemented.")
     }
 }

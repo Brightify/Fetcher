@@ -14,6 +14,10 @@ extension RxRouter {
         return observe { self.router.request(endpoint, callback: $0) }
     }
 
+    public func request(_ endpoint: Endpoint<Data, SupportedType>, input: Data) -> Observable<Response<SupportedType>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
     public func request<IN: Serializable>(_ endpoint: Endpoint<IN, SupportedType>, input: IN) -> Observable<Response<SupportedType>> {
         return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
@@ -66,6 +70,10 @@ extension RxRouter {
         return observe { self.router.request(endpoint, callback: $0) }
     }
 
+    public func request(_ endpoint: Endpoint<Data, Void>, input: Data) -> Observable<Response<Void>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
     public func request<IN: Serializable>(_ endpoint: Endpoint<IN, Void>, input: IN) -> Observable<Response<Void>> {
         return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
@@ -107,6 +115,62 @@ extension RxRouter {
     }
 }
 
+// Extension for output type Data.
+extension RxRouter {
+
+    public func request(_ endpoint: Endpoint<SupportedType, Data>, input: SupportedType) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request(_ endpoint: Endpoint<Void, Data>) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, callback: $0) }
+    }
+
+    public func request(_ endpoint: Endpoint<Data, Data>, input: Data) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<IN, Data>, input: IN) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<IN?, Data>, input: IN?) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[IN], Data>, input: [IN]) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[IN]?, Data>, input: [IN]?) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[IN?], Data>, input: [IN?]) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[IN?]?, Data>, input: [IN?]?) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[String: IN], Data>, input: [String: IN]) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[String: IN]?, Data>, input: [String: IN]?) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[String: IN?], Data>, input: [String: IN?]) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable>(_ endpoint: Endpoint<[String: IN?]?, Data>, input: [String: IN?]?) -> Observable<Response<Data>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+}
+
 // Extension for output type OUT.
 extension RxRouter {
 
@@ -116,6 +180,10 @@ extension RxRouter {
 
     public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, OUT>) -> Observable<Response<OUT>> {
         return observe { self.router.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, OUT>, input: Data) -> Observable<Response<OUT>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
 
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, OUT>, input: IN) -> Observable<Response<OUT>> {
@@ -170,6 +238,10 @@ extension RxRouter {
         return observe { self.router.request(endpoint, callback: $0) }
     }
 
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT]>, input: Data) -> Observable<Response<[OUT]>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT]>, input: IN) -> Observable<Response<[OUT]>> {
         return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
@@ -220,6 +292,10 @@ extension RxRouter {
 
     public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [OUT?]>) -> Observable<Response<[OUT?]>> {
         return observe { self.router.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT?]>, input: Data) -> Observable<Response<[OUT?]>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
 
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT?]>, input: IN) -> Observable<Response<[OUT?]>> {
@@ -274,6 +350,10 @@ extension RxRouter {
         return observe { self.router.request(endpoint, callback: $0) }
     }
 
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT]>, input: Data) -> Observable<Response<[String: OUT]>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
+    }
+
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT]>, input: IN) -> Observable<Response<[String: OUT]>> {
         return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
@@ -324,6 +404,10 @@ extension RxRouter {
 
     public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [String: OUT?]>) -> Observable<Response<[String: OUT?]>> {
         return observe { self.router.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT?]>, input: Data) -> Observable<Response<[String: OUT?]>> {
+        return observe { self.router.request(endpoint, input: input, callback: $0) }
     }
 
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT?]>, input: IN) -> Observable<Response<[String: OUT?]>> {
