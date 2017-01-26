@@ -13,14 +13,29 @@ Pod::Spec.new do |spec|
         :tag => spec.version.to_s
     }
     spec.social_media_url = 'https://twitter.com/BrightifyOrg'
-    spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
-    spec.source_files = ['Source/**/*.swift']
+    spec.platform = :ios, '8.0'
 
     spec.frameworks = 'Foundation'
 
-    spec.dependency 'Brightify/DataMapper'
-    spec.dependency 'Alamofire', '~> 4.0'
-    spec.dependency 'HTTPStatusCodes', '~> 3.1'
+    spec.subspec 'Core' do |subspec|
+        subspec.dependency 'DataMapper', '~> 0.1'
+        subspec.dependency 'Result', '~> 3.1'
+        subspec.source_files = ['Source/Core/**/*.swift']
+    end
+
+    spec.subspec 'AlamofireRequestPerformer' do |subspec|
+        subspec.dependency 'Fetcher/Core'
+        subspec.dependency 'Alamofire', '~> 4.3'
+        subspec.source_files = ['Source/RxFetcher/**/*.swift']
+    end
+
+    spec.subspec 'RxFetcher' do |subspec|
+        subspec.dependency 'Fetcher/Core'
+        subspec.dependency 'RxSwift', '~> 3.0'
+        subspec.source_files = ['Source/RxFetcher/**/*.swift']
+    end
+
+    spec.default_subspecs = 'Core', 'AlamofireRequestPerformer'
 end

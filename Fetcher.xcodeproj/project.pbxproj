@@ -141,6 +141,12 @@
 		DC4691541E37DEF9001C8540 /* Fetcher+Run.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fetcher+Run.swift"; sourceTree = "<group>"; };
 		DC4691561E37E904001C8540 /* CharsetHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharsetHeader.swift; sourceTree = "<group>"; };
 		DC4691581E38AC14001C8540 /* ResponseVerifierEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseVerifierEnhancer.swift; sourceTree = "<group>"; };
+		DC46915C1E3A019A001C8540 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		DC46915D1E3A019A001C8540 /* Fetcher.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fetcher.podspec; sourceTree = "<group>"; };
+		DC46915E1E3A019A001C8540 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		DC46915F1E3A019A001C8540 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		DC4691601E3A019A001C8540 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		DC4691611E3A019A001C8540 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCE2DDA81DFC1229006E462C /* BaseScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScript.swift; sourceTree = "<group>"; };
 		DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestGenerator.swift; sourceTree = "<group>"; };
 		DCE2DDAA1DFC1229006E462C /* run */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
@@ -169,21 +175,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		186D2E741B4ECD88005BC06D /* Fetcher */ = {
+		186D2E741B4ECD88005BC06D /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				186D2E751B4ECDAA005BC06D /* FetcherTest.swift */,
 				18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */,
 			);
-			name = Fetcher;
-			path = Fetcher;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		18E4845C1BA8BFB1004CB09A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				186D2E741B4ECD88005BC06D /* Fetcher */,
 				18E4845F1BA8BFB1004CB09A /* Info.plist */,
+				186D2E741B4ECD88005BC06D /* Core */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -202,12 +207,15 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				DC4690DE1E36A21D001C8540 /* AlamofireRequestPerformer */,
-				DC4690E51E36A227001C8540 /* Fetcher */,
-				DC4691401E36A23B001C8540 /* RxFetcher */,
-				DC99DD271DF94B9C00DD866C /* RequestGenerator */,
+				DC46915E1E3A019A001C8540 /* CHANGELOG.md */,
+				DC46915D1E3A019A001C8540 /* Fetcher.podspec */,
+				DC46915F1E3A019A001C8540 /* LICENSE */,
+				DC4691601E3A019A001C8540 /* Podfile */,
+				DC4691611E3A019A001C8540 /* README.md */,
+				DC46915C1E3A019A001C8540 /* .travis.yml */,
+				DC46915B1E39FF5C001C8540 /* Source */,
 				18E4845C1BA8BFB1004CB09A /* Tests */,
-				DC4690CD1E36A02D001C8540 /* Info.plist */,
+				DC99DD271DF94B9C00DD866C /* RequestGenerator */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				40530704BB654DF2297D1CF7 /* Pods */,
 				6003F58B195388D20070C39A /* Products */,
@@ -247,15 +255,15 @@
 			path = AlamofireRequestPerformer;
 			sourceTree = "<group>";
 		};
-		DC4690E51E36A227001C8540 /* Fetcher */ = {
+		DC4690E51E36A227001C8540 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				DC4690FC1E36A227001C8540 /* Request.swift */,
-				DC4691101E36A227001C8540 /* Response.swift */,
 				DC4691121E36A227001C8540 /* Fetcher.swift */,
 				DC4691111E36A227001C8540 /* Fetcher+Request.swift */,
 				DC4691541E37DEF9001C8540 /* Fetcher+Run.swift */,
 				DC4691131E36A227001C8540 /* FetcherError.swift */,
+				DC4690FC1E36A227001C8540 /* Request.swift */,
+				DC4691101E36A227001C8540 /* Response.swift */,
 				DC4690E61E36A227001C8540 /* Endpoint */,
 				DC4690EA1E36A227001C8540 /* ErrorHandler */,
 				DC4690F11E36A227001C8540 /* Header */,
@@ -264,8 +272,7 @@
 				DC46910D1E36A227001C8540 /* RequestPerformer */,
 				DC4691151E36A227001C8540 /* Utils */,
 			);
-			name = Fetcher;
-			path = Fetcher;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		DC4690E61E36A227001C8540 /* Endpoint */ = {
@@ -392,8 +399,8 @@
 			isa = PBXGroup;
 			children = (
 				DC4691161E36A227001C8540 /* Cancellable.swift */,
-				DC4691171E36A227001C8540 /* HTTPMethod.swift */,
 				DC4691181E36A227001C8540 /* FetcherResult.swift */,
+				DC4691171E36A227001C8540 /* HTTPMethod.swift */,
 				DC4691191E36A227001C8540 /* String+UrlSafe.swift */,
 			);
 			path = Utils;
@@ -408,7 +415,6 @@
 				DC4691451E36A23B001C8540 /* RxFetcher.swift */,
 				DC4691441E36A23B001C8540 /* RxFetcher+Request.swift */,
 			);
-			name = RxFetcher;
 			path = RxFetcher;
 			sourceTree = "<group>";
 		};
@@ -419,8 +425,18 @@
 				DC4690EF1E36A227001C8540 /* NoInternetErrorHandler.swift */,
 				DC4690F01E36A227001C8540 /* RequestTimeOutErrorHandler.swift */,
 			);
-			name = Implementation;
 			path = Implementation;
+			sourceTree = "<group>";
+		};
+		DC46915B1E39FF5C001C8540 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DC4690CD1E36A02D001C8540 /* Info.plist */,
+				DC4690DE1E36A21D001C8540 /* AlamofireRequestPerformer */,
+				DC4690E51E36A227001C8540 /* Core */,
+				DC4691401E36A23B001C8540 /* RxFetcher */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		DC99DD271DF94B9C00DD866C /* RequestGenerator */ = {
@@ -704,7 +720,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6351C7C54DDD9AD0AB32A1E2 /* Pods-Fetcher.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -716,7 +731,7 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -733,7 +748,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37BA2BDF2CB5FAC9A227A05D /* Pods-Fetcher.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
@@ -746,7 +760,7 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -763,7 +777,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC0DE68001EE417F352332A0 /* Pods-FetcherTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -780,7 +793,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 99A0826C575E48C9A0E70C4C /* Pods-FetcherTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
