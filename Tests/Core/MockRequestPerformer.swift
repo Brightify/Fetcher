@@ -31,7 +31,7 @@ public class MockRequestPerformer: RequestPerformer {
     public func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
         let endpoint = endpoints.first (where: { $0.method == request.httpMethod.rawValue && $0.url == request.url?.absoluteString })
         
-        print(request.url )
+        print(request.url as Any)
         let response: Response<Data>
         if let endpoint = endpoint {
             let responseData = endpoint.response.data(using: String.Encoding.utf8) ?? Data()
