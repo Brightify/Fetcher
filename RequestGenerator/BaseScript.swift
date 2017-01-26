@@ -1,12 +1,12 @@
 //
 //  BaseScript.swift
-//  SwiftKit
+//  Fetcher
 //
 //  Created by Filip Dolnik on 10.12.16.
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-// yes y | RouterRequestGenerator/run
+// yes y | FetcherRequestGenerator/run
 
 extension String {
     

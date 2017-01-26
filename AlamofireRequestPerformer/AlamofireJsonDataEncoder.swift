@@ -1,6 +1,6 @@
 //
 //  AlamofireJsonDataEncoder.swift
-//  SwiftKit
+//  Fetcher
 //
 //  Created by Filip Dolnik on 10.12.16.
 //  Copyright © 2016 Brightify. All rights reserved.
@@ -41,6 +41,9 @@ public struct AlamofireJsonDataEncoder: DataEncoder {
     }
     
     private func encode(using urlEncoding: URLEncoding, input: SupportedType, to request: inout Request) {
+        guard !input.isNull else {
+            return
+        }
         guard let dictionary = input.dictionary else {
             assertionFailure("Input data has to be in format [String: Any].")
             return

@@ -1,6 +1,6 @@
 //
 //  AlamofireRequestPerformer.swift
-//  SwiftKit
+//  Fetcher
 //
 //  Created by Tadeas Kriz on 28/07/15.
 //  Copyright © 2015 Brightify. All rights reserved.
@@ -27,7 +27,7 @@ public struct AlamofireRequestPerformer: RequestPerformer {
     }
     
     private func handleResponse(data: DataResponse<Data>, request: Request, callback: (Response<Data>) -> Void) {
-        let result: RouterResult<Data>
+        let result: FetcherResult<Data>
         // Alamofire uses different type of Result.
         switch data.result {
         case .success(let value):
