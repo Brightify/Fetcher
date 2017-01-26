@@ -1,7 +1,7 @@
-// ../RxRouter/RxRouter+Request.swift
+// ../RxFetcher/RxFetcher+Request.swift
 //
 //  RxRequestGenerator.swift
-//  SwiftKit
+//  Fetcher
 //
 //  Created by Filip Dolnik on 10.12.16.
 //  Copyright © 2016 Brightify. All rights reserved.
@@ -14,7 +14,7 @@ print("import DataMapper")
 for output in outputTypes {
     print("")
     print("// Extension for output type \(output).")
-    print("extension RxRouter {")
+    print("extension RxFetcher {")
     for input in inputTypes {
         let inputSigniture = input.isVoid ? "" : ", input: \(input)"
         let inputProvider = input.isVoid ? "" : ", input: input"
@@ -32,7 +32,7 @@ for output in outputTypes {
         
         print("")
         print("    public func request\(genericSigniture)(_ endpoint: Endpoint<\(input), \(output)>\(inputSigniture)) -> Observable<Response<\(output)>> {")
-        print("        return observe { self.router.request(endpoint\(inputProvider), callback: $0) }")
+        print("        return observe { self.fetcher.request(endpoint\(inputProvider), callback: $0) }")
         print("    }")
     }
     print("}")

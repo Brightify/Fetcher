@@ -1,0 +1,22 @@
+//
+//  ResponseProtocol.swift
+//  Fetcher
+//
+//  Created by Filip Dolnik on 10.12.16.
+//  Copyright © 2016 Brightify. All rights reserved.
+//
+
+import Result
+
+/// Protocol used as generic constraint in extensions.
+public protocol ResponseProtocol {
+    
+    associatedtype T
+    
+    var result: FetcherResult<T> { get }
+    
+    var request: Request  { get }
+}
+
+extension Response: ResponseProtocol {
+}

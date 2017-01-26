@@ -1,0 +1,14 @@
+//
+//  InputEncodingWithEncoder.swift
+//  Fetcher
+//
+//  Created by Filip Dolnik on 05.12.16.
+//  Copyright © 2016 Brightify. All rights reserved.
+//
+
+import DataMapper
+
+public protocol InputEncodingWithEncoder: InputEncoding {
+    
+    func encode(input: SupportedType, to request: inout Request)
+}

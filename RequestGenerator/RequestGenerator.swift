@@ -1,7 +1,7 @@
-// ../Router/Router+Request.swift
+// ../Fetcher/Fetcher+Request.swift
 //
 //  RequestGenerator.swift
-//  SwiftKit
+//  Fetcher
 //
 //  Created by Filip Dolnik on 08.12.16.
 //  Copyright © 2016 Brightify. All rights reserved.
@@ -13,7 +13,7 @@ print("import DataMapper")
 for output in outputTypes {
     print("")
     print("// Extension for output type \(output).")
-    print("extension Router {")
+    print("extension Fetcher {")
     for input in inputTypes {
         let inputSigniture = input.isVoid ? "" : ", input: \(input)"
         let inputProvider: String
