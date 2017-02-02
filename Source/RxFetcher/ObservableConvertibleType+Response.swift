@@ -11,7 +11,7 @@ import Result
 
 extension ObservableConvertibleType where E: ResponseProtocol {
 
-    public func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0)) -> Observable<E> {
+    public func retryRequest(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0)) -> Observable<E> {
         return asObservable().flatMap { response in
             return Observable.create { observer in
                 switch response.result {

@@ -8,25 +8,20 @@
 
 extension Headers {
     
-    public enum Accept: Header {
+    public struct Accept: Header {
         
-        case applicationJson
-        case textPlain
-        case custom(value: String)
+        public let name = "Accept"
         
-        public var name: String {
-            return "Accept"
-        }
+        public let value: String
         
-        public var value: String {
-            switch self {
-            case .applicationJson:
-                return "application/json"
-            case .textPlain:
-                return "text/plain"
-            case .custom(let value):
-                return value
-            }
+        public init(value: String) {
+            self.value = value
         }
     }
+}
+
+extension Headers.Accept {
+    
+    public static let applicationJson = Headers.Accept(value: "application/json")
+    public static let textPlain = Headers.Accept(value: "text/plain")
 }

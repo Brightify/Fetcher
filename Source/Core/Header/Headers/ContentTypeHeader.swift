@@ -8,28 +8,21 @@
 
 extension Headers {
     
-    public enum ContentType: Header {
+    public struct ContentType: Header {
         
-        case applicationJson
-        case applicationFormUrlencoded
-        case textPlain
-        case custom(value: String)
+        public let name = "Content-Type"
         
-        public var name: String {
-            return "Content-Type"
-        }
+        public let value: String
         
-        public var value: String {
-            switch self {
-            case .applicationJson:
-                return "application/json"
-            case .applicationFormUrlencoded:
-                return "application/x-www-form-urlencoded"
-            case .textPlain:
-                return "text/plain"
-            case .custom(let value):
-                return value
-            }
+        public init(value: String) {
+            self.value = value
         }
     }
+}
+
+extension Headers.ContentType {
+    
+    public static let applicationJson = Headers.ContentType(value: "application/json")
+    public static let applicationFormUrlencoded = Headers.ContentType(value: "application/x-www-form-urlencoded")
+    public static let textPlain = Headers.ContentType(value: "text/plain")
 }

@@ -16,8 +16,12 @@ open class BaseStatusCodeErrorHandler: ErrorHandler {
         self.codes = Set(codes)
     }
     
-    public init(code: Int...) {
-        self.codes = Set(code)
+    public init(codes: Int...) {
+        self.codes = Set(codes)
+    }
+    
+    public init(code: Int) {
+        self.codes = Set([code])
     }
     
     public init(range: CountableClosedRange<Int>) {

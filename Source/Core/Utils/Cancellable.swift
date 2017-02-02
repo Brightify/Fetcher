@@ -23,9 +23,7 @@ public final class Cancellable {
     
     public func cancel() {
         Cancellable.syncQueue.sync {
-            shouldCancel = true
-            cancelAction()
-            cancellables.forEach { $0.cancel() }
+            cancelNotSynchronized()
         }
     }
     
@@ -33,8 +31,14 @@ public final class Cancellable {
         Cancellable.syncQueue.sync {
             cancellables.append(cancellable)
             if (shouldCancel) {
-                cancel()
+                cancelNotSynchronized()
             }
         }
+    }
+    
+    private func cancelNotSynchronized() {
+        shouldCancel = true
+        cancelAction()
+        cancellables.forEach { $0.cancelNotSynchronized() }
     }
 }
