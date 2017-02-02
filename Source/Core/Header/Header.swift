@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 public protocol Header: RequestModifier {
     
     var name: String { get }

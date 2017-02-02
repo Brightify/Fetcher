@@ -11,9 +11,11 @@ import DataMapper
 public final class RequestLogger: RequestEnhancer {
     
     private let defaultOptions: RequestLogging
+    private let logFunction: (String) -> Void
     
-    public init(defaultOptions: RequestLogging = [.requestUrl, .responseCode, .time]) {
+    public init(defaultOptions: RequestLogging = [.requestUrl, .responseCode, .time], logFunction: @escaping (String) -> Void = { print($0) }) {
         self.defaultOptions = defaultOptions
+        self.logFunction = logFunction
     }
     
     public func enhance(request: inout Request) {
@@ -21,83 +23,92 @@ public final class RequestLogger: RequestEnhancer {
     }
     
     public func deenhance(response: inout Response<SupportedType>) {
+        let log = createLog(for: response)
+        if !log.isEmpty {
+            logFunction(log)
+        }
+    }
+    
+    private func createLog(for response: Response<SupportedType>) -> String {
+        var result = ""
         let modifiers = response.request.modifiers.flatMap { $0 as? RequestLogging }
         let options = modifiers.count == 0 ? defaultOptions : modifiers.reduce(RequestLogging.disabled) { acc, element in acc.union(element) }
-
-        guard options != .disabled else { return }
         
-        print("----- Begin of request log -----")
+        guard options != .disabled else { return "" }
+        
+        result += "----- Begin of request log -----\n"
         
         if options.contains(.requestUrl) {
             let url = response.request.url?.absoluteString ?? "<< unknown URL >>"
-            print("\nRequest url: \(response.request.httpMethod.rawValue) \(url)")
+            result += "\nRequest url: \(response.request.httpMethod.rawValue) \(url)\n"
         }
         
         if options.contains(.time) {
-            print("\nTime: ", terminator: "")
+            result += "\nTime: "
             if let timestamp = response.request.modifiers.flatMap({ $0 as? RequestLoggerTimestamp }).first {
-                print(String(format: "%.2fs", arguments: [-timestamp.time.timeIntervalSinceNow]))
+                result += String(format: "%.2fs", arguments: [-timestamp.time.timeIntervalSinceNow]) + "\n"
             } else {
-                print("unknown")
+                result += "unknown\n"
             }
         }
         
         if options.contains(.responseCode) {
-            print("\nResponse status code: ", terminator: "")
+            result += "\nResponse status code: "
             if let statusCode = response.rawResponse?.statusCode {
-                print(statusCode)
+                result += "\(statusCode)\n"
             } else {
-                print("unknown")
+                result += "unknown\n"
             }
         }
         
         if options.contains(.requestHeaders) {
-            print("\nRequest headers:", terminator: "")
+            result += "\nRequest headers: "
             if let headers = response.request.allHTTPHeaderFields, !headers.isEmpty {
-                print("")
+                result += "\n"
                 headers.forEach { name, value in
-                    print("\t\(name): \(value)")
+                    result += "\t\(name): \(value)\n"
                 }
             } else {
-                print(" empty")
+                result += "empty\n"
             }
         }
         
         if options.contains(.requestBody) {
-            print("\nRequest body: ", terminator: "")
+            result += "\nRequest body: "
             if let requestBody = response.request.httpBody {
                 if let requestBodyText = String(data: requestBody, encoding: .utf8) {
-                    print(requestBodyText)
+                    result += "\(requestBodyText)\n"
                 } else {
-                    print("unknown format")
+                    result += "unknown format\n"
                 }
-                print(requestBody)
+                result += "\(requestBody)\n"
             } else {
-                print("empty")
+                result += "empty\n"
             }
         }
         
         if options.contains(.responseHeaders) {
-            print("\nResponse headers:", terminator: "")
+            result += "\nResponse headers: "
             if let headers = response.rawResponse?.allHeaderFields, !headers.isEmpty {
-                print("")
+                result += "\n"
                 headers.forEach { name, value in
-                    print("\t\(name): \(value)")
+                    result += "\t\(name): \(value)\n"
                 }
             } else {
-                print(" empty")
+                result += "empty\n"
             }
         }
         
         if options.contains(.responseBody) {
-            print("\nResponse body: ", terminator: "")
+            result += "\nResponse body: "
             if let responseBody = response.rawString {
-                print(responseBody)
+                result += "\(responseBody)\n"
             } else {
-                print("empty")
+                result += "empty\n"
             }
         }
         
-        print("----- End of request log -----")
+        result += "\n----- End of request log -----\n"
+        return result
     }
 }

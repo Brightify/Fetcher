@@ -32,11 +32,11 @@ public enum RequestEnhancerPriority {
 
 extension RequestEnhancerPriority {
     
-    var less: RequestEnhancerPriority {
+    public var less: RequestEnhancerPriority {
         return .custom(value: value - 1)
     }
     
-    var more: RequestEnhancerPriority {
+    public var more: RequestEnhancerPriority {
         return .custom(value: value + 1)
     }
 }

@@ -33,6 +33,9 @@ public struct Response<T> {
         self.rawData = rawData
         self.request = request
     }
+}
+
+extension Response {
     
     public func map<U>(_ transform: (T) -> U) -> Response<U> {
         return Response<U>(result: result.map(transform), rawResponse: rawResponse, rawData: rawData, request: request)
@@ -41,9 +44,6 @@ public struct Response<T> {
     public func flatMap<U>(_ transform: (T) -> FetcherResult<U>) -> Response<U> {
         return Response<U>(result: result.flatMap(transform), rawResponse: rawResponse, rawData: rawData, request: request)
     }
-}
-
-extension Response {
     
     public var rawString: String? {
         guard let response = rawResponse, let data = rawData else {

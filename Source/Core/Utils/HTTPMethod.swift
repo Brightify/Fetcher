@@ -19,7 +19,7 @@ public enum HTTPMethod: String {
     case trace   = "TRACE"
     case unknown = "UNKNOWN"
     
-    var defaultInputEncoding: InputEncoding {
+    internal var defaultInputEncoding: InputEncoding {
         switch self {
         case .connect, .delete, .get, .head, .trace:
             return StandardInputEncoding.queryString

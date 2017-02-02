@@ -16,7 +16,7 @@ public struct RxFetcher {
         self.fetcher = fetcher
     }
 
-    public func observe<T>(request: @escaping (@escaping (Response<T>) -> Void) -> Cancellable) -> Observable<Response<T>> {
+    internal func observe<T>(request: @escaping (@escaping (Response<T>) -> Void) -> Cancellable) -> Observable<Response<T>> {
         return Observable<Response<T>>.create { observer in
             let cancellable = request { response in
                 observer.onNext(response)

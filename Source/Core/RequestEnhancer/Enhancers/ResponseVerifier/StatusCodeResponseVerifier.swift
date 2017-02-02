@@ -16,8 +16,12 @@ public struct StatusCodeResponseVerifier: ResponseVerifier {
         self.codes = Set(codes)
     }
     
-    public init(code: Int...) {
-        self.init(codes: code)
+    public init(codes: Int...) {
+        self.init(codes: codes)
+    }
+    
+    public init(code: Int) {
+        self.init(codes: [code])
     }
     
     public init(range: CountableClosedRange<Int>) {

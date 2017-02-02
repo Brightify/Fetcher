@@ -8,7 +8,7 @@
 
 import Result
 
-/// Protocol used as generic constraint in extensions.
+/// Protocol used as generic constraint in extensions. It is not part of public API may change between mayor versions.
 public protocol ResponseProtocol {
     
     associatedtype T
