@@ -10,7 +10,7 @@ import DataMapper
 
 extension Fetcher {
     
-    // Overloads have simmilar signiture to allow easier request generation.
+    // Overloads have similar signiture to allow easier request generation.
     internal func run(endpoint: Endpoint<Data, Data>, inputProvider: @escaping () -> (Data),
                       outputProvider: @escaping (Data) -> Data, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
         let cancellable = Cancellable()
