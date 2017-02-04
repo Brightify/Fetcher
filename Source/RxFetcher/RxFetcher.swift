@@ -12,7 +12,7 @@ public struct RxFetcher {
     
     public let fetcher: Fetcher
     
-    public init(fetcher: Fetcher) {
+    internal init(fetcher: Fetcher) {
         self.fetcher = fetcher
     }
 

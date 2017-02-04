@@ -9,22 +9,12 @@
 import DataMapper
 import Result
 
-/**
-    Response with generic type of output
-
-    :param: T output type
-*/
 public struct Response<T> {
     
     public var result: FetcherResult<T>
-    
-    /// Raw API response
     public var rawResponse: HTTPURLResponse?
-    
-    /// Raw data of the response
     public var rawData: Data?
     
-    /// Request that was used to obtain this response
     public let request: Request
     
     public init(result: FetcherResult<T>, rawResponse: HTTPURLResponse?, rawData: Data?, request: Request) {
