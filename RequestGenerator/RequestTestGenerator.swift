@@ -33,24 +33,26 @@ for (oIndex, output) in outputTypes.enumerated() {
         let inputDataParameter: String
         if input.isVoid {
             inputDataParameter = ""
+        } else if input.isData {
+            inputDataParameter = ", input: \(data[iIndex]).data(using: .utf8)!"
         } else {
-            inputDataParameter = ", input: \(inputData[iIndex])"
+            inputDataParameter = ", input: \(data[iIndex])"
         }
         
-        print("                    self.fetcher(response: \(jsonOutputData[oIndex])).request(POST\(genericSigniture)(\"xyz\")\(inputDataParameter)) { response in")
-        print("                        self.assertInput(request: response.request, expected: \(jsonInputData[iIndex]))")
+        print("                    self.fetcher(response: \(jsonData[oIndex])).request(POST\(genericSigniture)(\"xyz\")\(inputDataParameter)) { response in")
+        print("                        self.assertInput(request: response.request, expected: \(jsonData[iIndex]))")
         if output.isVoid {
             print("                        expect(response.result.value).toNot(beNil())")
         } else if output.isData {
             print("                        expect(response.result.value).toNot(beNil())")
             print("                        if let value = response.result.value {")
-            print("                            expect(String(data: value, encoding: .utf8)) == \(outputData[oIndex])")
+            print("                            expect(String(data: value, encoding: .utf8)) == \(data[oIndex])")
             print("                        }")
-        } else if outputData[oIndex].contains("nil") {
-            let data = outputData[oIndex].replacingOccurrences(of: "\"", with: "\\\"")
-            print("                        expect(\"\\(response.result.value)\") == \"Optional(\(data))\"")
+        } else if data[oIndex].contains("nil") {
+            let value = data[oIndex].replacingOccurrences(of: "\"", with: "\\\"")
+            print("                        expect(\"\\(response.result.value)\") == \"Optional(\(value))\"")
         } else {
-            print("                        expect(response.result.value) == \(outputData[oIndex])")
+            print("                        expect(response.result.value) == \(data[oIndex])")
         }
         print("                        called = true")
         print("                    }")

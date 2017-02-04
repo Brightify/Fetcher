@@ -89,7 +89,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], SupportedType>") {
                 it("works") {
-                    self.fetcher(response: "\"a\"").rx.request(POST<[Int?], SupportedType>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "\"a\"").rx.request(POST<[Int?], SupportedType>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == .string("a")
                         called = true
@@ -219,7 +219,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], Void>") {
                 it("works") {
-                    self.fetcher(response: "").rx.request(POST<[Int?], Void>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "").rx.request(POST<[Int?], Void>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value).toNot(beNil())
                         called = true
@@ -370,7 +370,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], Data>") {
                 it("works") {
-                    self.fetcher(response: "a").rx.request(POST<[Int?], Data>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "a").rx.request(POST<[Int?], Data>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value).toNot(beNil())
                         if let value = response.result.value {
@@ -518,7 +518,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], OUT>") {
                 it("works") {
-                    self.fetcher(response: "1").rx.request(POST<[Int?], Int>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "1").rx.request(POST<[Int?], Int>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == 1
                         called = true
@@ -571,6 +571,136 @@ class RxFetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "1").rx.request(POST<[String: Int?]?, Int>("xyz"), input: nil).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<SupportedType, Int?>("xyz"), input: .string("a")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Void, Int?>("xyz")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Data, Int?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int, Int?>("xyz"), input: 1).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int?, Int?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int], Int?>("xyz"), input: [1, 2]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int]?, Int?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?], Int?>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?]?, Int?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int], Int?>("xyz"), input: ["a": 1]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int]?, Int?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?], Int?>("xyz"), input: ["a": nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?]?, Int?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }).addDisposableTo(disposeBag)
                     expect(called).toEventually(beTrue())
@@ -648,7 +778,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [OUT]>") {
                 it("works") {
-                    self.fetcher(response: "[1,2]").rx.request(POST<[Int?], [Int]>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "[1,2]").rx.request(POST<[Int?], [Int]>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == [1, 2]
                         called = true
@@ -701,6 +831,136 @@ class RxFetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "[1,2]").rx.request(POST<[String: Int?]?, [Int]>("xyz"), input: nil).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<SupportedType, [Int]?>("xyz"), input: .string("a")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Void, [Int]?>("xyz")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Data, [Int]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int, [Int]?>("xyz"), input: 1).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int?, [Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int], [Int]?>("xyz"), input: [1, 2]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int]?, [Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?], [Int]?>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?]?, [Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int], [Int]?>("xyz"), input: ["a": 1]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int]?, [Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?], [Int]?>("xyz"), input: ["a": nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?]?, [Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }).addDisposableTo(disposeBag)
                     expect(called).toEventually(beTrue())
@@ -778,7 +1038,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [OUT?]>") {
                 it("works") {
-                    self.fetcher(response: "[1,null]").rx.request(POST<[Int?], [Int?]>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "[1,null]").rx.request(POST<[Int?], [Int?]>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
@@ -831,6 +1091,136 @@ class RxFetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "[1,null]").rx.request(POST<[String: Int?]?, [Int?]>("xyz"), input: nil).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<SupportedType, [Int?]?>("xyz"), input: .string("a")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Void, [Int?]?>("xyz")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Data, [Int?]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int, [Int?]?>("xyz"), input: 1).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int?, [Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int], [Int?]?>("xyz"), input: [1, 2]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int]?, [Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?], [Int?]?>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?]?, [Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int], [Int?]?>("xyz"), input: ["a": 1]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int]?, [Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?], [Int?]?>("xyz"), input: ["a": nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?]?, [Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }).addDisposableTo(disposeBag)
                     expect(called).toEventually(beTrue())
@@ -908,7 +1298,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [String: OUT]>") {
                 it("works") {
-                    self.fetcher(response: "{\"a\":1}").rx.request(POST<[Int?], [String: Int]>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "{\"a\":1}").rx.request(POST<[Int?], [String: Int]>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == ["a": 1]
                         called = true
@@ -961,6 +1351,136 @@ class RxFetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "{\"a\":1}").rx.request(POST<[String: Int?]?, [String: Int]>("xyz"), input: nil).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<SupportedType, [String: Int]?>("xyz"), input: .string("a")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Void, [String: Int]?>("xyz")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Data, [String: Int]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int, [String: Int]?>("xyz"), input: 1).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int?, [String: Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int], [String: Int]?>("xyz"), input: [1, 2]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int]?, [String: Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?], [String: Int]?>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?]?, [String: Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int], [String: Int]?>("xyz"), input: ["a": 1]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int]?, [String: Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?], [String: Int]?>("xyz"), input: ["a": nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?]?, [String: Int]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }).addDisposableTo(disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1038,7 +1558,7 @@ class RxFetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [String: OUT?]>") {
                 it("works") {
-                    self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int?], [String: Int?]>("xyz"), input: [1, nil]).subscribe(onNext: { response in
+                    self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int?], [String: Int?]>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
@@ -1091,6 +1611,136 @@ class RxFetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[String: Int?]?, [String: Int?]>("xyz"), input: nil).subscribe(onNext: { response in
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<SupportedType, [String: Int?]?>("xyz"), input: .string("a")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Void, [String: Int?]?>("xyz")).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Data, [String: Int?]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int, [String: Int?]?>("xyz"), input: 1).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<Int?, [String: Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int], [String: Int?]?>("xyz"), input: [1, 2]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int]?, [String: Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?], [String: Int?]?>("xyz"), input: [Optional(1), nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[Int?]?, [String: Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int], [String: Int?]?>("xyz"), input: ["a": 1]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int]?, [String: Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?], [String: Int?]?>("xyz"), input: ["a": nil]).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }).addDisposableTo(disposeBag)
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").rx.request(POST<[String: Int?]?, [String: Int?]?>("xyz"), input: nil).subscribe(onNext: { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }).addDisposableTo(disposeBag)
                     expect(called).toEventually(beTrue())

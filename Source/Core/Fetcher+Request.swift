@@ -278,6 +278,75 @@ extension Fetcher {
     }
 }
 
+// Extension for output type OUT?.
+extension Fetcher {
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, OUT?>, input: SupportedType, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, OUT?>, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, OUT?>, input: Data, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, OUT?>, input: IN, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, OUT?>, input: IN?, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], OUT?>, input: [IN], callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, OUT?>, input: [IN]?, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], OUT?>, input: [IN?], callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, OUT?>, input: [IN?]?, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], OUT?>, input: [String: IN], callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, OUT?>, input: [String: IN]?, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], OUT?>, input: [String: IN?], callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, OUT?>, input: [String: IN?]?, callback: @escaping (Response<OUT?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+}
+
 // Extension for output type [OUT].
 extension Fetcher {
 
@@ -343,6 +412,75 @@ extension Fetcher {
 
     @discardableResult
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT]>, input: [String: IN?]?, callback: @escaping (Response<[OUT]>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+}
+
+// Extension for output type [OUT]?.
+extension Fetcher {
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [OUT]?>, input: SupportedType, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [OUT]?>, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT]?>, input: Data, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT]?>, input: IN, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [OUT]?>, input: IN?, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [OUT]?>, input: [IN], callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [OUT]?>, input: [IN]?, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [OUT]?>, input: [IN?], callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [OUT]?>, input: [IN?]?, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [OUT]?>, input: [String: IN], callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [OUT]?>, input: [String: IN]?, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [OUT]?>, input: [String: IN?], callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT]?>, input: [String: IN?]?, callback: @escaping (Response<[OUT]?>) -> Void) -> Cancellable {
         return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
     }
 }
@@ -416,6 +554,75 @@ extension Fetcher {
     }
 }
 
+// Extension for output type [OUT?]?.
+extension Fetcher {
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [OUT?]?>, input: SupportedType, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [OUT?]?>, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT?]?>, input: Data, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT?]?>, input: IN, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [OUT?]?>, input: IN?, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [OUT?]?>, input: [IN], callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [OUT?]?>, input: [IN]?, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [OUT?]?>, input: [IN?], callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [OUT?]?>, input: [IN?]?, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [OUT?]?>, input: [String: IN], callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [OUT?]?>, input: [String: IN]?, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [OUT?]?>, input: [String: IN?], callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT?]?>, input: [String: IN?]?, callback: @escaping (Response<[OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+}
+
 // Extension for output type [String: OUT].
 extension Fetcher {
 
@@ -485,6 +692,75 @@ extension Fetcher {
     }
 }
 
+// Extension for output type [String: OUT]?.
+extension Fetcher {
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [String: OUT]?>, input: SupportedType, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [String: OUT]?>, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT]?>, input: Data, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT]?>, input: IN, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [String: OUT]?>, input: IN?, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [String: OUT]?>, input: [IN], callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [String: OUT]?>, input: [IN]?, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [String: OUT]?>, input: [IN?], callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [String: OUT]?>, input: [IN?]?, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [String: OUT]?>, input: [String: IN], callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [String: OUT]?>, input: [String: IN]?, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [String: OUT]?>, input: [String: IN?], callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT]?>, input: [String: IN?]?, callback: @escaping (Response<[String: OUT]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+}
+
 // Extension for output type [String: OUT?].
 extension Fetcher {
 
@@ -550,6 +826,75 @@ extension Fetcher {
 
     @discardableResult
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT?]>, input: [String: IN?]?, callback: @escaping (Response<[String: OUT?]>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+}
+
+// Extension for output type [String: OUT?]?.
+extension Fetcher {
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [String: OUT?]?>, input: SupportedType, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [String: OUT?]?>, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT?]?>, input: Data, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT?]?>, input: IN, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [String: OUT?]?>, input: IN?, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [String: OUT?]?>, input: [IN], callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [String: OUT?]?>, input: [IN]?, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [String: OUT?]?>, input: [IN?], callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [String: OUT?]?>, input: [IN?]?, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [String: OUT?]?>, input: [String: IN], callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [String: OUT?]?>, input: [String: IN]?, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [String: OUT?]?>, input: [String: IN?], callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
+    }
+
+    @discardableResult
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT?]?>, input: [String: IN?]?, callback: @escaping (Response<[String: OUT?]?>) -> Void) -> Cancellable {
         return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { self.objectMapper.deserialize($0) }, callback: callback)
     }
 }

@@ -86,7 +86,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], SupportedType>") {
                 it("works") {
-                    self.fetcher(response: "\"a\"").request(POST<[Int?], SupportedType>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "\"a\"").request(POST<[Int?], SupportedType>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == .string("a")
                         called = true
@@ -216,7 +216,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], Void>") {
                 it("works") {
-                    self.fetcher(response: "").request(POST<[Int?], Void>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "").request(POST<[Int?], Void>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value).toNot(beNil())
                         called = true
@@ -367,7 +367,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], Data>") {
                 it("works") {
-                    self.fetcher(response: "a").request(POST<[Int?], Data>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "a").request(POST<[Int?], Data>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value).toNot(beNil())
                         if let value = response.result.value {
@@ -515,7 +515,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], OUT>") {
                 it("works") {
-                    self.fetcher(response: "1").request(POST<[Int?], Int>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "1").request(POST<[Int?], Int>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == 1
                         called = true
@@ -568,6 +568,136 @@ class Fetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "1").request(POST<[String: Int?]?, Int>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<SupportedType, Int?>("xyz"), input: .string("a")) { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Void, Int?>("xyz")) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Data, Int?>("xyz"), input: "a".data(using: .utf8)!) { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int, Int?>("xyz"), input: 1) { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int?, Int?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int], Int?>("xyz"), input: [1, 2]) { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int]?, Int?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?], Int?>("xyz"), input: [Optional(1), nil]) { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?]?, Int?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int], Int?>("xyz"), input: ["a": 1]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int]?, Int?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?], Int?>("xyz"), input: ["a": nil]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, OUT?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?]?, Int?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -645,7 +775,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [OUT]>") {
                 it("works") {
-                    self.fetcher(response: "[1,2]").request(POST<[Int?], [Int]>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "[1,2]").request(POST<[Int?], [Int]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == [1, 2]
                         called = true
@@ -698,6 +828,136 @@ class Fetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "[1,2]").request(POST<[String: Int?]?, [Int]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<SupportedType, [Int]?>("xyz"), input: .string("a")) { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Void, [Int]?>("xyz")) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Data, [Int]?>("xyz"), input: "a".data(using: .utf8)!) { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int, [Int]?>("xyz"), input: 1) { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int?, [Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int], [Int]?>("xyz"), input: [1, 2]) { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int]?, [Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?], [Int]?>("xyz"), input: [Optional(1), nil]) { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?]?, [Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int], [Int]?>("xyz"), input: ["a": 1]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int]?, [Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?], [Int]?>("xyz"), input: ["a": nil]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?]?, [Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -775,7 +1035,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [OUT?]>") {
                 it("works") {
-                    self.fetcher(response: "[1,null]").request(POST<[Int?], [Int?]>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "[1,null]").request(POST<[Int?], [Int?]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
@@ -828,6 +1088,136 @@ class Fetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "[1,null]").request(POST<[String: Int?]?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<SupportedType, [Int?]?>("xyz"), input: .string("a")) { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Void, [Int?]?>("xyz")) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Data, [Int?]?>("xyz"), input: "a".data(using: .utf8)!) { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int, [Int?]?>("xyz"), input: 1) { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int?, [Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int], [Int?]?>("xyz"), input: [1, 2]) { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int]?, [Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?], [Int?]?>("xyz"), input: [Optional(1), nil]) { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?]?, [Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int], [Int?]?>("xyz"), input: ["a": 1]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int]?, [Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?], [Int?]?>("xyz"), input: ["a": nil]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?]?, [Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -905,7 +1295,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [String: OUT]>") {
                 it("works") {
-                    self.fetcher(response: "{\"a\":1}").request(POST<[Int?], [String: Int]>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "{\"a\":1}").request(POST<[Int?], [String: Int]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == ["a": 1]
                         called = true
@@ -958,6 +1348,136 @@ class Fetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "{\"a\":1}").request(POST<[String: Int?]?, [String: Int]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<SupportedType, [String: Int]?>("xyz"), input: .string("a")) { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Void, [String: Int]?>("xyz")) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Data, [String: Int]?>("xyz"), input: "a".data(using: .utf8)!) { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int, [String: Int]?>("xyz"), input: 1) { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int?, [String: Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int], [String: Int]?>("xyz"), input: [1, 2]) { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int]?, [String: Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?], [String: Int]?>("xyz"), input: [Optional(1), nil]) { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?]?, [String: Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int], [String: Int]?>("xyz"), input: ["a": 1]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int]?, [String: Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?], [String: Int]?>("xyz"), input: ["a": nil]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [String: OUT]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?]?, [String: Int]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1035,7 +1555,7 @@ class Fetcher_RequestTest: QuickSpec {
             }
             describe("request<[IN?], [String: OUT?]>") {
                 it("works") {
-                    self.fetcher(response: "{\"a\":null}").request(POST<[Int?], [String: Int?]>("xyz"), input: [1, nil]) { response in
+                    self.fetcher(response: "{\"a\":null}").request(POST<[Int?], [String: Int?]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
@@ -1088,6 +1608,136 @@ class Fetcher_RequestTest: QuickSpec {
                     self.fetcher(response: "{\"a\":null}").request(POST<[String: Int?]?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<SupportedType, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<SupportedType, [String: Int?]?>("xyz"), input: .string("a")) { response in
+                        self.assertInput(request: response.request, expected: "\"a\"")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Void, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Void, [String: Int?]?>("xyz")) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<Data, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Data, [String: Int?]?>("xyz"), input: "a".data(using: .utf8)!) { response in
+                        self.assertInput(request: response.request, expected: "a")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int, [String: Int?]?>("xyz"), input: 1) { response in
+                        self.assertInput(request: response.request, expected: "1")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<IN?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<Int?, [String: Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int], [String: Int?]?>("xyz"), input: [1, 2]) { response in
+                        self.assertInput(request: response.request, expected: "[1,2]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int]?, [String: Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?], [String: Int?]?>("xyz"), input: [Optional(1), nil]) { response in
+                        self.assertInput(request: response.request, expected: "[1,null]")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[IN?]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[Int?]?, [String: Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int], [String: Int?]?>("xyz"), input: ["a": 1]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":1}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int]?, [String: Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?], [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?], [String: Int?]?>("xyz"), input: ["a": nil]) { response in
+                        self.assertInput(request: response.request, expected: "{\"a\":null}")
+                        expect("\(response.result.value)") == "Optional(nil)"
+                        called = true
+                    }
+                    expect(called).toEventually(beTrue())
+                }
+            }
+            describe("request<[String: IN?]?, [String: OUT?]?>") {
+                it("works") {
+                    self.fetcher(response: "").request(POST<[String: Int?]?, [String: Int?]?>("xyz"), input: nil) { response in
+                        self.assertInput(request: response.request, expected: "")
+                        expect("\(response.result.value)") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
