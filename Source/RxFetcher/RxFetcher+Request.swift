@@ -227,6 +227,62 @@ extension RxFetcher {
     }
 }
 
+// Extension for output type OUT?.
+extension RxFetcher {
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, OUT?>, input: SupportedType) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, OUT?>) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, OUT?>, input: Data) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, OUT?>, input: IN) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, OUT?>, input: IN?) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], OUT?>, input: [IN]) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, OUT?>, input: [IN]?) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], OUT?>, input: [IN?]) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, OUT?>, input: [IN?]?) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], OUT?>, input: [String: IN]) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, OUT?>, input: [String: IN]?) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], OUT?>, input: [String: IN?]) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, OUT?>, input: [String: IN?]?) -> Observable<Response<OUT?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+}
+
 // Extension for output type [OUT].
 extension RxFetcher {
 
@@ -279,6 +335,62 @@ extension RxFetcher {
     }
 
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT]>, input: [String: IN?]?) -> Observable<Response<[OUT]>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+}
+
+// Extension for output type [OUT]?.
+extension RxFetcher {
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [OUT]?>, input: SupportedType) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [OUT]?>) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT]?>, input: Data) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT]?>, input: IN) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [OUT]?>, input: IN?) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [OUT]?>, input: [IN]) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [OUT]?>, input: [IN]?) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [OUT]?>, input: [IN?]) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [OUT]?>, input: [IN?]?) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [OUT]?>, input: [String: IN]) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [OUT]?>, input: [String: IN]?) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [OUT]?>, input: [String: IN?]) -> Observable<Response<[OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT]?>, input: [String: IN?]?) -> Observable<Response<[OUT]?>> {
         return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
     }
 }
@@ -339,6 +451,62 @@ extension RxFetcher {
     }
 }
 
+// Extension for output type [OUT?]?.
+extension RxFetcher {
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [OUT?]?>, input: SupportedType) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [OUT?]?>) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [OUT?]?>, input: Data) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [OUT?]?>, input: IN) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [OUT?]?>, input: IN?) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [OUT?]?>, input: [IN]) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [OUT?]?>, input: [IN]?) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [OUT?]?>, input: [IN?]) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [OUT?]?>, input: [IN?]?) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [OUT?]?>, input: [String: IN]) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [OUT?]?>, input: [String: IN]?) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [OUT?]?>, input: [String: IN?]) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [OUT?]?>, input: [String: IN?]?) -> Observable<Response<[OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+}
+
 // Extension for output type [String: OUT].
 extension RxFetcher {
 
@@ -395,6 +563,62 @@ extension RxFetcher {
     }
 }
 
+// Extension for output type [String: OUT]?.
+extension RxFetcher {
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [String: OUT]?>, input: SupportedType) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [String: OUT]?>) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT]?>, input: Data) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT]?>, input: IN) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [String: OUT]?>, input: IN?) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [String: OUT]?>, input: [IN]) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [String: OUT]?>, input: [IN]?) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [String: OUT]?>, input: [IN?]) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [String: OUT]?>, input: [IN?]?) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [String: OUT]?>, input: [String: IN]) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [String: OUT]?>, input: [String: IN]?) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [String: OUT]?>, input: [String: IN?]) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT]?>, input: [String: IN?]?) -> Observable<Response<[String: OUT]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+}
+
 // Extension for output type [String: OUT?].
 extension RxFetcher {
 
@@ -447,6 +671,62 @@ extension RxFetcher {
     }
 
     public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT?]>, input: [String: IN?]?) -> Observable<Response<[String: OUT?]>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+}
+
+// Extension for output type [String: OUT?]?.
+extension RxFetcher {
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<SupportedType, [String: OUT?]?>, input: SupportedType) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Void, [String: OUT?]?>) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, callback: $0) }
+    }
+
+    public func request<OUT: Deserializable>(_ endpoint: Endpoint<Data, [String: OUT?]?>, input: Data) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, [String: OUT?]?>, input: IN) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN?, [String: OUT?]?>, input: IN?) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN], [String: OUT?]?>, input: [IN]) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN]?, [String: OUT?]?>, input: [IN]?) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?], [String: OUT?]?>, input: [IN?]) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[IN?]?, [String: OUT?]?>, input: [IN?]?) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN], [String: OUT?]?>, input: [String: IN]) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN]?, [String: OUT?]?>, input: [String: IN]?) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?], [String: OUT?]?>, input: [String: IN?]) -> Observable<Response<[String: OUT?]?>> {
+        return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
+    }
+
+    public func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<[String: IN?]?, [String: OUT?]?>, input: [String: IN?]?) -> Observable<Response<[String: OUT?]?>> {
         return observe { self.fetcher.request(endpoint, input: input, callback: $0) }
     }
 }
