@@ -30,9 +30,10 @@ class RequestEnhancerPriorityTest: QuickSpec {
     }
     
     func apiTest() {
-        _ = RequestEnhancerPriority.normal
         _ = RequestEnhancerPriority.low
+        _ = RequestEnhancerPriority.normal
         _ = RequestEnhancerPriority.high
+        _ = RequestEnhancerPriority.fetcher
         _ = RequestEnhancerPriority.max
         _ = RequestEnhancerPriority.custom(value: 1)
     }

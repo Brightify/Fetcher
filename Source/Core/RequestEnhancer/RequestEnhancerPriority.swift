@@ -8,22 +8,25 @@
 
 public enum RequestEnhancerPriority {
     
-    case normal
     case low
+    case normal
     case high
+    case fetcher
     case max
     case custom(value: Int)
     
     public var value: Int {
         switch self {
-        case .normal:
-            return 0
         case .low:
             return -100
+        case .normal:
+            return 0
         case .high:
             return 100
+        case .fetcher:
+            return 200
         case .max:
-            return 1000
+            return 300
         case .custom(let value):
             return value
         }
