@@ -84,7 +84,7 @@ struct ExampleObject {
 }
 ```
 
-To simulate our server we will use [bin.org/get](https://httpbin.org/get). It returns everything you send to it. For example look at the response for [https://httpbin.org/get?id=1&text=a](https://httpbin.org/get?id=1&text=a).
+To simulate our server we will use [httpbin.org/get](https://httpbin.org/get). It returns everything you send to it. For example look at the response for [httpbin.org/get?id=1&text=a](https://httpbin.org/get?id=1&text=a).
 
 ```Swift
 let fetcher = Fetcher(requestPerformer: AlamofireRequestPerformer())
@@ -202,7 +202,7 @@ Problem with `data["args"]` is solved using `HttpBinResponseTranslation` and tha
 
 ### Fetcher
 
-`Fetcher` is responsible for processing requests and responses. It uses `RequestPerformer` to do the actual data transfer.
+`Fetcher` is responsible for processing requests and responses. It uses `RequestPerformer` (see [RequestPerformer](#requestperformer)) to do the actual data transfer.
 
 In `init` you can pass several more arguments:
 
@@ -239,7 +239,7 @@ init(copy fetcher: Fetcher)
 func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, OUT>, input: IN, callback: @escaping (Response<OUT>) -> Void) -> Cancellable
 ```
 
-The first generic type of `Endpoint` says what kind of data will be send to the server and the second one is what will the server send back. `Void` stands for no data, `NSData` means that [DataMapper](https://github.com/Brightify/DataMapper) won't be used and `SupportedType` lets you manually do the transformation. If `Endpoint` has `Void` as its input type, then the `request` does not have `input` parameter.
+The first generic type of `Endpoint` (see [Endpoint](#endpoint)) says what kind of data will be send to the server and the second one is what will the server send back. `Void` stands for no data, `NSData` means that [DataMapper](https://github.com/Brightify/DataMapper) won't be used and `SupportedType` lets you manually do the transformation. If `Endpoint` has `Void` as its input type, then the `request` does not have `input` parameter.
 
 `request` supports everything that [DataMapper](https://github.com/Brightify/DataMapper) does (plus exceptions mentioned above). Even though it is possible to create `Endpoint` with any input and output types, you won't be able to use them in `request`.
 
@@ -255,14 +255,14 @@ cancellable.cancel()
 
 #### Retry
 
-Sometimes repeating a request may result in a completely different behavior. For example your request failed because there is no internet connection. In that case you may want to try the request later. Exactly for this scenario is there `retry` method of `Request`.
-
 ```Swift
 extension Request {
 
     func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0), failCallback: () -> Void = {})
 }
 ```
+
+Sometimes repeating a request may result in a completely different behavior. For example your request failed because there is no internet connection. In that case you may want to try the request later. Exactly for this scenario is there `retry` method of `Request` (see [Request](#request)).
 
 It does the same thing as calling the request again manually. `max` says how many times will be the request retried. If this count is reached, then instead of repeating the request, `failCallback` is called. Each call of `retry` retries the request only once. But because this is usually done in callback (which is called for every try), `retry` is called in cycle (and here comes in play `max`). `delay` modifies how long should `Fetcher` wait before it attempts again. `Cancallable` obtained from the original request works for retried request too. Example:
 
@@ -280,9 +280,30 @@ fetcher.request(...) { response in
 
 Here `retry` is called only if `result` is failure. After `retry` is called this callback ends. Next time it is called with a different `Response` and this cycle repeats (in this case max three times). If after all these retries the `result` is still failure, then `print("error")` is called and no more attempts are made.
 
-### Response
+### Request
 
-`Response` represents result of `Request` (server response to it). You get an instance of `Response` in every callback of `fetcher.request`. Declaration:
+```Swift
+struct Request {
+    
+    var modifiers: [RequestModifier] = []
+    
+    var urlRequest: URLRequest
+    
+    var callback: (Response<Data>) -> Void
+    
+    var cancellable: Cancellable
+    
+    var retried = 0
+    
+    var retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
+
+    func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0), failCallback: () -> Void = {})
+}
+```
+
+`Request` is a wrapper over `NSURLRequest`. It provides delegates for all methods from `NSURLRequest`. You get access to `Request` in `RequestEnhancer` (see [RequestEnhancer](#requestenhancer)) and from `Response`. You can modify `Request` in `RequestEnhancer` as you like. `cancellable` is the same `Cancellable` returned by `Fetcher.request` that created this `Request`. `retried` counts the number of times `retry` is called, `retryClosure` represents the implementation of `retry`. 
+
+### Response
 
 ```Swift
 struct Response<T> {
@@ -293,6 +314,8 @@ struct Response<T> {
     public let request: Request
 }
 ```
+
+`Response` represents result of `Request` (server response to it). You get an instance of `Response` in every callback of `fetcher.request`. Declaration:
 
 `T` is the same type as `OUT` in `Endpoint`. `FetcherResult<T>` is type alias to `Result<T, FetcherError>`. 
 
@@ -313,7 +336,7 @@ extension Response {
 
 ### Endpoint
 
-`Endpoint` is a class which defines url (`path`) of request, which `InputEncoding` will be used and `RequestModifier` that are specific to the request. All implementations of it has these inits:
+`Endpoint` is a class which defines url (`path`) of request, which `InputEncoding` will be used, `RequestModifier` that are specific to the request and HTTP method of the request. All implementations of it has these inits:
 
 ```Swift
 init(_ path: String, modifiers: [RequestModifier])
@@ -344,7 +367,7 @@ struct Endpoints: EndpointProvider {
 }
 ```
 
-Notice that `create` could be replaced with `GET` and `POST` but we think, it is better to specify the type only in one place. Another advantage of `create` is that you can add implicit `RequestModfier` to every `Endpoint`. To do this implement `implicitModifiers`:
+Notice that `create` could be replaced with `GET` and `POST` but we think, it is better to specify the type only in one place. Another advantage of `create` is that you can add implicit `RequestModfier` (see [RequestModifier](#requestmodifier)) to every `Endpoint`. To do this implement `implicitModifiers`:
 
 ```Swift
 struct Endpoints: EndpointProvider {
@@ -391,8 +414,6 @@ These are predefined implementations of `Endpoint` which represent some HTTP met
 
 ### RequestEnhancer
 
-`RequestEnhancer` is a protocol which modifies behavior of `Fetcher`. Definition:
-
 ```Swift
 protocol RequestEnhancer {
 
@@ -406,6 +427,8 @@ protocol RequestEnhancer {
 }
 ```
 
+`RequestEnhancer` is a protocol which modifies behavior of `Fetcher`.
+
 `enhance` is applied to each `Request` after the input data are encoded to it (see [InputEncoding](#inputencoding)) and before it is performed by `RequestPerformer` (see [RequestPerformer](#requestperformer)). You can modify the `Request` as you like. Default implementation does nothing.
 
 `deenhance` does the same thing but for incoming `Response`. It is called after the output data are decoded (see [InputEncoding](#inputencoding)) and before the callback of the request. Default implementation does nothing.
@@ -417,8 +440,6 @@ protocol RequestEnhancer {
 `RequestEnhancer` can be added to `Fetcher` by `register` methods (see [Fetcher](#fetcher-1)). 
 
 #### RequestEnhancerPriority
-
-`RequestEnhancerPriority` represents priority of `RequestEnhancer`.
 
 ```Swift
 enum RequestEnhancerPriority {
@@ -432,7 +453,7 @@ enum RequestEnhancerPriority {
 }
 ```
 
-The order is from the lowest to the greatest priority. `.normal` is default priority. `.fetcher` is used for internal `RequestEnhacer` and shouldn't be used by other programs. `.max` should be used only if you need to precede internal `RequestEnhancer`. It is recommended not to use `.custom` if possible.
+`RequestEnhancerPriority` represents priority of `RequestEnhancer`. The order is from the lowest to the greatest priority. `.normal` is default priority. `.fetcher` is used for internal `RequestEnhacer` and shouldn't be used by other programs. `.max` should be used only if you need to precede internal `RequestEnhancer`. It is recommended not to use `.custom` if possible.
 
 ```Swift
 extension RequestEnhancerPriority {
@@ -530,6 +551,15 @@ enum StandardInputEncoding: InputEncoding {
 `.httpBody` simply sends the data in the request body. Concrete encoding depends on `DataEncoder` implementation (may be JSON, XML, etc.).
 
 ### RequestPerformer
+
+```Swift
+protocol RequestPerformer {
+    
+    var dataEncoder: DataEncoder { get }
+    
+    func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable
+}
+```
 
 `RequestPerformer` duty is to communicate with the server (perform requests). This is done in `perform` method that takes `Request` and calls `callback` with `Response` (this call may not happen immediately), it returns `Cancellable` (way to cancel the request).  
 
