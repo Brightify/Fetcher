@@ -77,7 +77,7 @@ extension Fetcher {
         
         var request = Request(url: url, retry: retry, callback: callback, cancellable: Cancellable())
         request.httpMethod = endpoint.method
-        request.modifiers = [endpoint.modifiers, requestPerformer.implicitModifiers, requestModifiers].flatMap { $0 }
+        request.modifiers = [endpoint.modifiers, requestModifiers].flatMap { $0 }
         
         return request
     }

@@ -11,10 +11,9 @@ import Result
 
 public struct Response<T> {
     
-    public var result: FetcherResult<T>
-    public var rawResponse: HTTPURLResponse?
-    public var rawData: Data?
-    
+    public let result: FetcherResult<T>
+    public let rawResponse: HTTPURLResponse?
+    public let rawData: Data?
     public let request: Request
     
     public init(result: FetcherResult<T>, rawResponse: HTTPURLResponse?, rawData: Data?, request: Request) {

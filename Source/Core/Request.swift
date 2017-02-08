@@ -14,13 +14,13 @@ public struct Request {
     
     public var urlRequest: URLRequest
     
-    internal let callback: (Response<Data>) -> Void
+    public var callback: (Response<Data>) -> Void
     
-    internal let cancellable: Cancellable
+    public var cancellable: Cancellable
     
-    internal var retried = 0
+    public var retried = 0
     
-    private let retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
+    public var retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
     
     public var url: URL? {
         get {

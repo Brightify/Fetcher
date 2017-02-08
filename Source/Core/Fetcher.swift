@@ -32,7 +32,6 @@ public final class Fetcher {
         self.callbackQueue = callbackQueue
         
         register(requestEnhancers: HeaderRequestEnhancer(), BaseUrlRequestEnhancer(), ResponseVerifierEnhancer())
-        register(requestEnhancers: requestPerformer.implicitEnchancers)
     }
     
     public init(copy fetcher: Fetcher) {
