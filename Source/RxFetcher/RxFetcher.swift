@@ -20,6 +20,7 @@ public struct RxFetcher {
         return Observable<Response<T>>.create { observer in
             let cancellable = request { response in
                 observer.onNext(response)
+                observer.onCompleted()
             }
             return Disposables.create {
                 cancellable.cancel()
