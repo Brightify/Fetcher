@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
     spec.subspec 'AlamofireRequestPerformer' do |subspec|
         subspec.dependency 'Fetcher/Core'
         subspec.dependency 'Alamofire', '~> 4.3'
-        subspec.source_files = 'Source/RxFetcher/**/*.swift'
+        subspec.source_files = 'Source/AlamofireRequestPerformer/**/*.swift'
     end
 
     spec.subspec 'RxFetcher' do |subspec|
