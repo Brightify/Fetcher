@@ -22,19 +22,19 @@ Pod::Spec.new do |spec|
     spec.subspec 'Core' do |subspec|
         subspec.dependency 'DataMapper', '~> 0.1'
         subspec.dependency 'Result', '~> 3.1'
-        subspec.source_files = ['Source/Core/**/*.swift']
+        subspec.source_files = 'Source/Core/**/*.swift'
     end
 
     spec.subspec 'AlamofireRequestPerformer' do |subspec|
         subspec.dependency 'Fetcher/Core'
         subspec.dependency 'Alamofire', '~> 4.3'
-        subspec.source_files = ['Source/RxFetcher/**/*.swift']
+        subspec.source_files = 'Source/RxFetcher/**/*.swift'
     end
 
     spec.subspec 'RxFetcher' do |subspec|
         subspec.dependency 'Fetcher/Core'
         subspec.dependency 'RxSwift', '~> 3.0'
-        subspec.source_files = ['Source/RxFetcher/**/*.swift']
+        subspec.source_files = 'Source/RxFetcher/**/*.swift'
     end
 
     spec.default_subspecs = 'Core', 'AlamofireRequestPerformer'
