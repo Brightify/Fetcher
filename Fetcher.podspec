@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
 
     spec.subspec 'Core' do |subspec|
         subspec.dependency 'DataMapper', '~> 0.1'
-        subspec.dependency 'Result', '~> 3.1'
+        subspec.dependency 'Result', '~> 3.0'
         subspec.source_files = 'Source/Core/**/*.swift'
     end
 
