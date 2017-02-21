@@ -10,7 +10,7 @@ import DataMapper
 
 public final class Fetcher {
     
-    private static let syncQueue = DispatchQueue(label: "Fetcher_syncQueue")
+    private let syncQueue = DispatchQueue(label: "Fetcher_syncQueue")
     
     public let requestPerformer: RequestPerformer
     public let objectMapper: ObjectMapper
@@ -47,7 +47,7 @@ public final class Fetcher {
     }
     
     public func register(requestEnhancers: [RequestEnhancer]) {
-        Fetcher.syncQueue.sync {
+        syncQueue.sync {
             self.requestEnhancers.append(contentsOf: requestEnhancers)
             self.requestEnhancers.sort {
                 let priority0 = $0.instancePriority ?? type(of: $0).priority
@@ -62,7 +62,7 @@ public final class Fetcher {
     }
     
     public func register(requestModifiers: [RequestModifier]) {
-        Fetcher.syncQueue.sync {
+        syncQueue.sync {
             self.requestModifiers.append(contentsOf: requestModifiers)
         }
     }

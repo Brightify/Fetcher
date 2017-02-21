@@ -11,7 +11,7 @@ import Foundation
 /// Can be used to cancel requests.
 public final class Cancellable {
     
-    private static let syncQueue = DispatchQueue(label: "Cancellable_syncQueue")
+    private let syncQueue = DispatchQueue(label: "Cancellable_syncQueue")
     
     private var cancelAction: () -> Void
     private var cancellables: [Cancellable] = []
@@ -22,13 +22,13 @@ public final class Cancellable {
     }
     
     public func cancel() {
-        Cancellable.syncQueue.sync {
+        syncQueue.sync {
             cancelNotSynchronized()
         }
     }
     
     public func add(cancellable: Cancellable) {
-        Cancellable.syncQueue.sync {
+        syncQueue.sync {
             cancellables.append(cancellable)
             if (shouldCancel) {
                 cancelNotSynchronized()
