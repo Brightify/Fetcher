@@ -30,7 +30,7 @@ class ResponseVerifierTest: QuickSpec {
                     called = true
                 }
                 
-                expect(called).toEventually(beTrue())
+                expect(called).toEventually(beTrue(), timeout: 5)
             }
             it("does nothing if nil is returned by verify") {
                 let endpoint: GET<Void, Void> = GET("xyz", modifiers: ResponseVerifierStub(error: nil))

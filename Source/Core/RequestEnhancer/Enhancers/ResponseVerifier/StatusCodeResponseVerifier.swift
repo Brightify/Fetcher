@@ -20,12 +20,12 @@ public struct StatusCodeResponseVerifier: ResponseVerifier {
         self.init(codes: codes)
     }
     
-    public init(code: Int) {
-        self.init(codes: [code])
+    public init(codes: CountableClosedRange<Int>) {
+        self.init(codes: codes.map { $0 })
     }
     
-    public init(range: CountableClosedRange<Int>) {
-        self.init(codes: range.map { $0 })
+    public init(code: Int) {
+        self.init(codes: [code])
     }
     
     public func verify(response: Response<SupportedType>) -> FetcherError? {

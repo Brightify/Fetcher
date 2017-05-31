@@ -16,8 +16,8 @@ class BaseStatusCodeErrorHandlerTest {
     func apiTest() {
         _ = BaseStatusCodeErrorHandler(codes: [1, 2, 3])
         _ = BaseStatusCodeErrorHandler(codes: 1, 2, 3)
+        _ = BaseStatusCodeErrorHandler(codes: 1...3)
         _ = BaseStatusCodeErrorHandler(code: 1)
-        _ = BaseStatusCodeErrorHandler(range: 1...3)
     }
 }
 

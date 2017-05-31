@@ -44,7 +44,7 @@ class StatusCodeResponseVerifierTest: QuickSpec {
     func apiTest() {
         _ = StatusCodeResponseVerifier(codes: [1, 2, 3])
         _ = StatusCodeResponseVerifier(codes: 1, 2, 3)
+        _ = StatusCodeResponseVerifier(codes: 1...3)
         _ = StatusCodeResponseVerifier(code: 1)
-        _ = StatusCodeResponseVerifier(range: 1...3)
     }
 }
