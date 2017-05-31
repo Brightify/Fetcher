@@ -6,7 +6,7 @@ def shared
     pod 'Alamofire', '~> 4.3'
     pod 'RxSwift', '~> 3.0'
     pod 'Result', '~> 3.0'
-    pod 'DataMapper', '~> 0.1'
+    pod 'DataMapper'
 end
 
 target 'Fetcher' do
