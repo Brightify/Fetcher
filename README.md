@@ -74,7 +74,7 @@ Below is a complete list of all features this library offers and how to use them
 
 Below is shown a simple use case. It does not explain all of the concepts used. Refer to corresponding chapters for explanations.
 
-Lets say we want to send `GET` request which will retrieve some data from your server. Our data looks like this:
+Lets say we want to send `GET` request which will retrieve some data from our server. Our data looks like this:
 
 ```Swift
 struct ExampleObject {
@@ -103,7 +103,7 @@ fetcher.request(GET<Void, SupportedType>("https://httpbin.org/get?id=1&text=a"),
 })
 ```
 
-This is probably the simplest code you can write (and simultaneously the ugliest). Also there is almost no difference between this and a normal [Alamofire](https://github.com/Alamofire/Alamofire) code. But we can do some improvements:
+This is probably the simplest code you can write (and simultaneously the ugliest). Also there is almost no difference between this and [Alamofire](https://github.com/Alamofire/Alamofire) code. But we can do some improvements:
 
 ```Swift
 let fetcher = Fetcher(requestPerformer: AlamofireRequestPerformer())
@@ -138,7 +138,7 @@ struct ExampleObject: Deserializable {
 }
 ```
 
-Here [DataMapper](https://github.com/Brightify/DataMapper) is used to remove mapping from the request and endpoint is moved to extra struct, so that it can be easily reused. There are still some problems left which especially become visible as we extend our code. For example if we want to add new data objects, then `data["args"]` needs to be written everywhere because of the server API. Also if we add new endpoints, then the base url will be on multiple places.
+Here [DataMapper](https://github.com/Brightify/DataMapper) is used to remove mapping from the request and endpoint is moved to extra struct, so that it can be easily reused. There are still some problems that left that will become worse as we further extend our code. For example if we want to add new data objects, then `data["args"]` needs to be written everywhere because of the server API. Also if we add new endpoints, then the base URL will be on multiple places.
 
 ```Swift
 let fetcher = Fetcher(requestPerformer: AlamofireRequestPerformer())
@@ -198,7 +198,7 @@ struct ExampleObject: Mappable {
 }
 ```
 
-Problem with `data["args"]` is solved using `HttpBinResponseTranslation` and thanks to `BaseUrl` there is no longer need to write the base url everywhere (see [RequestEnhancer](#requestenhancer) if you want to know how all of this works). Another important feature of this example is the `fetcher.request(Endpoints.post(), input: ExampleObject(id: "1", text: "a"))` which demonstrates how some data can be send to the server.
+Problem with `data["args"]` is solved using `HttpBinResponseTranslation` and thanks to `BaseUrl` there is no longer need to write the base URL everywhere (see [RequestEnhancer](#requestenhancer) if you want to know how all of this works). Another important feature of this example is the `fetcher.request(Endpoints.post(), input: ExampleObject(id: "1", text: "a"))` which demonstrates how some data can be send to the server.
 
 ### Fetcher
 
@@ -208,7 +208,7 @@ In `init` you can pass several more arguments:
 
 * objectMapperPolymorph: `Polymorph` - Polymorph used for mapping objects passed to `Fetcher` (see [DataMapper](https://github.com/Brightify/DataMapper))
 * errorHandler: `ErrorHandler` - see [ErrorHandler](#errorhandler)
-* callQueue: `DispatchQueue` - Queue on which almost all of the logic behind `Fetcher` is done (including object mapping). Default is the background queue.
+* callQueue: `DispatchQueue` - Queue where almost all of Fetcher's logic is done (including object mapping). Default is the background queue.
 * callbackQueue: `DispatchQueue` - Queue on which the callback passed in request is called. Default is the main queue.
 
 `Fetcher` can have additional configuration done by `register` methods:
@@ -225,7 +225,7 @@ func register(requestModifiers: RequestModifier...)
 
 These are used to add `RequestEnhacer` and `RequestModifier` which are used in every request (see [RequestEnhancer](#requestenhancer)).
 
-By its nature `Fetcher` will usually be created only at one place in your code. But sometimes you may want to have more of them (for example you make request to two servers with different base url). In this case it may be handy to copy settings from one instance of `Fetcher` to another. This can be done via:
+By its nature `Fetcher` will usually be created only at one place in your code. But sometimes you may want to have more of them (for example if you want to two servers with different base URL). In this case it may be handy to copy settings from one instance of `Fetcher` to another. This can be done via:
 
 ```Swift
 init(copy fetcher: Fetcher)
@@ -233,7 +233,7 @@ init(copy fetcher: Fetcher)
 
 #### Requests
 
-`request` method has many overloads with slightly different signatures to support all kind of data. Main difference between them is, if there are input data and if [DataMapper](https://github.com/Brightify/DataMapper) is used. For example:
+`request` support all kinds of data. The main difference between them is whether there is input data and if [DataMapper](https://github.com/Brightify/DataMapper) is used. Example of `request` overload:
 
 ```Swift
 func request<IN: Serializable, OUT: Deserializable>(_ endpoint: Endpoint<IN, OUT>, input: IN, callback: @escaping (Response<OUT>) -> Void) -> Cancellable
@@ -287,7 +287,7 @@ struct Request {
     
     var modifiers: [RequestModifier] = []
     
-    var urlRequest: URLRequest
+    var URLRequest: URLRequest
     
     var callback: (Response<Data>) -> Void
     
@@ -301,7 +301,7 @@ struct Request {
 }
 ```
 
-`Request` is a wrapper over `NSURLRequest`. It provides delegates for all methods from `NSURLRequest`. You get access to `Request` in `RequestEnhancer` (see [RequestEnhancer](#requestenhancer)) and from `Response`. You can modify `Request` in `RequestEnhancer` as you like. `cancellable` is the same `Cancellable` returned by `Fetcher.request` that created this `Request`. `retried` counts the number of times `retry` is called, `retryClosure` represents the implementation of `retry`. 
+`Request` is a wrapper over `NSURLRequest`. It provides delegates for all methods from `NSURLRequest`. You can access `Request` in `RequestEnhancer` (see [RequestEnhancer](#requestenhancer)) and in `Response`. You can modify `Request` in `RequestEnhancer` as you like. `cancellable` is the same `Cancellable` returned by `Fetcher.request` that created this `Request`. `retried` counts the number of times `retry` is called, `retryClosure` represents the implementation of `retry`. 
 
 ### Response
 
@@ -315,11 +315,11 @@ struct Response<T> {
 }
 ```
 
-`Response` represents result of `Request` (server response to it). You get an instance of `Response` in every callback of `fetcher.request`. Declaration:
+`Response` represents result of `Request` (server's response to it). You get an instance of `Response` in every callback of `fetcher.request`. Declaration:
 
 `T` is the same type as `OUT` in `Endpoint`. `FetcherResult<T>` is type alias to `Result<T, FetcherError>`. 
 
-Also there are some extensions:
+There are also some extensions:
 
 ```Swift
 extension Response {
@@ -336,7 +336,7 @@ extension Response {
 
 ### Endpoint
 
-`Endpoint` is a class which defines url (`path`) of request, which `InputEncoding` will be used, `RequestModifier` that are specific to the request and HTTP method of the request. All implementations of it has these inits:
+`Endpoint` is a class which defines URL (`path`) of request, which `InputEncoding` will be used, `RequestModifier`s that are specific to the request and HTTP method of the request. The implementation has these constructors.
 
 ```Swift
 init(_ path: String, modifiers: [RequestModifier])
@@ -352,7 +352,7 @@ Normally you won't use `Endpoint` directly or create subclasses of it. See [Meth
 
 #### EndpointProvider
 
-`EndpointProvider` is a protocol that supports pattern for creating reusable endpoints. It provides `create`, which is a static method, that has the same signature as `Endpoint` but creates a specific implementation based on the context. The pattern looks like this:
+`EndpointProvider` is a protocol that supports pattern for creating reusable endpoints. It provides `create`, a static method that has the same signature as Endpoint, but creates a specific implementation based on the context. The pattern looks like this:
 
 ```Swift
 struct Endpoints: EndpointProvider {
@@ -367,7 +367,7 @@ struct Endpoints: EndpointProvider {
 }
 ```
 
-Notice that `create` could be replaced with `GET` and `POST` but we think, it is better to specify the type only in one place. Another advantage of `create` is that you can add implicit `RequestModfier` (see [RequestModifier](#requestmodifier)) to every `Endpoint`. To do this implement `implicitModifiers`:
+Notice that `create` could be replaced with `GET` and `POST` but we think, it is better to specify the type only in one place. Another advantage of `create` is that you can add implicit `RequestModfier` (see [RequestModifier](#requestmodifier)) to every `Endpoint`. To do this, implement `implicitModifiers`:
 
 ```Swift
 struct Endpoints: EndpointProvider {
@@ -389,7 +389,7 @@ struct Endpoints: EndpointProvider {
 }
 ```
 
-This can be done only if you don't pass any parameters directly to url. In this example `implicitModifiers` wouldn't work. This can be fixed if necessary: 
+This can be only done if you don't pass any parameters directly to URL. In this example `implicitModifiers` wouldn't work. If needed, it can be fixed like so:
 
 ```Swift
 struct Endpoints: EndpointProvider {
@@ -431,7 +431,7 @@ protocol RequestEnhancer {
 
 `enhance` is applied to each `Request` after the input data are encoded to it (see [InputEncoding](#inputencoding)) and before it is performed by `RequestPerformer` (see [RequestPerformer](#requestperformer)). You can modify the `Request` as you like. Default implementation does nothing.
 
-`deenhance` does the same thing but for incoming `Response`. It is called after the output data are decoded (see [InputEncoding](#inputencoding)) and before the callback of the request. Default implementation does nothing.
+`deenhance` does the same thing but for incoming `Response`. It is called after the output data is decoded (see [InputEncoding](#inputencoding)) and before the callback of the request. Default implementation does nothing.
 
 `priority` is used to decide in which order should be multiple instances of `RequestEnhancer` applied. Default value is `.normal`.
 
@@ -453,7 +453,7 @@ enum RequestEnhancerPriority {
 }
 ```
 
-`RequestEnhancerPriority` represents priority of `RequestEnhancer`. The order is from the lowest to the greatest priority. `.normal` is default priority. `.fetcher` is used for internal `RequestEnhacer` and shouldn't be used by other programs. `.max` should be used only if you need to precede internal `RequestEnhancer`. It is recommended not to use `.custom` if possible.
+`RequestEnhancerPriority` represents priority of `RequestEnhancer`. The order is from the lowest to the greatest priority. `.normal` is default priority. `.fetcher` is used for internal `RequestEnhacer` and shouldn't be used by other programs. `.max` should be used only if you need to precede internal `RequestEnhancer`. It is recommended to use `.custom` only when necessary.
 
 ```Swift
 extension RequestEnhancerPriority {
@@ -464,7 +464,7 @@ extension RequestEnhancerPriority {
 }
 ```
 
-These modifiers allows you to say that one `RequestEnhancer` should run before another (it is more convenient way of specifying the order if you don't care about the order of not related enhancers). Also they are the reason for `priority` being static. In this example `RequestEnhancer2` will always run before `RequestEnhancer1`:
+These modifiers allow you to say that one `RequestEnhancer` should run before another (it is a convenient way to specify the order without having to care about the order or unrelated enhancers). They are also the reason for `priority` being static. In this example `RequestEnhancer2` will always run before `RequestEnhancer1`:
 
 ```Swift
 struct RequestEnhancer1: RequestEnhancer {
@@ -486,25 +486,37 @@ struct RequestEnhancer2: RequestEnhancer {
 
 #### RequestModifier
 
-`RequestEnhancer` is used for all requests made by an instance of `Fetcher`. `RequestModifier` is a marker protocol that can be added to each request separately. `RequestEnhancer` then can look into `Request.modifiers` if there is instance it knows and act accordingly. For example behavior of `RequestLogger` is specified by `RequestLogging` which is `RequestModifier` with some additional data.
+`RequestEnhancer` is used for all requests made by an instance of `Fetcher`. `RequestModifier` is a marker protocol that can be added to each request separately. `RequestEnhancer` can then look into `Request.modifiers` to see if there is an instance to act accordingly. For example behavior of `RequestLogger` is specified by `RequestLogging` which is `RequestModifier` with some additional data.
 
-`RequestModifier` can be added to request by three different ways:
+There are three ways to add `RequestModifier` to request:
 
 1. `register` method in `Fetcher` (see [Fetcher](#fetcher-1)). `RequestModifier` is applied to all requests.
 2. `implicitModifiers` in `EndpointProvider` (see [EndpointProvider](#endpointprovider)). `RequestModifier` is applied to all requests using `Endpoint` created by `create` method of the `EndpointProvider`.
-3. `modifiers` parameter in `Endpoint` `init` (see [Endpoint](#endpoint)). `RequestModifier` is applied only to the requests which use this concrete instance of `Endpoint`.
+3. `modifiers` parameter in `Endpoint` `init` (see [Endpoint](#endpoint)). `RequestModifier` is applied only to the requests which use this specific instance of `Endpoint`.
 
 #### Implementations
 
 *BaseUrl*
 
-`BaseUrl` is `RequestModifier` that tells `BaseUrlRequestEnhancer` what url to insert before the url specified in `Endpoint`. `BaseUrlRequestEnhancer` is registered by default. `BaseUrl` uses priority like `RequestEnhancer` to decide which one will be used if more then one is registered. `baseUrl` parameter of `init` specifies what url to insert. If it is nil then nothing happens. There is special instance `BaseUrl.Ignore` which suppresses other `BaseUrl`.
+`BaseUrl` is `RequestModifier` that tells `BaseUrlRequestEnhancer` what URL to insert before the URL specified in `Endpoint`. `BaseUrlRequestEnhancer` is registered by default. `BaseUrl` uses `RequestEnhancerPriority` to decide which one will be used if more then one is registered. `baseUrl` parameter of `init` specifies what URL to insert. If it is nil then nothing happens. There is a special instance `BaseUrl.Ignore` which suppresses other `BaseUrl`.
 
 Example can be found in the last example in [Quick overview](#quick-overview).
 
 *RequestLogger*
 
-`RequestLogger` is good tool to debug requests. By default it logs some information about the request (and the response) to the console but this can be changed using `logFunction` in `init`. What to log is specified using `RequestLogging` (`RequestModifier`). `RequestLogger` merges all instances of `RequestLogging` using `union`. If there is no instance of `RequestLogging` then `defaultOptions` from `init` are used.
+`RequestLogger` is a good tool to debug requests. By default it logs some information about the request (and the response) to the console, although it can be overridden using `logFunction` in `init`. What to log is specified using `RequestLogging` (`RequestModifier`). `RequestLogging` is an `OptionSet` so multiple options can be selected by putting them into array. If there is no instance of `RequestLogging` then `defaultOptions` from `init` are used. Options for `RequestLogging`:
+
+* `requestUrl`
+* `time`
+* `responseCode`
+* `requestHeaders`
+* `requestBody`
+* `responseHeaders`
+* `responseBody`
+* `all` - everything from above
+* `disabled` - nothing
+
+`defaultOptions` consists from `requestUrl`, `responseCode`, `time`.
 
 *ResponseVerifier*
 
@@ -515,13 +527,13 @@ protocol ResponseVerifier: RequestModifier {
 }
 ```
 
-`verify` is called by `ResponseVerifierEnhancer` (registered by default). `ResponseVerifierEnhancer` takes all instances of `ResponseVerifier` and calls `verify` method. The first non nil result, is used to modify the response by `Response.flatMap`. It only does something if `Response.result` is success.
+`verify` is called by `ResponseVerifierEnhancer` (registered by default). `ResponseVerifierEnhancer` takes all instances of `ResponseVerifier` and calls `verify` method. The first non-nil result, is used to modify the response by `Response.flatMap`. It only performs an action if `Response.result` is success.
 
-`StatusCodeResponseVerifier` is preimplemented `ResponseVerifier` that compares status code of response with codes from `init`. If match is not found then it returns `.invalidStatusCode`, nil otherwise.
+`StatusCodeResponseVerifier` is a preimplemented `ResponseVerifier` that compares status code of response with codes from `init`. If match is not found then it returns `.invalidStatusCode`, nil otherwise.
 
 ### InputEncoding
 
-`InputEncoding` is a marker protocol which says how the data should be encoded to `Request` and how decoded from `Response`. Each `Endpoint` has default encoding based on the method it uses (`GET` encodes data to the url, `POST` to the request body atc.) but this can be changed by passing different encoding in its `init` (see [Endpoint](#endpoint)).
+`InputEncoding` is a marker protocol which says how the data should be encoded to `Request` and decoded from `Response`. Each `Endpoint` has default encoding based on the method it uses (`GET` encodes data to the URL, `POST` to the request body atc.) but this can be changed by passing different encoding in its `init` (see [Endpoint](#endpoint)).
 
 #### InputEncodingWithEncoder
 
@@ -546,9 +558,9 @@ enum StandardInputEncoding: InputEncoding {
 
 `StandardInputEncoding` represents two encodings that all `DataEncoder` understand. 
 
-`.queryString` encodes the input data into the request url (`http://url.xxx?param1=value`). As shown in examples in [Quick overview](#quick-overview) this may also be done manually. `.queryString` has a disadvantage, that the input data must be a dictionary. 
+`.queryString` encodes the input data into the request URL (`http://url.xxx?param1=value`). As shown in examples in [Quick overview](#quick-overview) this may also be done manually. `.queryString`'s disadvantage is that the input data must be a dictionary. 
 
-`.httpBody` simply sends the data in the request body. Concrete encoding depends on `DataEncoder` implementation (may be JSON, XML, etc.).
+`.httpBody` simply sends the data in the request body. Encoding depends on `DataEncoder` implementation (may be JSON, XML, etc.).
 
 ### RequestPerformer
 
@@ -561,9 +573,9 @@ protocol RequestPerformer {
 }
 ```
 
-`RequestPerformer` duty is to communicate with the server (perform requests). This is done in `perform` method that takes `Request` and calls `callback` with `Response` (this call may not happen immediately), it returns `Cancellable` (way to cancel the request).  
+`RequestPerformer`'s duty is to communicate with the server (perform requests). This is done in the `perform` method that takes `Request` and calls `callback` with `Response` (this call may not happen immediately). It returns `Cancellable` (way to cancel the request).  
 
-`RequestPerformer` also specifies `DataEncoder`, that will be used to encode and decode the data.
+`RequestPerformer` also specifies `DataEncoder`, which will be used to encode and decode the data.
 
 #### DataEncoder
 
@@ -580,19 +592,19 @@ protocol DataEncoder {
 }
 ```
 
-`DataEncoder` is called by `Fetcher` to encode the input data into `Request` (`encode???`) and to decode data from `Response` (`decode`). 
+`DataEncoder` is called by `Fetcher` to encode the input data into `Request` and to decode data from `Response`. 
 
-`encodeToQueryString` and `encodeToHttpBody` are used if `StandardInputEncoding` is used (method selected based on value). 
+`StandardInputEncoding` specifies which of `encodeToQueryString` or `encodeToHttpBody` is used.
 
-`encodeCustom` is called if a custom implementation of `InputEncoding` is used and it is not `InputEncodingWithEncoder`. By default calling this method will result in crash (`InputEncoding` is not known).  
+`encodeCustom` is called if a custom implementation of `InputEncoding` is used and it is not `InputEncodingWithEncoder`. By default calling this method will result in a crash (`InputEncoding` is unknown).  
 
 #### Implementations
 
 *AlamofireRequestPerformer*
 
-`AlamofireRequestPerformer` is implementation over [Alamofire](https://github.com/Alamofire/Alamofire). By default it uses `AlamofireJsonDataEncoder` (encoder for JSON) as `DataEncoder` but this can be changed in its `init`. 
+`AlamofireRequestPerformer` is an implementation on top of [Alamofire](https://github.com/Alamofire/Alamofire). By default it uses `AlamofireJsonDataEncoder` (encoder for JSON) as `DataEncoder` but this can be changed in its `init`. 
 
-`AlamofireJsonDataEncoder` knows special type of `InputEncoding` and that is `FormInputEncoding` which supports content type `application/x-www-form-urlencoded`.
+`AlamofireJsonDataEncoder` knows a special type of `InputEncoding` and that is `FormInputEncoding` which supports content type `application/x-www-form-urlencoded`.
 
 ### Header
 
@@ -608,7 +620,7 @@ protocol Header: RequestModifier {
 
 #### Predefined headers
 
-`Headers` gathers all predefined headers. They are represented as nested structs added by extensions. For example this is implementation of `Accept`:
+`Headers` gathers all predefined headers. They are represented as nested structs added by extensions. For example this is the implementation of `Accept`:
 
 ```Swift
 extension Headers {
@@ -632,11 +644,11 @@ extension Headers.Accept {
 }
 ```
 
-Another headers can be added the same way (as well as concrete values of the headers).
+Another headers can be added the same way (as well as specific values of the headers).
 
 Currently there are these headers: `Accept`, `ContentType`, `Charset`.
 
-`Custom` is a special type of header. It is meant to by used if some header is needed only in one place, so it is not worth it to create a new struct.
+`Custom` is a special type of header. It is meant to by used if some header is needed in only one place, so it is not worth creating a new struct.
 
 ### FetcherError
 
@@ -663,13 +675,13 @@ protocol ErrorHandler {
 }
 ```
 
-`ErrorHandler` tells `Fetcher` what to do if `Response.result` is failure. It can be set in its `init` with parameter named `errorHandler`. Default one is `NoErrorHandler`.
+`ErrorHandler` tells `Fetcher` what to do if `Response.result` is a failure. It can be set in its `init` with parameter named `errorHandler`. The default one is a `NoErrorHandler`.
 
-When resolving error `Fetcher` first calls `canResolveError`. If it returns `false`, then there is no change in behavior and callback is called with unchanged `Response`. If `true`, then `resolveError` is called instead of the callback. However the callback is passed as a closure, which you can call with the modified `Response`.
+When resolving error, `Fetcher` first calls `canResolveError`. If it returns `false`, there is no change in behavior and callback is called with unchanged `Response`. If `true`, `resolveError` is called instead of the callback. However the callback is passed as a closure, which you can call with the modified `Response`.
 
 #### BaseStatusCodeErrorHandler
 
-`BaseStatusCodeErrorHandler` is "abstract" class for implementations that resolves errors based on the status code of the response. It has similar `init` to `StatusCodeResponseVerifier`. `canResolveError` returns `true` if the status code is one of the codes from `init`.
+`BaseStatusCodeErrorHandler` is an "abstract" class for implementations that resolves errors based on the status code of the response. It has similar `init` to `StatusCodeResponseVerifier`. `canResolveError` returns `true` if the status code is one of the codes from `init`.
 
 #### CompositeErrorHandler
 
@@ -682,7 +694,7 @@ struct CompositeErrorHandler: ErrorHandler {
 }
 ```
 
-`CompositeErrorHandler` allows composition of multiple `ErrorHandler`. Only the first `ErrorHandler`, that can resolve the error is used to actually resolve the error.
+`CompositeErrorHandler` allows composition of multiple `ErrorHandler`s. Only the first `ErrorHandler` that can resolve the error is used to actually resolve the error.
 
 #### Implementations
 
@@ -750,11 +762,11 @@ extension ObservableConvertibleType where E: ResponseProtocol {
 
 ### Thread safety
 
-`Fetcher` by default does many things on the background thread, so it needs to be thread safe. This also applies to things like `RequestPerformer`, `RequestEnhancer`, `ErrorHandler` and so on. Usually all methods from these protocols are  implemented as pure functions, so they don't cause any problems. Also see [DataMapper#ThreadSafety](https://github.com/Brightify/DataMapper#threadsafety). 
+`Fetcher` by default does many things on the background thread, so it needs to be thread safe. This also applies to objects like `RequestPerformer`, `RequestEnhancer`, `ErrorHandler` and so on. Usually all methods from these protocols are  implemented as pure functions, so they don't cause any problems. Also see [DataMapper#ThreadSafety](https://github.com/Brightify/DataMapper#threadsafety). 
 
 ## Versioning
 
-This library uses semantic versioning. Until the version 1.0 API breaking changes may occur even in minor versions. We consider the version 0.1 to be prerelease, which means that API should be stable but is not tested yet in a real project. After that testing, we make needed adjustments and bump the version to 1.0 (first release).
+This library uses semantic versioning. Until the version 1.0 API breaking changes may occur even in minor versions. We consider the version 0.1 to be prerelease, which means that API should be stable but is not tested yet in a real project. After the testing we'll make the necessary adjustments and bump the version to 1.0 (first release).
 
 ## Author
 

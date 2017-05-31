@@ -20,12 +20,12 @@ open class BaseStatusCodeErrorHandler: ErrorHandler {
         self.codes = Set(codes)
     }
     
-    public init(code: Int) {
-        self.codes = Set([code])
+    public init(codes: CountableClosedRange<Int>) {
+        self.codes = Set(codes.map { $0 })
     }
     
-    public init(range: CountableClosedRange<Int>) {
-        self.codes = Set(range.map { $0 })
+    public init(code: Int) {
+        self.codes = Set([code])
     }
     
     public final func canResolveError(response: Response<SupportedType>) -> Bool {
