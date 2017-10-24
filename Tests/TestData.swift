@@ -12,7 +12,7 @@ import Nimble
 
 struct TestData {
     
-    static func request(url: String, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void = { _ in }) -> Request {
+    static func request(url: String, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void = { _, _, _, _ in }) -> Request {
         return Request(url: URL(string: url)!, retry: retry, callback: { _ in }, cancellable: Cancellable())
     }
     

@@ -17,7 +17,7 @@ class ObservableConvertibleType_ResponseTest: QuickSpec {
         describe("ObservableConvertibleType+Response") {
             describe("retry") {
                 var called = false
-                let request = TestData.request(url: "xyz") { _ in
+                let request = TestData.request(url: "xyz") { _,_,_,_  in
                     called = true
                 }
                 beforeEach {

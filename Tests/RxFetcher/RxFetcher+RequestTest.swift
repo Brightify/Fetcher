@@ -23,7 +23,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -33,7 +33,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -43,7 +43,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -53,7 +53,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -63,7 +63,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -73,7 +73,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -83,7 +83,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -93,7 +93,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -103,7 +103,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -113,7 +113,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -123,7 +123,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -133,7 +133,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -143,7 +143,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == .string("a")
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -153,7 +153,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -163,7 +163,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -173,7 +173,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -183,7 +183,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -193,7 +193,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -203,7 +203,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -213,7 +213,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -223,7 +223,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -233,7 +233,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -243,7 +243,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -253,7 +253,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -263,7 +263,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -273,7 +273,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value).toNot(beNil())
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -286,7 +286,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -299,7 +299,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -312,7 +312,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -325,7 +325,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -338,7 +338,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -351,7 +351,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -364,7 +364,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -377,7 +377,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -390,7 +390,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -403,7 +403,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -416,7 +416,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -429,7 +429,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -442,7 +442,7 @@ class RxFetcher_RequestTest: QuickSpec {
                             expect(String(data: value, encoding: .utf8)) == "a"
                         }
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -452,7 +452,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -462,7 +462,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -472,7 +472,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -482,7 +482,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -492,7 +492,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -502,7 +502,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -512,7 +512,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -522,7 +522,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -532,7 +532,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -542,7 +542,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -552,7 +552,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -562,7 +562,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -572,7 +572,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == 1
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -582,7 +582,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -592,7 +592,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -602,7 +602,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -612,7 +612,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -622,7 +622,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -632,7 +632,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -642,7 +642,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -652,7 +652,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -662,7 +662,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -672,7 +672,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -682,7 +682,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -692,7 +692,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -702,7 +702,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -712,7 +712,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -722,7 +722,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -732,7 +732,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -742,7 +742,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -752,7 +752,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -762,7 +762,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -772,7 +772,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -782,7 +782,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -792,7 +792,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -802,7 +802,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -812,7 +812,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -822,7 +822,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -832,7 +832,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == [1, 2]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -842,7 +842,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -852,7 +852,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -862,7 +862,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -872,7 +872,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -882,7 +882,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -892,7 +892,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -902,7 +902,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -912,7 +912,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -922,7 +922,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -932,7 +932,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -942,7 +942,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -952,7 +952,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -962,7 +962,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -972,7 +972,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -982,7 +982,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -992,7 +992,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1002,7 +1002,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1012,7 +1012,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1022,7 +1022,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1032,7 +1032,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1042,7 +1042,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1052,7 +1052,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1062,7 +1062,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1072,7 +1072,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1082,7 +1082,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1092,7 +1092,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([Optional(1), nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1102,7 +1102,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1112,7 +1112,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1122,7 +1122,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1132,7 +1132,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1142,7 +1142,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1152,7 +1152,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1162,7 +1162,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1172,7 +1172,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1182,7 +1182,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1192,7 +1192,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1202,7 +1202,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1212,7 +1212,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1222,7 +1222,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1232,7 +1232,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1242,7 +1242,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1252,7 +1252,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1262,7 +1262,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1272,7 +1272,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1282,7 +1282,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1292,7 +1292,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1302,7 +1302,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1312,7 +1312,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1322,7 +1322,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1332,7 +1332,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1342,7 +1342,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1352,7 +1352,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect(response.result.value) == ["a": 1]
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1362,7 +1362,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1372,7 +1372,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1382,7 +1382,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1392,7 +1392,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1402,7 +1402,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1412,7 +1412,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1422,7 +1422,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1432,7 +1432,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1442,7 +1442,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1452,7 +1452,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1462,7 +1462,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1472,7 +1472,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1482,7 +1482,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1492,7 +1492,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1502,7 +1502,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1512,7 +1512,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1522,7 +1522,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1532,7 +1532,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1542,7 +1542,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1552,7 +1552,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1562,7 +1562,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1572,7 +1572,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1582,7 +1582,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1592,7 +1592,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1602,7 +1602,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1612,7 +1612,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional([\"a\": nil])"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1622,7 +1622,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "\"a\"")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1632,7 +1632,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1642,7 +1642,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "a")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1652,7 +1652,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "1")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1662,7 +1662,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1672,7 +1672,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,2]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1682,7 +1682,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1692,7 +1692,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "[1,null]")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1702,7 +1702,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1712,7 +1712,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1722,7 +1722,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1732,7 +1732,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }
@@ -1742,7 +1742,7 @@ class RxFetcher_RequestTest: QuickSpec {
                         self.assertInput(request: response.request, expected: "")
                         expect("\(response.result.value)") == "Optional(nil)"
                         called = true
-                    }).addDisposableTo(disposeBag)
+                    }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
                 }
             }

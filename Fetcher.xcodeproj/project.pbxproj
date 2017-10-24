@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
 		18E484571BA8BFB1004CB09A /* Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* Fetcher.framework */; };
 		67D791B607BD885ED386A1E0 /* Pods_FetcherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2097300D98DE1D9862CD8833 /* Pods_FetcherTests.framework */; };
 		B4B02854FBC5323C6E2E9726 /* Pods_Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B73372ABC70C0A663396C7EA /* Pods_Fetcher.framework */; };
@@ -100,6 +101,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SupportedType+Equatable.swift"; path = "Utils/SupportedType+Equatable.swift"; sourceTree = "<group>"; };
 		18E4844D1BA8BFB1004CB09A /* Fetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E484561BA8BFB1004CB09A /* FetcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 				DC46918B1E3A63D5001C8540 /* CancellableTest.swift */,
 				DC4691B41E3B6397001C8540 /* HTTPMethodTest.swift */,
 				DC4691B61E3B6440001C8540 /* String+UrlSafeTest.swift */,
+				185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -757,13 +760,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Fetcher-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		921650F9D8529F3C16859D75 /* [CP] Embed Pods Frameworks */ = {
@@ -772,9 +778,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DataMapper/DataMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -802,13 +821,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FetcherTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -890,6 +912,7 @@
 				DC4691781E3A5B53001C8540 /* RequestTimeOutErrorHandlerTest.swift in Sources */,
 				DC4691851E3A5F65001C8540 /* HeaderTest.swift in Sources */,
 				DC4691B51E3B6397001C8540 /* HTTPMethodTest.swift in Sources */,
+				185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */,
 				DC4691BD1E3CF5D7001C8540 /* ResponseTest.swift in Sources */,
 				DC4691B11E3B616A001C8540 /* StandardInputEncodingTest.swift in Sources */,
 				DC4691701E3A5A7D001C8540 /* CompositeErrorHandlerTest.swift in Sources */,
@@ -938,7 +961,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.brightify.Fetcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -967,7 +989,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.brightify.Fetcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1049,7 +1070,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1089,7 +1110,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

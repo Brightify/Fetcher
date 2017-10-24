@@ -49,7 +49,7 @@ public struct AlamofireJsonDataEncoder: DataEncoder {
             return
         }
         
-        let data = dictionary.mapValue { serializer.typedSerialize($0) }
+        let data = dictionary.mapValues { serializer.typedSerialize($0) }
         
         // Iqnore error from Alamofire because it is handled elsewhere (program already crashed if there is a problem).
         request.urlRequest = (try? urlEncoding.encode(request.urlRequest, with: data)) ?? request.urlRequest

@@ -26,7 +26,7 @@ class AlamofireRequestPerformerTest: QuickSpec {
                         expect(response.result.value).toNot(beNil())
                     }
                     
-                    expect(called).toEventually(beTrue())
+                    expect(called).toEventually(beTrue(), timeout: 10)
                 }
                 it("calls callback with failure response if Request is not valid") {
                     let request = TestData.request(url: "https://xxx")
@@ -37,7 +37,7 @@ class AlamofireRequestPerformerTest: QuickSpec {
                         expect(response.result.value).to(beNil())
                     }
                     
-                    expect(called).toEventually(beTrue())
+                    expect(called).toEventually(beTrue(), timeout: 10)
                 }
             }
         }
