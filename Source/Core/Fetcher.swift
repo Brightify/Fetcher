@@ -31,7 +31,7 @@ public final class Fetcher {
         self.callQueue = callQueue
         self.callbackQueue = callbackQueue
         
-        register(requestEnhancers: HeaderRequestEnhancer(), BaseUrlRequestEnhancer(), ResponseVerifierEnhancer())
+        register(requestEnhancers: HeaderRequestEnhancer(), BaseUrlRequestEnhancer(), ResponseVerifierEnhancer(), URLQueryItemRequestEnhancer())
     }
     
     public init(copy fetcher: Fetcher) {

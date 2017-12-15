@@ -10,6 +10,10 @@
 		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
 		18E484571BA8BFB1004CB09A /* Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* Fetcher.framework */; };
 		67D791B607BD885ED386A1E0 /* Pods_FetcherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2097300D98DE1D9862CD8833 /* Pods_FetcherTests.framework */; };
+		6894349C1FE4362400E653D7 /* URLQueryItemConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349B1FE4362400E653D7 /* URLQueryItemConvertible.swift */; };
+		6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349D1FE4415700E653D7 /* URL+withQueries.swift */; };
+		689434A11FE446A900E653D7 /* URLQueryItemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349F1FE4460500E653D7 /* URLQueryItemTest.swift */; };
+		689434A31FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */; };
 		B4B02854FBC5323C6E2E9726 /* Pods_Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B73372ABC70C0A663396C7EA /* Pods_Fetcher.framework */; };
 		DC4690E21E36A21D001C8540 /* AlamofireJsonDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690DF1E36A21D001C8540 /* AlamofireJsonDataEncoder.swift */; };
 		DC4690E31E36A21D001C8540 /* AlamofireRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690E01E36A21D001C8540 /* AlamofireRequestPerformer.swift */; };
@@ -113,6 +117,10 @@
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6351C7C54DDD9AD0AB32A1E2 /* Pods-Fetcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fetcher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fetcher/Pods-Fetcher.debug.xcconfig"; sourceTree = "<group>"; };
+		6894349B1FE4362400E653D7 /* URLQueryItemConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQueryItemConvertible.swift; sourceTree = "<group>"; };
+		6894349D1FE4415700E653D7 /* URL+withQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+withQueries.swift"; sourceTree = "<group>"; };
+		6894349F1FE4460500E653D7 /* URLQueryItemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQueryItemTest.swift; sourceTree = "<group>"; };
+		689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQueryItemRequestEnhancer.swift; sourceTree = "<group>"; };
 		99A0826C575E48C9A0E70C4C /* Pods-FetcherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetcherTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests.release.xcconfig"; sourceTree = "<group>"; };
 		B73372ABC70C0A663396C7EA /* Pods_Fetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4690CD1E36A02D001C8540 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -407,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				DC46914B1E36A310001C8540 /* BaseUrl.swift */,
+				6894349B1FE4362400E653D7 /* URLQueryItemConvertible.swift */,
 				DC4691001E36A227001C8540 /* Internal */,
 				DC4691021E36A227001C8540 /* RequestLogger */,
 				DC4691071E36A227001C8540 /* ResponseVerifier */,
@@ -418,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				DC46914D1E36A316001C8540 /* BaseUrlRequestEnhancer.swift */,
+				689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */,
 				DC4691011E36A227001C8540 /* HeaderRequestEnhancer.swift */,
 				DC4691581E38AC14001C8540 /* ResponseVerifierEnhancer.swift */,
 			);
@@ -467,6 +477,7 @@
 				DC4691181E36A227001C8540 /* FetcherResult.swift */,
 				DC4691171E36A227001C8540 /* HTTPMethod.swift */,
 				DC4691191E36A227001C8540 /* String+UrlSafe.swift */,
+				6894349D1FE4415700E653D7 /* URL+withQueries.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -555,6 +566,7 @@
 			isa = PBXGroup;
 			children = (
 				DC46917C1E3A5E4A001C8540 /* BaseUrlTest.swift */,
+				6894349F1FE4460500E653D7 /* URLQueryItemTest.swift */,
 				DC4691841E3A5F65001C8540 /* HeaderTest.swift */,
 				DC46917B1E3A5DE7001C8540 /* RequestLogger */,
 				DC4691821E3A5F40001C8540 /* ResponseVerifier */,
@@ -844,6 +856,7 @@
 				DC4691201E36A227001C8540 /* NoErrorHandler.swift in Sources */,
 				DC4691491E36A23B001C8540 /* RxFetcher+Request.swift in Sources */,
 				DC46914C1E36A310001C8540 /* BaseUrl.swift in Sources */,
+				6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */,
 				DC46912B1E36A227001C8540 /* Request.swift in Sources */,
 				DC46914A1E36A23B001C8540 /* RxFetcher.swift in Sources */,
 				DC4691321E36A227001C8540 /* StatusCodeResponseVerifier.swift in Sources */,
@@ -862,6 +875,7 @@
 				DC46912D1E36A227001C8540 /* HeaderRequestEnhancer.swift in Sources */,
 				DC4691261E36A227001C8540 /* CustomHeader.swift in Sources */,
 				DC4691271E36A227001C8540 /* Headers.swift in Sources */,
+				689434A31FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift in Sources */,
 				DC4691241E36A227001C8540 /* AcceptHeader.swift in Sources */,
 				DC46912A1E36A227001C8540 /* StandardInputEncoding.swift in Sources */,
 				DC4691591E38AC14001C8540 /* ResponseVerifierEnhancer.swift in Sources */,
@@ -889,6 +903,7 @@
 				DC4691281E36A227001C8540 /* InputEncoding.swift in Sources */,
 				DC4691311E36A227001C8540 /* ResponseVerifier.swift in Sources */,
 				DC4691301E36A227001C8540 /* RequestLogging.swift in Sources */,
+				6894349C1FE4362400E653D7 /* URLQueryItemConvertible.swift in Sources */,
 				DC4691571E37E904001C8540 /* CharsetHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -914,6 +929,7 @@
 				DC4691B51E3B6397001C8540 /* HTTPMethodTest.swift in Sources */,
 				185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */,
 				DC4691BD1E3CF5D7001C8540 /* ResponseTest.swift in Sources */,
+				689434A11FE446A900E653D7 /* URLQueryItemTest.swift in Sources */,
 				DC4691B11E3B616A001C8540 /* StandardInputEncodingTest.swift in Sources */,
 				DC4691701E3A5A7D001C8540 /* CompositeErrorHandlerTest.swift in Sources */,
 				DC4691891E3A5F95001C8540 /* StatusCodeResponseVerifierTest.swift in Sources */,
