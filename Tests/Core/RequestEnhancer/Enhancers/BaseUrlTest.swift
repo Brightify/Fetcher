@@ -17,7 +17,7 @@ class BaseUrlTest: QuickSpec {
             let fetcher = Fetcher(requestPerformer: TestData.RequestPerformerStub())
             
             it("appends prefix to url (RequestEnhancer)") {
-                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(baseUrl: "abc"))
+                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(string: "abc"))
                 var url: String?
                 
                 fetcher.request(endpoint) {
@@ -27,8 +27,8 @@ class BaseUrlTest: QuickSpec {
                 expect(url).toEventually(equal("abc/xyz"))
             }
             it("solve conflicts by priority") {
-                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(baseUrl: "abc"),
-                                                    BaseUrl(baseUrl: "qwe", priority: .high), BaseUrl(baseUrl: "asd", priority: .low))
+                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(string: "abc"),
+                                                    BaseUrl(string: "qwe", priority: .high), BaseUrl(string: "asd", priority: .low))
                 var url: String?
                 
                 fetcher.request(endpoint) {
@@ -38,7 +38,7 @@ class BaseUrlTest: QuickSpec {
                 expect(url).toEventually(equal("qwe/xyz"))
             }
             it("does nothing if baseUrl is nil") {
-                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(baseUrl: nil))
+                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(string: nil))
                 var url: String?
                 
                 fetcher.request(endpoint) {
@@ -46,6 +46,16 @@ class BaseUrlTest: QuickSpec {
                 }
                 
                 expect(url).toEventually(equal("xyz"))
+            }
+            it("constructs successfully using URL instead of String") {
+                let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(url: URL(string: "abc")))
+                var url: String?
+
+                fetcher.request(endpoint) {
+                    url = $0.request.url?.absoluteString
+                }
+
+                expect(url).toEventually(equal("abc/xyz"))
             }
         }
     }
