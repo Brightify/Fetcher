@@ -12,22 +12,21 @@ public struct BaseUrl: RequestModifier {
 
     public static let Ignore = BaseUrl(url: nil, priority: .fetcher)
 
-    internal let baseUrl: String?
+    internal let baseUrl: URL?
     internal let priority: RequestEnhancerPriority
 
     @available(*, deprecated, message: "Use `init(string:)`.")
     public init(baseUrl: String?, priority: RequestEnhancerPriority = .normal) {
-        self.baseUrl = baseUrl
-        self.priority = priority
+        self.init(string: baseUrl, priority: priority)
     }
 
     public init(string: String?, priority: RequestEnhancerPriority = .normal) {
-        self.baseUrl = string
+        self.baseUrl = URL(string: string ?? "")
         self.priority = priority
     }
 
     public init(url: URL?, priority: RequestEnhancerPriority = .normal) {
-        self.baseUrl = url?.absoluteString
+        self.baseUrl = url
         self.priority = priority
     }
 }
