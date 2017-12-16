@@ -13,9 +13,10 @@ internal struct BaseUrlRequestEnhancer: RequestEnhancer {
     internal static let priority: RequestEnhancerPriority = .fetcher
     
     internal func enhance(request: inout Request) {
-        let modifier = request.modifiers.flatMap { $0 as? BaseUrl }.sorted { $0.priority.value > $1.priority.value }.first
+        let modifier = request.modifiers.flatMap { $0 as? BaseUrl }.max { $0.priority.value < $1.priority.value }
         if let url = request.url, var baseUrl = modifier?.baseUrl {
 
+            URLComponents.
             var component = url.absoluteString
             if component[component.startIndex] == "/" {
                 component = component.substring(from: component.index(after: component.startIndex))
