@@ -10,7 +10,7 @@ import Foundation
 
 public struct BaseUrl: RequestModifier {
 
-    public static let Ignore = BaseUrl(baseUrl: nil as String?, priority: .fetcher)
+    public static let Ignore = BaseUrl(url: nil, priority: .fetcher)
 
     internal let baseUrl: String?
     internal let priority: RequestEnhancerPriority
