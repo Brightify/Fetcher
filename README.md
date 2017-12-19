@@ -60,7 +60,7 @@ Note: "RxFetcher" subspec does not depend on "AlamofireRequestPerformer". So if 
 pod "Fetcher"
 ```
 
-or: 
+or:
 
 ```ruby
 pod "Fetcher/AlamofireRequestPerformer"
@@ -78,7 +78,7 @@ Lets say we want to send `GET` request which will retrieve some data from our se
 
 ```Swift
 struct ExampleObject {
-    
+
     let id: String?
     let text: String?
 }
@@ -88,8 +88,8 @@ To simulate our server we will use [httpbin.org/get](https://httpbin.org/get). I
 
 ```Swift
 let fetcher = Fetcher(requestPerformer: AlamofireRequestPerformer())
-        
-fetcher.request(GET<Void, SupportedType>("https://httpbin.org/get?id=1&text=a"), callback: { response in
+
+    fetcher.request(GET<Void, SupportedType>("https://httpbin.org/get", modifiers: URLQueryItem(name: "id", value: "1"), URLQueryItem(name: "text", value: "a")), callback: { response in
     switch response.result {
     case .success(let value):
         let object = ExampleObject(id: value.dictionary?["args"]?.dictionary?["id"]?.string,
@@ -103,7 +103,7 @@ fetcher.request(GET<Void, SupportedType>("https://httpbin.org/get?id=1&text=a"),
 })
 ```
 
-This is probably the simplest code you can write (and simultaneously the ugliest). Also there is almost no difference between this and [Alamofire](https://github.com/Alamofire/Alamofire) code. But we can do some improvements:
+This is probably the simplest code you can write (and simultaneously the ugliest). Also there is almost no difference between this and [Alamofire](https://github.com/Alamofire/Alamofire) code. However, we can improve it a bit:
 
 ```Swift
 let fetcher = Fetcher(requestPerformer: AlamofireRequestPerformer())
@@ -120,17 +120,17 @@ fetcher.request(Endpoints.get(id: "1", text: "a"), callback: { response in
 })
 
 struct Endpoints: EndpointProvider {
-    
+
     static func get(id: String, text: String) -> GET<Void, ExampleObject> {
-        return create("https://httpbin.org/get?id=\(id)&text=\(text)")
+        return create("https://httpbin.org/get", modifiers: URLQueryItem(name: "id", value: "\(id)"), URLQueryItem(name: "text", value: "\(text)"))
     }
 }
 
 struct ExampleObject: Deserializable {
-    
+
     let id: String?
     let text: String?
-    
+
     init(_ data: DeserializableData) throws {
         id = data["args"]["id"].get()
         text = data["args"]["text"].get()
@@ -152,45 +152,45 @@ fetcher.request(Endpoints.post(), input: ExampleObject(id: "1", text: "a")) {
 }
 
 struct Endpoints: EndpointProvider {
-    
+
     static func get(id: String, text: String) -> GET<Void, ExampleObject> {
-        return create("get?id=\(id)&text=\(text)")
+        return create("get", modifiers: URLQueryItem(name: "id", value: "\(id)"), URLQueryItem(name: "text", value: "\(text)"))
     }
-    
+
     static func post() -> POST<ExampleObject, Void> {
         return create("post")
     }
-    
+
     static func put() -> PUT<ExampleObject, Void> {
         return create("put")
     }
-    
+
     static func delete(id: String) -> DELETE<Void, Void> {
-        return create("delete?id=\(id)")
+        return create("delete", modifiers: URLQueryItem(name: "id", value: "\(id)"))
     }
 }
 
 struct HttpBinResponseTranslation: RequestEnhancer {
-    
+
     func deenhance(response: inout Response<SupportedType>) {
         response = response.map { $0.dictionary?["args"] ?? .null }
     }
 }
 
 struct ExampleObject: Mappable {
-    
+
     var id: String?
     var text: String?
-    
+
     init(id: String?, text: String?) {
         self.id = id
         self.text = text
     }
-    
+
     init(_ data: DeserializableData) throws {
         try mapping(data)
     }
-    
+
     mutating func mapping(_ data: inout MappableData) throws {
         data["id"].map(&id)
         data["text"].map(&text)
@@ -284,30 +284,30 @@ Here `retry` is called only if `result` is failure. After `retry` is called this
 
 ```Swift
 struct Request {
-    
+
     var modifiers: [RequestModifier] = []
-    
+
     var URLRequest: URLRequest
-    
+
     var callback: (Response<Data>) -> Void
-    
+
     var cancellable: Cancellable
-    
+
     var retried = 0
-    
+
     var retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
 
     func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0), failCallback: () -> Void = {})
 }
 ```
 
-`Request` is a wrapper over `NSURLRequest`. It provides delegates for all methods from `NSURLRequest`. You can access `Request` in `RequestEnhancer` (see [RequestEnhancer](#requestenhancer)) and in `Response`. You can modify `Request` in `RequestEnhancer` as you like. `cancellable` is the same `Cancellable` returned by `Fetcher.request` that created this `Request`. `retried` counts the number of times `retry` is called, `retryClosure` represents the implementation of `retry`. 
+`Request` is a wrapper over `NSURLRequest`. It provides delegates for all methods from `NSURLRequest`. You can access `Request` in `RequestEnhancer` (see [RequestEnhancer](#requestenhancer)) and in `Response`. You can modify `Request` in `RequestEnhancer` as you like. `cancellable` is the same `Cancellable` returned by `Fetcher.request` that created this `Request`. `retried` counts the number of times `retry` is called, `retryClosure` represents the implementation of `retry`.
 
 ### Response
 
 ```Swift
 struct Response<T> {
-    
+
     public let result: FetcherResult<T>
     public let rawResponse: HTTPURLResponse?
     public let rawData: Data?
@@ -317,17 +317,17 @@ struct Response<T> {
 
 `Response` represents result of `Request` (server's response to it). You get an instance of `Response` in every callback of `fetcher.request`. Declaration:
 
-`T` is the same type as `OUT` in `Endpoint`. `FetcherResult<T>` is type alias to `Result<T, FetcherError>`. 
+`T` is the same type as `OUT` in `Endpoint`. `FetcherResult<T>` is type alias to `Result<T, FetcherError>`.
 
 There are also some extensions:
 
 ```Swift
 extension Response {
-    
+
     func map<U>(_ transform: (T) -> U) -> Response<U>
-    
+
     func flatMap<U>(_ transform: (T) -> FetcherResult<U>) -> Response<U>
-    
+
     var rawString: String?
 }
 ```
@@ -341,7 +341,7 @@ extension Response {
 ```Swift
 init(_ path: String, modifiers: [RequestModifier])
 
-init(_ path: String, inputEncoding: InputEncoding, modifiers: [RequestModifier]) 
+init(_ path: String, inputEncoding: InputEncoding, modifiers: [RequestModifier])
 
 init(_ path: String, modifiers: RequestModifier...)
 
@@ -356,24 +356,24 @@ Normally you won't use `Endpoint` directly or create subclasses of it. See [Meth
 
 ```Swift
 struct Endpoints: EndpointProvider {
-    
+
     static func get(id: String, text: String) -> GET<Void, ExampleObject> {
-        return create("get?id=\(id)&text=\(text)")
+        return create("get", modifiers: URLQueryItem(name: "id", value: "\(id)"), URLQueryItem(name: "text", value: "\(text)"))
     }
-    
+
     static func post() -> POST<ExampleObject, Void> {
         return create("post")
     }
 }
 ```
 
-Notice that `create` could be replaced with `GET` and `POST` but we think, it is better to specify the type only in one place. Another advantage of `create` is that you can add implicit `RequestModfier` (see [RequestModifier](#requestmodifier)) to every `Endpoint`. To do this, implement `implicitModifiers`:
+Notice that `create` could be replaced with `GET` and `POST` but we think it's better to specify the type in just one place. Another advantage of `create` is that you can add implicit `RequestModfier` (see [RequestModifier](#requestmodifier)) to every `Endpoint`. To do this, implement `implicitModifiers`:
 
 ```Swift
 struct Endpoints: EndpointProvider {
-    
+
     static var implicitModifiers: [RequestModifier] = [StatusCodeResponseVerifier(code: 200)]
-    
+
     static func post() -> POST<ExampleObject, Void> {
         return create("post")
     }
@@ -384,7 +384,7 @@ It is also possible to declare endpoints as properties:
 
 ```Swift
 struct Endpoints: EndpointProvider {
-    
+
     static var post = POST<ExampleObject, Void>("post")
 }
 ```
@@ -393,7 +393,7 @@ This can be only done if you don't pass any parameters directly to URL. In this 
 
 ```Swift
 struct Endpoints: EndpointProvider {
-    
+
     static var post: POST<ExampleObject, Void> = create("post")
 }
 ```
@@ -418,11 +418,11 @@ These are predefined implementations of `Endpoint` which represent some HTTP met
 protocol RequestEnhancer {
 
     static var priority: RequestEnhancerPriority { get }
-    
+
     var instancePriority: RequestEnhancerPriority? { get }
-    
+
     func enhance(request: inout Request)
-    
+
     func deenhance(response: inout Response<SupportedType>)
 }
 ```
@@ -437,13 +437,13 @@ protocol RequestEnhancer {
 
 `instancePriority` solves problem that each instance of `RequestEnhancer` may have different priority (`priority` is static). Default value is nil, in which case `priority` is used. If `instancePriority` is not nil, then it is used instead of `priority`.
 
-`RequestEnhancer` can be added to `Fetcher` by `register` methods (see [Fetcher](#fetcher-1)). 
+`RequestEnhancer` can be added to `Fetcher` by `register` methods (see [Fetcher](#fetcher-1)).
 
 #### RequestEnhancerPriority
 
 ```Swift
 enum RequestEnhancerPriority {
-  
+
     case low  
     case normal
     case high
@@ -457,9 +457,9 @@ enum RequestEnhancerPriority {
 
 ```Swift
 extension RequestEnhancerPriority {
-    
+
     var less: RequestEnhancerPriority
-    
+
     var more: RequestEnhancerPriority
 }
 ```
@@ -539,7 +539,7 @@ protocol ResponseVerifier: RequestModifier {
 
 ```Swift
 protocol InputEncodingWithEncoder: InputEncoding {
-    
+
     func encode(input: SupportedType, to request: inout Request)
 }
 ```
@@ -550,15 +550,15 @@ protocol InputEncodingWithEncoder: InputEncoding {
 
 ```Swift
 enum StandardInputEncoding: InputEncoding {
-    
+
     case queryString
     case httpBody
 }
 ```
 
-`StandardInputEncoding` represents two encodings that all `DataEncoder` understand. 
+`StandardInputEncoding` represents two encodings that all `DataEncoder` understand.
 
-`.queryString` encodes the input data into the request URL (`http://url.xxx?param1=value`). As shown in examples in [Quick overview](#quick-overview) this may also be done manually. `.queryString`'s disadvantage is that the input data must be a dictionary. 
+`.queryString` encodes the input data into the request URL (`http://url.xxx?param1=value`). As shown in examples in [Quick overview](#quick-overview) this may also be done manually. `.queryString`'s disadvantage is that the input data must be a dictionary.
 
 `.httpBody` simply sends the data in the request body. Encoding depends on `DataEncoder` implementation (may be JSON, XML, etc.).
 
@@ -566,9 +566,9 @@ enum StandardInputEncoding: InputEncoding {
 
 ```Swift
 protocol RequestPerformer {
-    
+
     var dataEncoder: DataEncoder { get }
-    
+
     func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable
 }
 ```
@@ -581,18 +581,18 @@ protocol RequestPerformer {
 
 ```Swift
 protocol DataEncoder {
-    
+
     func encodeToQueryString(input: SupportedType, to request: inout Request)
-    
+
     func encodeToHttpBody(input: SupportedType, to request: inout Request)
-    
+
     func encodeCustom(input: SupportedType, to request: inout Request, inputEncoding: InputEncoding)
-    
+
     func decode(response: Response<Data>) -> Response<SupportedType>
 }
 ```
 
-`DataEncoder` is called by `Fetcher` to encode the input data into `Request` and to decode data from `Response`. 
+`DataEncoder` is called by `Fetcher` to encode the input data into `Request` and to decode data from `Response`.
 
 `StandardInputEncoding` specifies which of `encodeToQueryString` or `encodeToHttpBody` is used.
 
@@ -602,7 +602,7 @@ protocol DataEncoder {
 
 *AlamofireRequestPerformer*
 
-`AlamofireRequestPerformer` is an implementation on top of [Alamofire](https://github.com/Alamofire/Alamofire). By default it uses `AlamofireJsonDataEncoder` (encoder for JSON) as `DataEncoder` but this can be changed in its `init`. 
+`AlamofireRequestPerformer` is an implementation on top of [Alamofire](https://github.com/Alamofire/Alamofire). By default it uses `AlamofireJsonDataEncoder` (encoder for JSON) as `DataEncoder` but this can be changed in its `init`.
 
 `AlamofireJsonDataEncoder` knows a special type of `InputEncoding` and that is `FormInputEncoding` which supports content type `application/x-www-form-urlencoded`.
 
@@ -610,7 +610,7 @@ protocol DataEncoder {
 
 ```Swift
 protocol Header: RequestModifier {
-    
+
     var name: String { get }
     var value: String { get }
 }
@@ -624,13 +624,13 @@ protocol Header: RequestModifier {
 
 ```Swift
 extension Headers {
-    
+
     struct Accept: Header {
-        
+
         let name = "Accept"
-        
+
         let value: String
-        
+
         init(value: String) {
             self.value = value
         }
@@ -638,7 +638,7 @@ extension Headers {
 }
 
 extension Headers.Accept {
-    
+
     static let applicationJson = Headers.Accept(value: "application/json")
     static let textPlain = Headers.Accept(value: "text/plain")
 }
@@ -662,15 +662,15 @@ enum FetcherError: Error {
 }
 ```
 
-`FetcherError` is used as the type of error in `Response.result`. 
+`FetcherError` is used as the type of error in `Response.result`.
 
 ### ErrorHandler
 
 ```Swift
 protocol ErrorHandler {
-    
+
     func canResolveError(response: Response<SupportedType>) -> Bool
-    
+
     func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void)
 }
 ```
@@ -687,9 +687,9 @@ When resolving error, `Fetcher` first calls `canResolveError`. If it returns `fa
 
 ```Swift
 struct CompositeErrorHandler: ErrorHandler {
-    
+
     init(handlers: [ErrorHandler])
-    
+
     init(handlers: ErrorHandler...)
 }
 ```
@@ -751,18 +751,18 @@ fetcher.rx.request(Endpoints.get(id: "1", text: "a").subscribe(onNext: { respons
 extension ObservableConvertibleType where E: ResponseProtocol {
 
     func retryRequest(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0)) -> Observable<E>
-    
+
     func asResult() -> Observable<FetcherResult<E.T>>
 }
 ```
 
-`retryRequest` is a reactive variant to `retry` of `Request` (see [retry](#retry)). 
+`retryRequest` is a reactive variant to `retry` of `Request` (see [retry](#retry)).
 
 `asResult` returns a mapped sequence with `Response.result`.
 
 ### Thread safety
 
-`Fetcher` by default does many things on the background thread, so it needs to be thread safe. This also applies to objects like `RequestPerformer`, `RequestEnhancer`, `ErrorHandler` and so on. Usually all methods from these protocols are  implemented as pure functions, so they don't cause any problems. Also see [DataMapper#ThreadSafety](https://github.com/Brightify/DataMapper#threadsafety). 
+`Fetcher` by default does many things on the background thread, so it needs to be thread safe. This also applies to objects like `RequestPerformer`, `RequestEnhancer`, `ErrorHandler` and so on. Usually all methods from these protocols are  implemented as pure functions, so they don't cause any problems. Also see [DataMapper#ThreadSafety](https://github.com/Brightify/DataMapper#threadsafety).
 
 ## Versioning
 
