@@ -26,7 +26,7 @@ class BaseUrlTest: QuickSpec {
                 
                 expect(url).toEventually(equal("abc/xyz"))
             }
-            it("solve conflicts by priority") {
+            it("solves conflicts by priority") {
                 let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(string: "abc"),
                                                     BaseUrl(string: "qwe", priority: .high), BaseUrl(string: "asd", priority: .low))
                 var url: String?
@@ -47,7 +47,7 @@ class BaseUrlTest: QuickSpec {
                 
                 expect(url).toEventually(equal("xyz"))
             }
-            it("constructs successfully using URL instead of String") {
+            it("constructs successfully using URL") {
                 let endpoint: GET<Void, Void> = GET("xyz", modifiers: BaseUrl(url: URL(string: "abc")))
                 var url: String?
 

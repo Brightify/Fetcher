@@ -13,19 +13,8 @@ internal struct BaseUrlRequestEnhancer: RequestEnhancer {
     internal static let priority: RequestEnhancerPriority = .fetcher
     
     internal func enhance(request: inout Request) {
-        let modifier = request.modifiers.flatMap { $0 as? BaseUrl }.sorted { $0.priority.value > $1.priority.value }.first
-        if let url = request.url, var baseUrl = modifier?.baseUrl {
-
-            var component = url.absoluteString
-            if component[component.startIndex] == "/" {
-                component = component.substring(from: component.index(after: component.startIndex))
-            }
-            
-            if baseUrl[baseUrl.index(before: baseUrl.endIndex)] == "/" {
-                baseUrl = baseUrl.substring(to: baseUrl.index(before: baseUrl.endIndex))
-            }
-            
-            request.url = URL(string: baseUrl + "/" + component)
-        }
+        let modifier = request.modifiers.flatMap { $0 as? BaseUrl }.max { $0.priority.value < $1.priority.value }
+        guard let url = request.url, let baseUrl = modifier?.baseUrl else { return }
+        request.url = baseUrl.appendingPathComponent(url.absoluteString)
     }
 }
