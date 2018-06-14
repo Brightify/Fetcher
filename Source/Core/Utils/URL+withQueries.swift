@@ -8,8 +8,8 @@
 
 import Foundation
 
-internal extension URL {
-    func withQueries(_ queries: [URLQueryItem]) -> URL? {
+public extension URL {
+    public func withQueries(_ queries: [URLQueryItem]) -> URL? {
         guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         if let queryItems = urlComponents.queryItems, !queryItems.isEmpty {
             urlComponents.queryItems?.append(contentsOf: queries)
@@ -20,11 +20,11 @@ internal extension URL {
         return urlComponents.url
     }
 
-    func withQueries(_ queries: URLQueryItem...) -> URL? {
+    public func withQueries(_ queries: URLQueryItem...) -> URL? {
         return self.withQueries(queries)
     }
 
-    mutating func addQueries(_ queries: URLQueryItem...) {
+    public mutating func addQueries(_ queries: URLQueryItem...) {
         guard let modifiedSelf = self.withQueries(queries) else { return }
         self = modifiedSelf
     }

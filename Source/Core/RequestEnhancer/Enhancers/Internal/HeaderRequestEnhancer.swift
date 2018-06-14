@@ -11,6 +11,6 @@ internal struct HeaderRequestEnhancer: RequestEnhancer {
     internal static let priority: RequestEnhancerPriority = .fetcher
     
     internal func enhance(request: inout Request) {
-        request.modifiers.flatMap { $0 as? Header }.forEach { request.setHeader($0) }
+        request.modifiers.compactMap { $0 as? Header }.forEach { request.setHeader($0) }
     }
 }

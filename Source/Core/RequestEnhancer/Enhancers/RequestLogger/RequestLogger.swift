@@ -31,7 +31,7 @@ public final class RequestLogger: RequestEnhancer {
     
     private func createLog(for response: Response<SupportedType>) -> String {
         var result = ""
-        let modifiers = response.request.modifiers.flatMap { $0 as? RequestLogging }
+        let modifiers = response.request.modifiers.compactMap { $0 as? RequestLogging }
         let options = modifiers.count == 0 ? defaultOptions : modifiers.reduce(RequestLogging.disabled) { acc, element in acc.union(element) }
         
         guard options != .disabled else { return "" }
@@ -45,7 +45,7 @@ public final class RequestLogger: RequestEnhancer {
         
         if options.contains(.time) {
             result += "\nTime: "
-            if let timestamp = response.request.modifiers.flatMap({ $0 as? RequestLoggerTimestamp }).first {
+            if let timestamp = response.request.modifiers.compactMap({ $0 as? RequestLoggerTimestamp }).first {
                 result += String(format: "%.2fs", arguments: [-timestamp.time.timeIntervalSinceNow]) + "\n"
             } else {
                 result += "unknown\n"

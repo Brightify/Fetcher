@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name             = "Fetcher"
-    spec.version          = "0.2.0"
+    spec.version          = "0.3.0"
     spec.summary          = "Swift HTTP networking library."
     spec.description      = <<-DESC
                        Fetcher is a small HTTP networking library for Swift. Its main goal is to simplify common tasks like sending REST requests. Networking is a very complex subject and our goal is not to cover everything that can be done. But we provide API that allows you to implement what you need or to customize behavior of Fetcher (this is handy if your server for some reason does not obey any standard).

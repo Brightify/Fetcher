@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
 		18E484571BA8BFB1004CB09A /* Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* Fetcher.framework */; };
+		18F7988420D2AB3C00522E1E /* shim-Collection+compactMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F7988320D2AB3C00522E1E /* shim-Collection+compactMap.swift */; };
 		67D791B607BD885ED386A1E0 /* Pods_FetcherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2097300D98DE1D9862CD8833 /* Pods_FetcherTests.framework */; };
 		6894349C1FE4362400E653D7 /* URLQueryItemConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349B1FE4362400E653D7 /* URLQueryItemConvertible.swift */; };
 		6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349D1FE4415700E653D7 /* URL+withQueries.swift */; };
@@ -109,6 +110,7 @@
 		18E4844D1BA8BFB1004CB09A /* Fetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E484561BA8BFB1004CB09A /* FetcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18F7988320D2AB3C00522E1E /* shim-Collection+compactMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "shim-Collection+compactMap.swift"; sourceTree = "<group>"; };
 		2097300D98DE1D9862CD8833 /* Pods_FetcherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FetcherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37BA2BDF2CB5FAC9A227A05D /* Pods-Fetcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fetcher.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fetcher/Pods-Fetcher.release.xcconfig"; sourceTree = "<group>"; };
 		5E1C57433A6E87B4863BE0A9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -478,6 +480,7 @@
 				DC4691171E36A227001C8540 /* HTTPMethod.swift */,
 				DC4691191E36A227001C8540 /* String+UrlSafe.swift */,
 				6894349D1FE4415700E653D7 /* URL+withQueries.swift */,
+				18F7988320D2AB3C00522E1E /* shim-Collection+compactMap.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -662,7 +665,6 @@
 				18E484491BA8BFB1004CB09A /* Frameworks */,
 				18E4844A1BA8BFB1004CB09A /* Headers */,
 				18E4844B1BA8BFB1004CB09A /* Resources */,
-				BD6E9D0536F42C5040E24A8E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -682,7 +684,6 @@
 				18E484531BA8BFB1004CB09A /* Frameworks */,
 				18E484541BA8BFB1004CB09A /* Resources */,
 				921650F9D8529F3C16859D75 /* [CP] Embed Pods Frameworks */,
-				6740BA2BA3A725465D8BBB8E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -751,21 +752,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6740BA2BA3A725465D8BBB8E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8BEE83A0B8E8B96C376572AC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -812,21 +798,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BD6E9D0536F42C5040E24A8E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fetcher/Pods-Fetcher-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DA0FDB8995EE725847F2562A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -853,6 +824,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC46913A1E36A227001C8540 /* Fetcher.swift in Sources */,
+				18F7988420D2AB3C00522E1E /* shim-Collection+compactMap.swift in Sources */,
 				DC4691201E36A227001C8540 /* NoErrorHandler.swift in Sources */,
 				DC4691491E36A23B001C8540 /* RxFetcher+Request.swift in Sources */,
 				DC46914C1E36A310001C8540 /* BaseUrl.swift in Sources */,

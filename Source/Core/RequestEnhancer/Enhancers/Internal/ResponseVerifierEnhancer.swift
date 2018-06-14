@@ -13,7 +13,7 @@ internal struct ResponseVerifierEnhancer: RequestEnhancer {
     internal static let priority: RequestEnhancerPriority = .fetcher
     
     internal func deenhance(response: inout Response<SupportedType>) {
-        if let error = (response.request.modifiers.flatMap { $0 as? ResponseVerifier }.flatMap { $0.verify(response: response) }.first) {
+        if let error = (response.request.modifiers.compactMap { $0 as? ResponseVerifier }.compactMap { $0.verify(response: response) }.first) {
             response = response.flatMap { _ in .failure(error) }
         }
     }
