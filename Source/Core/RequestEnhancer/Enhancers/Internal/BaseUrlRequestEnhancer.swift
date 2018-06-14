@@ -15,6 +15,29 @@ internal struct BaseUrlRequestEnhancer: RequestEnhancer {
     internal func enhance(request: inout Request) {
         let modifier = request.modifiers.compactMap { $0 as? BaseUrl }.max { $0.priority.value < $1.priority.value }
         guard let url = request.url, let baseUrl = modifier?.baseUrl else { return }
-        request.url = baseUrl.appendingPathComponent(url.absoluteString)
+        guard url.host == nil || url.scheme == nil else { return }
+        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+
+        if urlComponents.scheme == nil {
+            urlComponents.scheme = baseUrl.scheme
+        }
+
+        if urlComponents.host == nil {
+            urlComponents.host = baseUrl.host
+        }
+
+        urlComponents.path = baseUrl.appendingPathComponent(urlComponents.path.removingFirst(ifEqualTo: "/")).path
+        
+        guard let newUrl = urlComponents.url else { return }
+
+        request.url = newUrl
+    }
+}
+
+private extension String {
+    func removingFirst(ifEqualTo firstCharacter: Character) -> String {
+        guard hasPrefix(String(firstCharacter)) else { return self }
+
+        return String(self[index(after: startIndex)...])
     }
 }

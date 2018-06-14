@@ -23,7 +23,7 @@ class BaseUrlTest: QuickSpec {
                 fetcher.request(endpoint) {
                     url = $0.request.url?.absoluteString
                 }
-                
+
                 expect(url).toEventually(equal("abc/xyz"))
             }
             it("solves conflicts by priority") {
@@ -56,6 +56,36 @@ class BaseUrlTest: QuickSpec {
                 }
 
                 expect(url).toEventually(equal("abc/xyz"))
+            }
+            it("doesn't change an absolute URL") {
+                let endpoint = GET<Void, Void>("http://google.com/xyz", modifiers: BaseUrl(url: URL(string: "http://github.com")))
+                var url: String?
+
+                fetcher.request(endpoint) {
+                    url = $0.request.url?.absoluteString
+                }
+
+                expect(url).toEventually(equal("http://google.com/xyz"))
+            }
+            it("it appends paths correctly") {
+                let endpoint = GET<Void, Void>("/somepath/otherpath", modifiers: BaseUrl(url: URL(string: "http://github.com/wutko/")))
+                var url: String?
+
+                fetcher.request(endpoint) {
+                    url = $0.request.url?.absoluteString
+                }
+
+                expect(url).toEventually(equal("http://github.com/wutko/somepath/otherpath"))
+            }
+            it("it doesn't encode a path with query parameters") {
+                let endpoint = GET<Void, Void>("somepath?param1=1&param2=2", modifiers: BaseUrl(url: URL(string: "http://github.com")))
+                var url: String?
+
+                fetcher.request(endpoint) {
+                    url = $0.request.url?.absoluteString
+                }
+
+                expect(url).toEventually(equal("http://github.com/somepath?param1=1&param2=2"))
             }
         }
     }
