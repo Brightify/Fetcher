@@ -8,7 +8,7 @@
 
 open class Endpoint<IN, OUT> {
     
-    open class var method: HTTPMethod {
+    public class var method: HTTPMethod {
         return .get
     }
     
