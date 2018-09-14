@@ -15,6 +15,7 @@
 		6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349D1FE4415700E653D7 /* URL+withQueries.swift */; };
 		689434A11FE446A900E653D7 /* URLQueryItemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6894349F1FE4460500E653D7 /* URLQueryItemTest.swift */; };
 		689434A31FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */; };
+		71D98766214BFEF200E94CFA /* NetInspectorRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98765214BFEF200E94CFA /* NetInspectorRequestEnhancer.swift */; };
 		B4B02854FBC5323C6E2E9726 /* Pods_Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B73372ABC70C0A663396C7EA /* Pods_Fetcher.framework */; };
 		DC4690E21E36A21D001C8540 /* AlamofireJsonDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690DF1E36A21D001C8540 /* AlamofireJsonDataEncoder.swift */; };
 		DC4690E31E36A21D001C8540 /* AlamofireRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4690E01E36A21D001C8540 /* AlamofireRequestPerformer.swift */; };
@@ -123,6 +124,7 @@
 		6894349D1FE4415700E653D7 /* URL+withQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+withQueries.swift"; sourceTree = "<group>"; };
 		6894349F1FE4460500E653D7 /* URLQueryItemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQueryItemTest.swift; sourceTree = "<group>"; };
 		689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQueryItemRequestEnhancer.swift; sourceTree = "<group>"; };
+		71D98765214BFEF200E94CFA /* NetInspectorRequestEnhancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetInspectorRequestEnhancer.swift; sourceTree = "<group>"; };
 		99A0826C575E48C9A0E70C4C /* Pods-FetcherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetcherTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests.release.xcconfig"; sourceTree = "<group>"; };
 		B73372ABC70C0A663396C7EA /* Pods_Fetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4690CD1E36A02D001C8540 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 			children = (
 				DC4691051E36A227001C8540 /* RequestLogger.swift */,
 				DC4691061E36A227001C8540 /* RequestLogging.swift */,
+				71D98765214BFEF200E94CFA /* NetInspectorRequestEnhancer.swift */,
 				DC4691031E36A227001C8540 /* Internal */,
 			);
 			path = RequestLogger;
@@ -860,6 +863,7 @@
 				DC4691231E36A227001C8540 /* Header.swift in Sources */,
 				DC4691221E36A227001C8540 /* RequestTimeOutErrorHandler.swift in Sources */,
 				DC46911D1E36A227001C8540 /* BaseStatusCodeErrorHandler.swift in Sources */,
+				71D98766214BFEF200E94CFA /* NetInspectorRequestEnhancer.swift in Sources */,
 				DC4691361E36A227001C8540 /* DataEncoder.swift in Sources */,
 				DC46913E1E36A227001C8540 /* FetcherResult.swift in Sources */,
 				DC4691481E36A23B001C8540 /* Fetcher+RxFetcher.swift in Sources */,
