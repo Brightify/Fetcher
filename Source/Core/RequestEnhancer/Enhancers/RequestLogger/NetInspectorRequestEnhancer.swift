@@ -9,87 +9,124 @@
 import DataMapper
 import Alamofire
 
-private extension Formatter {
-    static let iso8601: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        return formatter
-    }()
+struct Registration: Encodable {
+    var uuid: UUID
+    var applicationName: String
+    var applicationBundleIdentifier: String
+    var applicationVersion: String
 }
-private extension Date {
-    var iso8601: String {
-        return Formatter.iso8601.string(from: self)
+
+struct LogItem: Codable {
+    let uuid: UUID
+    let request: Request
+    let response: Response?
+}
+
+extension LogItem {
+    var duration: TimeInterval? {
+        guard let end = response?.time else { return nil }
+        return end.timeIntervalSince(request.time)
     }
 }
 
-public final class NetInspectorRequestEnhancer: RequestEnhancer {
-    private let netInspectorBaseURL: String
-    private let port = 1111
+extension LogItem {
+    struct Request: Codable {
+        let method: String /* FIXME Should be HTTPMethod */
+        let url: URL
+        let headers: [String: String]
+        let time: Date
+        let body: String
+    }
 
+    struct Response: Codable {
+        let headers: [String: String]
+        let time: Date
+        let body: String
+        let code: Int
+    }
+}
+
+internal struct NetInspectorTimestamp: RequestModifier {
+    internal let time: Date
+    internal let uuid: UUID
+}
+
+public final class NetInspectorRequestEnhancer: RequestEnhancer {
+    private let netInspectorBaseURL: URL
+    private let port = 1111
     private let applicationId: String
-    private let headers: [String: String]
-    private let uuid: String
+    private let uuid: UUID
 
     public init(netInspectorBaseURL: String) {
-        self.netInspectorBaseURL = netInspectorBaseURL
+        var components = URLComponents(string: netInspectorBaseURL)!
+        components.port = 1111
+        self.netInspectorBaseURL = components.url!
         self.applicationId = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        self.headers = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-
-        self.uuid = UUID().uuidString
-        register()
+        self.uuid = UUID()
+        try! register()
     }
 
     public var instancePriority: RequestEnhancerPriority? {
         return .low
     }
 
-    public func deenhance(response: inout Response<SupportedType>) {
-        let duration = -Int((response.request.modifiers.compactMap({ $0 as? RequestLoggerTimestamp }).first?.time.timeIntervalSinceNow ?? 0) * 1000)
-        var requestBody = ""
-        if let data = response.request.httpBody {
-            requestBody = String(data: data, encoding: .utf8) ?? ""
-        }
-
-        var headersResult = "\nResponse headers: "
-        if let headers = response.rawResponse?.allHeaderFields, !headers.isEmpty {
-            headersResult += "\n"
-            headers.forEach { name, value in
-                headersResult += "\t\(name): \(value)\n"
-            }
-        } else {
-            headersResult += "empty\n"
-        }
-
-        let parameters = [
-            "uuid": UUID().uuidString,
-            "url": response.request.url?.absoluteString ?? "<< unknown URL >>",
-            "method": response.request.httpMethod.rawValue,
-            "responseCode": "\(response.rawResponse?.statusCode ?? 0)",
-            "startTime": Date().iso8601,
-            "duration": "\(duration)",
-            "headers": headersResult,
-            "requestBody": requestBody,
-            "responseBody": response.rawString ?? ""
-        ]
-
-        Alamofire.request(URL(string: "\(netInspectorBaseURL):\(port)/\(uuid)/logItem/")!, method: .post, parameters: parameters, headers: headers).response { _ in
-        }
+    public func enhance(request: inout Request) {
+        request.modifiers.append(NetInspectorTimestamp(time: Date(), uuid: UUID()))
     }
 
-    private func register() {
-        let parameters = [
-            "uuid": uuid,
-            "applicationName": Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String,
-            "applicationBundleIdentifier": Bundle.main.bundleIdentifier!,
-            "applicationVersion": Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
-        ]
+    public func deenhance(response: inout Response<SupportedType>) {
+        guard let timestamp = response.request.modifiers.compactMap({ $0 as? NetInspectorTimestamp }).first else { return }
 
-        Alamofire.request(URL(string: "\(netInspectorBaseURL):\(port)/registration")!, method: .post, parameters: parameters, headers: headers).response { _ in
-        }
+        let requestBody = response.request.httpBody.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+
+        let allRequestHeaders = response.request.allHTTPHeaderFields?.compactMap { key, value -> (key: String, value: String)? in
+            guard let keyString = key as? String, let valueString = value as? String else { return nil }
+            return (key: keyString, value: valueString)
+            } ?? []
+        let requestHeaders = Dictionary(allRequestHeaders, uniquingKeysWith: { $1 })
+
+        let allResponseHeaders = response.rawResponse?.allHeaderFields.compactMap { key, value -> (key: String, value: String)? in
+            guard let keyString = key as? String, let valueString = value as? String else { return nil }
+            return (key: keyString, value: valueString)
+            } ?? []
+        let responseHeaders = Dictionary(allResponseHeaders, uniquingKeysWith: { $1 })
+
+        let logItem = LogItem(
+            uuid: UUID(),
+            request: LogItem.Request(
+                method: response.request.httpMethod.rawValue,
+                url: response.request.url ?? netInspectorBaseURL,
+                headers: requestHeaders,
+                time: timestamp.time,
+                body: requestBody),
+            response: LogItem.Response(
+                headers: responseHeaders,
+                time: Date(),
+                body: response.rawString ?? "",
+                code: response.rawResponse?.statusCode ?? 0))
+
+        try? post(to: "api/runs/\(uuid.uuidString)/logItems", value: logItem)
+    }
+
+    private func register() throws {
+        let registration = Registration(
+            uuid: uuid,
+            applicationName:  Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String,
+            applicationBundleIdentifier: Bundle.main.bundleIdentifier!,
+            applicationVersion: Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String)
+
+        try post(to: "api/runs", value: registration)
+    }
+
+    private func post<T: Encodable>(to endpoint: String, value: T) throws {
+        let url = netInspectorBaseURL.appendingPathComponent(endpoint)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(value)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            // TODO Handle the response
+            }.resume()
     }
 }
