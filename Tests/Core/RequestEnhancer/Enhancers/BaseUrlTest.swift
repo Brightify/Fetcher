@@ -9,6 +9,7 @@
 import Quick
 import Nimble
 import Fetcher
+import Foundation
 
 class BaseUrlTest: QuickSpec {
     

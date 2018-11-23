@@ -8,6 +8,7 @@
 
 import DataMapper
 import Fetcher
+import Foundation
 
 private struct EndpointProviderStub: EndpointProvider {
 }

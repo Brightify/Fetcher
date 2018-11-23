@@ -14,6 +14,8 @@ let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift.git", "4.0.0"..<"5.0.0"),
         .package(url: "https://github.com/antitypical/Result.git", "4.0.0"..<"5.0.0"),
         .package(url: "https://github.com/Brightify/DataMapper.git", .branch("feature/swift-pm")),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.1"),
+        .package(url: "https://github.com/Quick/Quick.git", from: "1.1.0"),
     ],
     targets: [
         .target(
@@ -22,7 +24,7 @@ let package = Package(
             path: "Source"),
         .testTarget(
             name: "FetcherTests",
-            dependencies: ["Fetcher", "Alamofire", "RxSwift", "Result", "DataMapper"],
+            dependencies: ["Fetcher", "Alamofire", "RxSwift", "Result", "DataMapper", "Quick", "Nimble"],
             path: "Tests"),
     ]
 )

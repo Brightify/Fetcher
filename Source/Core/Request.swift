@@ -7,6 +7,7 @@
 //
 
 import DataMapper
+import Foundation
 
 public struct Request {
     

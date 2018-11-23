@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import Foundation
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     

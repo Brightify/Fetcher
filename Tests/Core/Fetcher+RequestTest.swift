@@ -4,6 +4,7 @@ import Quick
 import Nimble
 import Fetcher
 import DataMapper
+import Foundation
 
 class Fetcher_RequestTest: QuickSpec {
 
@@ -1746,7 +1747,7 @@ class Fetcher_RequestTest: QuickSpec {
         }
     }
 
-    private func assertInput(request: Request, expected: String, file: String = #file, line: UInt = #line) {
+    private func assertInput(request: Request, expected: String, file: FileString = #file, line: UInt = #line) {
         expect(request.httpBody, file: file, line: line).toNot(beNil())
         if let input = request.httpBody, let json = String(data: input, encoding: .utf8) {
             expect(json, file: file, line: line) == expected

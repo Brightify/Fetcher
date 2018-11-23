@@ -9,6 +9,7 @@
 import Quick
 import Nimble
 import Fetcher
+import Foundation
 
 final class URLQueryItemTest: QuickSpec {
     override func spec() {

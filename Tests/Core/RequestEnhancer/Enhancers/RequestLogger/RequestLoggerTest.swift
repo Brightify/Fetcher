@@ -9,6 +9,7 @@
 import Quick
 import Nimble
 import Fetcher
+import Foundation
 
 class RequestLoggerTest: QuickSpec {
     
@@ -30,7 +31,7 @@ class RequestLoggerTest: QuickSpec {
         }
     }
     
-    private func logTest(expected: String, log: RequestLogging?, defaultLogging: RequestLogging? = nil, file: String = #file, line: UInt = #line) {
+    private func logTest(expected: String, log: RequestLogging?, defaultLogging: RequestLogging? = nil, file: FileString = #file, line: UInt = #line) {
         let fetcher = Fetcher(requestPerformer: TestData.RequestPerformerStub())
         let endpoint: GET<Void, Void>
         if let log = log {

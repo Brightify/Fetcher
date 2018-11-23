@@ -8,6 +8,7 @@
 
 import Alamofire
 import DataMapper
+import Foundation
 
 public struct AlamofireJsonDataEncoder: DataEncoder {
     
