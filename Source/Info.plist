@@ -18,6 +18,8 @@
 	<string>0.2</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>
