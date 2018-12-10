@@ -9,6 +9,7 @@
 import Fetcher
 import DataMapper
 import Nimble
+import Foundation
 
 struct TestData {
     
@@ -25,11 +26,11 @@ struct TestData {
         return Response(result: result, rawResponse: response, rawData: data, request: request)
     }
     
-    static func expect(modifiers: [RequestModifier], file: String = #file, line: UInt = #line, toContains headers: [Header]) {
+    static func expect(modifiers: [RequestModifier], file: FileString = #file, line: UInt = #line, toContains headers: [Header]) {
         Nimble.expect(modifiers, file: file, line: line).to(contain(headers) { $0.name == $1.name && $0.value == $1.value })
     }
     
-    static func expect(modifiers: [RequestModifier], file: String = #file, line: UInt = #line, toContains headers: Header...) {
+    static func expect(modifiers: [RequestModifier], file: FileString = #file, line: UInt = #line, toContains headers: Header...) {
         expect(modifiers: modifiers, file: file, line: line, toContains: headers)
     }
     

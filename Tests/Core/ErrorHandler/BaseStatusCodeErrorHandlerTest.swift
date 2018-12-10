@@ -10,6 +10,7 @@ import Quick
 import Nimble
 import Fetcher
 import DataMapper
+import Foundation
 
 class BaseStatusCodeErrorHandlerTest {
     
@@ -62,7 +63,7 @@ class BaseStatusCodeErrorHandlerImplementationTest: QuickSpec {
         return BaseStatusCodeErrorHandler(codes: codes)
     }
     
-    func testRetry(handler: ErrorHandler, maxRepetitions: Int, delay: Int, file: String = #file, line: UInt = #line) {
+    func testRetry(handler: ErrorHandler, maxRepetitions: Int, delay: Int, file: FileString = #file, line: UInt = #line) {
         var requestFromClosure: Request?
         var responseFromCallback: Response<SupportedType>?
         var actualMaxRepetitions: Int?

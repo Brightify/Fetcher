@@ -2,6 +2,7 @@
 
 import RxSwift
 import DataMapper
+import Foundation
 
 // Extension for output type SupportedType.
 extension RxFetcher {
