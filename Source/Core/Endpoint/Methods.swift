@@ -6,65 +6,65 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-open class CONNECT<IN, OUT>: Endpoint<IN, OUT> {
+public class CONNECT<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .connect
     }
 }
 
-open class DELETE<IN, OUT>: Endpoint<IN, OUT> {
+public class DELETE<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .delete
     }
 }
 
-open class GET<IN, OUT>: Endpoint<IN, OUT> {
+public class GET<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .get
     }
 }
 
-open class HEAD<IN, OUT>: Endpoint<IN, OUT> {
+public class HEAD<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .head
     }
 }
 
-open class OPTIONS<IN, OUT>: Endpoint<IN, OUT> {
+public class OPTIONS<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .options
     }
 }
 
-open class PATCH<IN, OUT>: Endpoint<IN, OUT> {
+public class PATCH<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .patch
     }
 }
 
-open class POST<IN, OUT>: Endpoint<IN, OUT> {
+public class POST<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .post
     }
 }
 
-open class PUT<IN, OUT>: Endpoint<IN, OUT> {
+public class PUT<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .put
     }
 }
 
-open class TRACE<IN, OUT>: Endpoint<IN, OUT> {
+public class TRACE<IN, OUT>: Endpoint<IN, OUT> {
     
-    open override static var method: HTTPMethod {
+    public override static var method: HTTPMethod {
         return .trace
     }
 }
