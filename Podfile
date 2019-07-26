@@ -5,7 +5,6 @@ use_frameworks!
 def shared
     pod 'Alamofire', '~> 4.3'
     pod 'RxSwift', '~> 4.0'
-    pod 'Result', '~> 3.0'
     pod 'DataMapper'
 end
 

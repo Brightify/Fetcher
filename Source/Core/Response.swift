@@ -7,7 +7,6 @@
 //
 
 import DataMapper
-import Result
 import Foundation
 
 public struct Response<T> {

@@ -6,6 +6,4 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-import Result
-
 public typealias FetcherResult<T> = Result<T, FetcherError>

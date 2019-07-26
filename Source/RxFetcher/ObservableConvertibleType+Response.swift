@@ -7,7 +7,6 @@
 //
 
 import RxSwift
-import Result
 import Foundation
 
 extension ObservableConvertibleType where E: ResponseProtocol {

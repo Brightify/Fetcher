@@ -104,7 +104,7 @@ extension Fetcher {
             return response.flatMap { _ in
                 if let data = response.rawData {
                     return .success(data)
-                } else if let error = response.result.error {
+                } else if case .failure(let error) = response.result {
                     return .failure(error)
                 } else {
                     return .failure(.unknown)
