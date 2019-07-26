@@ -3,8 +3,8 @@ platform :ios, '8.0'
 use_frameworks!
 
 def shared
-    pod 'Alamofire', '~> 4.3'
-    pod 'RxSwift', '~> 4.0'
+    pod 'Alamofire', '~> 4.8'
+    pod 'RxSwift', '~> 5.0'
     pod 'DataMapper'
 end
 

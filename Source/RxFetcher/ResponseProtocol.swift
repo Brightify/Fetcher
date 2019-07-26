@@ -8,11 +8,10 @@
 
 /// Protocol used as a generic constraint in extensions. It is not part of public API may change between mayor versions.
 public protocol ResponseProtocol {
-    
-    associatedtype T
-    
-    var result: FetcherResult<T> { get }
-    
+    associatedtype BodyType
+
+    var result: FetcherResult<BodyType> { get }
+
     var request: Request  { get }
 }
 
