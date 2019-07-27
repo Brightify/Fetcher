@@ -16,11 +16,11 @@ class EndpointProviderTest: QuickSpec {
         describe("EndpointProvider") {
             describe("create") {
                 it("creates Endpoint with implicit modifiers") {
-                    let endpoint1: Endpoint<Int, String> = EndpointProviderStub.create("a", modifiers: [Headers.Accept.applicationJson])
-                    let endpoint2: Endpoint<Int, String> = EndpointProviderStub.create("a", inputEncoding: StandardInputEncoding.httpBody,
+                    let endpoint1: Endpoint<Int, String> = EndpointProviderStub().create("a", modifiers: [Headers.Accept.applicationJson])
+                    let endpoint2: Endpoint<Int, String> = EndpointProviderStub().create("a", inputEncoding: StandardInputEncoding.httpBody,
                                                                                        modifiers: [Headers.Accept.applicationJson])
-                    let endpoint3: Endpoint<Int, String> = EndpointProviderStub.create("a", modifiers: Headers.Accept.applicationJson, Headers.ContentType.applicationJson)
-                    let endpoint4: Endpoint<Int, String> = EndpointProviderStub.create("a", inputEncoding: StandardInputEncoding.httpBody,
+                    let endpoint3: Endpoint<Int, String> = EndpointProviderStub().create("a", modifiers: Headers.Accept.applicationJson, Headers.ContentType.applicationJson)
+                    let endpoint4: Endpoint<Int, String> = EndpointProviderStub().create("a", inputEncoding: StandardInputEncoding.httpBody,
                                                                                        modifiers: Headers.Accept.applicationJson, Headers.ContentType.applicationJson)
                     
                     self.assert(endpoint: endpoint1, inputEncoding: StandardInputEncoding.queryString, headers: Headers.Charset.utf8, Headers.Accept.applicationJson)
@@ -53,7 +53,6 @@ class EndpointProviderTest: QuickSpec {
     }
     
     private struct EndpointProviderStub: EndpointProvider {
-        
-        static var implicitModifiers: [RequestModifier] = [Headers.Charset.utf8]
+        var implicitModifiers: [RequestModifier] = [Headers.Charset.utf8]
     }
 }
