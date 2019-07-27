@@ -80,7 +80,6 @@
 		DC4691871E3A5F82001C8540 /* ResponseVerifierTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4691861E3A5F82001C8540 /* ResponseVerifierTest.swift */; };
 		DC4691891E3A5F95001C8540 /* StatusCodeResponseVerifierTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4691881E3A5F95001C8540 /* StatusCodeResponseVerifierTest.swift */; };
 		DC46918C1E3A63D5001C8540 /* CancellableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46918B1E3A63D5001C8540 /* CancellableTest.swift */; };
-		DC46918E1E3A642B001C8540 /* ObservableConvertibleType+ResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46918D1E3A642B001C8540 /* ObservableConvertibleType+ResponseTest.swift */; };
 		DC4691901E3A6465001C8540 /* RxFetcher+RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46918F1E3A6465001C8540 /* RxFetcher+RequestTest.swift */; };
 		DC4691A41E3B482C001C8540 /* NoErrorHandlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4691A31E3B482C001C8540 /* NoErrorHandlerTest.swift */; };
 		DC4691A91E3B5B6A001C8540 /* EndpointProviderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4691A81E3B5B6A001C8540 /* EndpointProviderTest.swift */; };
@@ -212,9 +211,7 @@
 		DCA35D611E41F6C6009919AB /* RequestTestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTestGenerator.swift; sourceTree = "<group>"; };
 		DCA35D621E433597009919AB /* RxRequestTestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxRequestTestGenerator.swift; sourceTree = "<group>"; };
 		DCE2DDA81DFC1229006E462C /* BaseScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScript.swift; sourceTree = "<group>"; };
-		DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestGenerator.swift; sourceTree = "<group>"; };
 		DCE2DDAA1DFC1229006E462C /* run */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
-		DCE2DDAB1DFC1229006E462C /* RxRequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxRequestGenerator.swift; sourceTree = "<group>"; };
 		EC0DE68001EE417F352332A0 /* Pods-FetcherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetcherTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FetcherTests/Pods-FetcherTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -635,9 +632,7 @@
 			children = (
 				DCE2DDAA1DFC1229006E462C /* run */,
 				DCE2DDA81DFC1229006E462C /* BaseScript.swift */,
-				DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */,
 				DCA35D611E41F6C6009919AB /* RequestTestGenerator.swift */,
-				DCE2DDAB1DFC1229006E462C /* RxRequestGenerator.swift */,
 				DCA35D621E433597009919AB /* RxRequestTestGenerator.swift */,
 			);
 			path = RequestGenerator;
@@ -889,7 +884,6 @@
 				DC4691B71E3B6440001C8540 /* String+UrlSafeTest.swift in Sources */,
 				DC4691741E3A5B0D001C8540 /* BaseStatusCodeErrorHandlerTest.swift in Sources */,
 				DC4691B91E3B64C5001C8540 /* FetcherErrorTest.swift in Sources */,
-				DC46918E1E3A642B001C8540 /* ObservableConvertibleType+ResponseTest.swift in Sources */,
 				DC4691691E3A5952001C8540 /* ApiTest.swift in Sources */,
 				DC4691671E3A591F001C8540 /* AlamofireJsonDataEncoderTest.swift in Sources */,
 				DC4691B31E3B61DE001C8540 /* RequestEnhancerPriorityTest.swift in Sources */,

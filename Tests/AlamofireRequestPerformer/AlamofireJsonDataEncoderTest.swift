@@ -10,7 +10,6 @@ import Quick
 import Nimble
 import Fetcher
 import DataMapper
-import Result
 
 class AlamofireJsonDataEncoderTest: QuickSpec {
     
@@ -43,7 +42,7 @@ class AlamofireJsonDataEncoderTest: QuickSpec {
                     
                     expect(request.httpBody).toNot(beNil())
                     if let data = request.httpBody, let text = String(data: data, encoding: .utf8) {
-                        expect(text) == "{\"text\":\"a\",\"number\":1.1}"
+                        expect(text).to(equal("{\"text\":\"a\",\"number\":1.1}") || equal("{\"number\":1.1,\"text\":\"a\"}"))
                     }
                 }
                 it("adds correct modifiers") {

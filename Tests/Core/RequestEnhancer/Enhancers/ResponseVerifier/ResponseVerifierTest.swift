@@ -11,6 +11,26 @@ import Nimble
 import Fetcher
 import DataMapper
 
+extension Result {
+    var value: Success? {
+        switch self {
+        case .success(let value):
+            return value
+        case .failure:
+            return nil
+        }
+    }
+
+    var error: Failure? {
+        switch self {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
+    }
+}
+
 class ResponseVerifierTest: QuickSpec {
     
     override func spec() {
@@ -22,7 +42,7 @@ class ResponseVerifierTest: QuickSpec {
                 var called = false
                 
                 fetcher.request(endpoint) {
-                    if let error = $0.result.error, case .invalidStatusCode = error {
+                    if let error = $0.result.error, case FetcherError.invalidStatusCode = error {
                     } else {
                         fail()
                     }

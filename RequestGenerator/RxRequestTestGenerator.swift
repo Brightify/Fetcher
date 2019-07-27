@@ -42,7 +42,7 @@ for (oIndex, output) in outputTypes.enumerated() {
             inputDataParameter = ", input: \(data[iIndex])"
         }
         
-        print("                    self.fetcher(response: \(jsonData[oIndex])).rx.request(POST\(genericSigniture)(\"xyz\")\(inputDataParameter)).subscribe(onNext: { response in")
+        print("                    self.fetcher(response: \(jsonData[oIndex])).rx.request(POST\(genericSigniture)(\"xyz\")\(inputDataParameter)).subscribe(onSuccess: { response in")
         print("                        self.assertInput(request: response.request, expected: \(jsonData[iIndex]))")
         if output.isVoid {
             print("                        expect(response.result.value).toNot(beNil())")

@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
     spec.frameworks = 'Foundation'
 
     spec.subspec 'Core' do |subspec|
-        subspec.dependency 'DataMapper', '~> 0.2'
+        subspec.dependency 'DataMapper', '~> 1.0'
         subspec.source_files = 'Source/Core/**/*.swift'
     end
 

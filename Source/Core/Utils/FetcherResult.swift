@@ -6,4 +6,4 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public typealias FetcherResult<T> = Result<T, FetcherError>
+public typealias FetcherResult<T> = Result<T, Error>

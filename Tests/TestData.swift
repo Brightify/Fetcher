@@ -17,11 +17,11 @@ struct TestData {
         return Request(url: URL(string: url)!, retry: retry, callback: { _ in }, cancellable: Cancellable())
     }
     
-    static func response<T>(url: String, result: FetcherResult<T> = .failure(.unknown), statusCode: Int = 500, data: Data? = nil) -> Response<T> {
+    static func response<T>(url: String, result: FetcherResult<T> = .failure(FetcherError.unknown), statusCode: Int = 500, data: Data? = nil) -> Response<T> {
         return response(request: request(url: url), result: result, statusCode: statusCode, data: data)
     }
     
-    static func response<T>(request: Request, result: FetcherResult<T> = .failure(.unknown), statusCode: Int = 500, data: Data? = nil) -> Response<T> {
+    static func response<T>(request: Request, result: FetcherResult<T> = .failure(FetcherError.unknown), statusCode: Int = 500, data: Data? = nil) -> Response<T> {
         let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "1.2", headerFields: nil)
         return Response(result: result, rawResponse: response, rawData: data, request: request)
     }

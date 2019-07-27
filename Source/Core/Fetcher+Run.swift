@@ -12,8 +12,12 @@ import Foundation
 extension Fetcher {
     
     // Overloads have similar signiture to allow easier request generation.
-    internal func run(endpoint: Endpoint<Data, Data>, inputProvider: @escaping () -> (Data),
-                      outputProvider: @escaping (Data) -> Data, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+    internal func run(
+        endpoint: Endpoint<Data, Data>,
+        inputProvider: @escaping () -> (Data),
+        outputProvider: @escaping (Data) -> Data,
+        callback: @escaping (Response<Data>) -> Void
+    ) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
@@ -26,22 +30,34 @@ extension Fetcher {
         return cancellable
     }
     
-    internal func run<IN>(endpoint: Endpoint<IN, Data>, inputProvider: @escaping () -> (SupportedType),
-                      outputProvider: @escaping (Data) -> Data, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+    internal func run<IN>(
+        endpoint: Endpoint<IN, Data>,
+        inputProvider: @escaping () throws -> (SupportedType),
+        outputProvider: @escaping (Data) -> Data,
+        callback: @escaping (Response<Data>) -> Void
+    ) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
-            self.requestEnhancers.forEach { $0.enhance(request: &request) }
-            self.perform(request: request)
-            cancellable.add(cancellable: request.cancellable)
+            do {
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
         }
         return cancellable
     }
     
-    internal func run<OUT>(endpoint: Endpoint<Data, OUT>, inputProvider: @escaping () -> (Data),
-                      outputProvider: @escaping (SupportedType) -> OUT?, callback: @escaping (Response<OUT>) -> Void) -> Cancellable {
+    internal func run<OUT>(
+        endpoint: Endpoint<Data, OUT>,
+        inputProvider: @escaping () -> (Data),
+        outputProvider: @escaping (SupportedType) throws -> OUT,
+        callback: @escaping (Response<OUT>) -> Void
+    ) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
@@ -54,16 +70,24 @@ extension Fetcher {
         return cancellable
     }
     
-    internal func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, inputProvider: @escaping () -> (SupportedType),
-                      outputProvider: @escaping (SupportedType) -> OUT?, callback: @escaping (Response<OUT>) -> Void) -> Cancellable {
+    internal func run<IN, OUT>(
+        endpoint: Endpoint<IN, OUT>,
+        inputProvider: @escaping () throws -> (SupportedType),
+        outputProvider: @escaping (SupportedType) throws -> OUT,
+        callback: @escaping (Response<OUT>) -> Void
+    ) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
-            self.requestEnhancers.forEach { $0.enhance(request: &request) }
-            self.perform(request: request)
-            cancellable.add(cancellable: request.cancellable)
+            do {
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
         }
         return cancellable
     }
@@ -107,17 +131,27 @@ extension Fetcher {
                 } else if case .failure(let error) = response.result {
                     return .failure(error)
                 } else {
-                    return .failure(.unknown)
+                    return .failure(FetcherError.unknown)
                 }
             }
         }
     }
     
     fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                          with outputProvider: @escaping (SupportedType) -> OUT?) -> (Response<Data>) -> Void {
+                          with outputProvider: @escaping (SupportedType) throws -> OUT) -> (Response<Data>) -> Void {
         return wrap(callback: callback) { response in
-            return response.flatMap { outputProvider($0).map { .success($0) } ?? .failure(.nilValue) }
+            return response.flatMap {
+                do {
+                    return .success(try outputProvider($0))
+                } catch {
+                    return .failure(FetcherError.custom(error))
+                }
+            }
         }
+    }
+
+    fileprivate func rollback(request: Request, error: Error) {
+        request.callback(Response<Data>(result: .failure(error), rawResponse: nil, rawData: nil, request: request))
     }
     
     fileprivate func perform(request: Request) {

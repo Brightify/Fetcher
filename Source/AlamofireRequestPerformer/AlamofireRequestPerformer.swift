@@ -34,7 +34,7 @@ public struct AlamofireRequestPerformer: RequestPerformer {
         case .success(let value):
             result = .success(value)
         case .failure(let error):
-            result = .failure(.requestError(error))
+            result = .failure(FetcherError.requestError(error))
         }
         
         let response = Response<Data>(
