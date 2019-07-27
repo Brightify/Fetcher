@@ -5,7 +5,6 @@ import Nimble
 import Fetcher
 import DataMapper
 import RxSwift
-import Foundation
 
 class RxFetcher_RequestTest: QuickSpec {
 
@@ -581,7 +580,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<SupportedType, Int?>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -591,7 +590,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Void, Int?>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -601,7 +600,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Data, Int?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -611,7 +610,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int, Int?>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -621,7 +620,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int?, Int?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -631,7 +630,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int], Int?>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -641,7 +640,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int]?, Int?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -651,7 +650,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?], Int?>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -661,7 +660,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?]?, Int?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -671,7 +670,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int], Int?>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -681,7 +680,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int]?, Int?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -691,7 +690,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?], Int?>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -701,7 +700,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?]?, Int?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -841,7 +840,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<SupportedType, [Int]?>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -851,7 +850,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Void, [Int]?>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -861,7 +860,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Data, [Int]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -871,7 +870,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int, [Int]?>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -881,7 +880,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int?, [Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -891,7 +890,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int], [Int]?>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -901,7 +900,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int]?, [Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -911,7 +910,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?], [Int]?>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -921,7 +920,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?]?, [Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -931,7 +930,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int], [Int]?>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -941,7 +940,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int]?, [Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -951,7 +950,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?], [Int]?>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -961,7 +960,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?]?, [Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -971,7 +970,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<SupportedType, [Int?]>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -981,7 +980,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<Void, [Int?]>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -991,7 +990,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<Data, [Int?]>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1001,7 +1000,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<Int, [Int?]>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1011,7 +1010,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<Int?, [Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1021,7 +1020,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[Int], [Int?]>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1031,7 +1030,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[Int]?, [Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1041,7 +1040,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[Int?], [Int?]>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1051,7 +1050,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[Int?]?, [Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1061,7 +1060,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[String: Int], [Int?]>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1071,7 +1070,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[String: Int]?, [Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1081,7 +1080,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[String: Int?], [Int?]>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1091,7 +1090,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").rx.request(POST<[String: Int?]?, [Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1101,7 +1100,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<SupportedType, [Int?]?>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1111,7 +1110,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Void, [Int?]?>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1121,7 +1120,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Data, [Int?]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1131,7 +1130,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int, [Int?]?>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1141,7 +1140,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int?, [Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1151,7 +1150,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int], [Int?]?>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1161,7 +1160,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int]?, [Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1171,7 +1170,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?], [Int?]?>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1181,7 +1180,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?]?, [Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1191,7 +1190,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int], [Int?]?>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1201,7 +1200,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int]?, [Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1211,7 +1210,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?], [Int?]?>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1221,7 +1220,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?]?, [Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1361,7 +1360,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<SupportedType, [String: Int]?>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1371,7 +1370,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Void, [String: Int]?>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1381,7 +1380,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Data, [String: Int]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1391,7 +1390,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int, [String: Int]?>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1401,7 +1400,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int?, [String: Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1411,7 +1410,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int], [String: Int]?>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1421,7 +1420,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int]?, [String: Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1431,7 +1430,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?], [String: Int]?>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1441,7 +1440,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?]?, [String: Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1451,7 +1450,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int], [String: Int]?>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1461,7 +1460,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int]?, [String: Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1471,7 +1470,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?], [String: Int]?>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1481,7 +1480,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?]?, [String: Int]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1491,7 +1490,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<SupportedType, [String: Int?]>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1501,7 +1500,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<Void, [String: Int?]>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1511,7 +1510,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<Data, [String: Int?]>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1521,7 +1520,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<Int, [String: Int?]>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1531,7 +1530,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<Int?, [String: Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1541,7 +1540,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int], [String: Int?]>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1551,7 +1550,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int]?, [String: Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1561,7 +1560,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int?], [String: Int?]>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1571,7 +1570,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[Int?]?, [String: Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1581,7 +1580,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[String: Int], [String: Int?]>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1591,7 +1590,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[String: Int]?, [String: Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1601,7 +1600,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[String: Int?], [String: Int?]>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1611,7 +1610,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").rx.request(POST<[String: Int?]?, [String: Int?]>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1621,7 +1620,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<SupportedType, [String: Int?]?>("xyz"), input: .string("a")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1631,7 +1630,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Void, [String: Int?]?>("xyz")).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1641,7 +1640,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Data, [String: Int?]?>("xyz"), input: "a".data(using: .utf8)!).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1651,7 +1650,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int, [String: Int?]?>("xyz"), input: 1).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1661,7 +1660,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<Int?, [String: Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1671,7 +1670,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int], [String: Int?]?>("xyz"), input: [1, 2]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1681,7 +1680,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int]?, [String: Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1691,7 +1690,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?], [String: Int?]?>("xyz"), input: [Optional(1), nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1701,7 +1700,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[Int?]?, [String: Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1711,7 +1710,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int], [String: Int?]?>("xyz"), input: ["a": 1]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1721,7 +1720,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int]?, [String: Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1731,7 +1730,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?], [String: Int?]?>("xyz"), input: ["a": nil]).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1741,7 +1740,7 @@ class RxFetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").rx.request(POST<[String: Int?]?, [String: Int?]?>("xyz"), input: nil).subscribe(onSuccess: { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }).disposed(by: disposeBag)
                     expect(called).toEventually(beTrue())
@@ -1750,7 +1749,7 @@ class RxFetcher_RequestTest: QuickSpec {
         }
     }
 
-    private func assertInput(request: Request, expected: String, file: FileString = #file, line: UInt = #line) {
+    private func assertInput(request: Request, expected: String, file: String = #file, line: UInt = #line) {
         expect(request.httpBody, file: file, line: line).toNot(beNil())
         if let input = request.httpBody, let json = String(data: input, encoding: .utf8) {
             expect(json, file: file, line: line) == expected

@@ -6,7 +6,7 @@ for SCRIPT in "$BASE_DIR"/*.swift; do
 		continue
 	fi
 	OUTPUT="$BASE_DIR/$(head -1 "$SCRIPT" | cut -d" " -f2-)"
-	read -p "Script $(basename "$SCRIPT") will rewrite file $(realpath "$OUTPUT" --relative-to=.). Proceed? (y): "
+	read -p "Script $(basename "$SCRIPT") will rewrite file $OUTPUT. Proceed? (y): "
 	if [[ $REPLY =~ ^[Yy]([Ee][Ss])?$ ]]; then
 		cat "$BASE_SCRIPT" "$SCRIPT" | swift - > "$OUTPUT"
 	fi

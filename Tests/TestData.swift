@@ -48,15 +48,15 @@ struct TestData {
     }
 }
 
-func contain<T, R>(_ items: [R], compareFunction: @escaping (R, R) -> Bool) -> NonNilMatcherFunc<[T]> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
+func contain<T, R>(_ items: [R], compareFunction: @escaping (R, R) -> Bool) -> Predicate<[T]> {
+    return Predicate<[T]>.fromDeprecatedClosure { actualExpression, failureMessage in
         failureMessage.postfixMessage = "contain <\(items)>"
         guard let actual = try actualExpression.evaluate() else {
             return false
         }
-        
+
         for item in items {
-            if !(actual.flatMap { $0 as? R }.contains(where: { compareFunction($0, item) })) {
+            if !(actual.compactMap { $0 as? R }.contains(where: { compareFunction($0, item) })) {
                 return false
             }
         }

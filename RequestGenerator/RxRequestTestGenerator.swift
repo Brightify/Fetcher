@@ -53,12 +53,12 @@ for (oIndex, output) in outputTypes.enumerated() {
             print("                        }")
         } else if data[oIndex].contains("nil") {
             let value = data[oIndex].replacingOccurrences(of: "\"", with: "\\\"")
-            print("                        expect(\"\\(response.result.value)\") == \"Optional(\(value))\"")
+            print("                        expect(\"\\(String(describing: response.result.value))\") == \"Optional(\(value))\"")
         } else {
             print("                        expect(response.result.value) == \(data[oIndex])")
         }
         print("                        called = true")
-        print("                    }).addDisposableTo(disposeBag)")
+        print("                    }).disposed(by: disposeBag)")
         print("                    expect(called).toEventually(beTrue())")
         print("                }")
         print("            }")

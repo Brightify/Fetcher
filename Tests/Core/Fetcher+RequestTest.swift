@@ -4,7 +4,6 @@ import Quick
 import Nimble
 import Fetcher
 import DataMapper
-import Foundation
 
 class Fetcher_RequestTest: QuickSpec {
 
@@ -578,7 +577,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<SupportedType, Int?>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -588,7 +587,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Void, Int?>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -598,7 +597,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Data, Int?>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -608,7 +607,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int, Int?>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -618,7 +617,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int?, Int?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -628,7 +627,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int], Int?>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -638,7 +637,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int]?, Int?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -648,7 +647,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?], Int?>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -658,7 +657,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?]?, Int?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -668,7 +667,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int], Int?>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -678,7 +677,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int]?, Int?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -688,7 +687,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?], Int?>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -698,7 +697,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?]?, Int?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -838,7 +837,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<SupportedType, [Int]?>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -848,7 +847,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Void, [Int]?>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -858,7 +857,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Data, [Int]?>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -868,7 +867,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int, [Int]?>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -878,7 +877,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int?, [Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -888,7 +887,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int], [Int]?>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -898,7 +897,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int]?, [Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -908,7 +907,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?], [Int]?>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -918,7 +917,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?]?, [Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -928,7 +927,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int], [Int]?>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -938,7 +937,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int]?, [Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -948,7 +947,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?], [Int]?>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -958,7 +957,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?]?, [Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -968,7 +967,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<SupportedType, [Int?]>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -978,7 +977,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<Void, [Int?]>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -988,7 +987,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<Data, [Int?]>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -998,7 +997,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<Int, [Int?]>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1008,7 +1007,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<Int?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1018,7 +1017,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[Int], [Int?]>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1028,7 +1027,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[Int]?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1038,7 +1037,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[Int?], [Int?]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1048,7 +1047,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[Int?]?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1058,7 +1057,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[String: Int], [Int?]>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1068,7 +1067,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[String: Int]?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1078,7 +1077,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[String: Int?], [Int?]>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1088,7 +1087,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "[1,null]").request(POST<[String: Int?]?, [Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([Optional(1), nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([Optional(1), nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1098,7 +1097,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<SupportedType, [Int?]?>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1108,7 +1107,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Void, [Int?]?>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1118,7 +1117,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Data, [Int?]?>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1128,7 +1127,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int, [Int?]?>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1138,7 +1137,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int?, [Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1148,7 +1147,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int], [Int?]?>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1158,7 +1157,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int]?, [Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1168,7 +1167,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?], [Int?]?>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1178,7 +1177,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?]?, [Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1188,7 +1187,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int], [Int?]?>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1198,7 +1197,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int]?, [Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1208,7 +1207,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?], [Int?]?>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1218,7 +1217,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?]?, [Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1358,7 +1357,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<SupportedType, [String: Int]?>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1368,7 +1367,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Void, [String: Int]?>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1378,7 +1377,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Data, [String: Int]?>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1388,7 +1387,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int, [String: Int]?>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1398,7 +1397,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int?, [String: Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1408,7 +1407,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int], [String: Int]?>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1418,7 +1417,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int]?, [String: Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1428,7 +1427,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?], [String: Int]?>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1438,7 +1437,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?]?, [String: Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1448,7 +1447,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int], [String: Int]?>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1458,7 +1457,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int]?, [String: Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1468,7 +1467,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?], [String: Int]?>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1478,7 +1477,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?]?, [String: Int]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1488,7 +1487,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<SupportedType, [String: Int?]>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1498,7 +1497,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<Void, [String: Int?]>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1508,7 +1507,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<Data, [String: Int?]>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1518,7 +1517,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<Int, [String: Int?]>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1528,7 +1527,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<Int?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1538,7 +1537,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[Int], [String: Int?]>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1548,7 +1547,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[Int]?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1558,7 +1557,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[Int?], [String: Int?]>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1568,7 +1567,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[Int?]?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1578,7 +1577,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[String: Int], [String: Int?]>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1588,7 +1587,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[String: Int]?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1598,7 +1597,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[String: Int?], [String: Int?]>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1608,7 +1607,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "{\"a\":null}").request(POST<[String: Int?]?, [String: Int?]>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional([\"a\": nil])"
+                        expect("\(String(describing: response.result.value))") == "Optional([\"a\": nil])"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1618,7 +1617,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<SupportedType, [String: Int?]?>("xyz"), input: .string("a")) { response in
                         self.assertInput(request: response.request, expected: "\"a\"")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1628,7 +1627,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Void, [String: Int?]?>("xyz")) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1638,7 +1637,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Data, [String: Int?]?>("xyz"), input: "a".data(using: .utf8)!) { response in
                         self.assertInput(request: response.request, expected: "a")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1648,7 +1647,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int, [String: Int?]?>("xyz"), input: 1) { response in
                         self.assertInput(request: response.request, expected: "1")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1658,7 +1657,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<Int?, [String: Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1668,7 +1667,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int], [String: Int?]?>("xyz"), input: [1, 2]) { response in
                         self.assertInput(request: response.request, expected: "[1,2]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1678,7 +1677,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int]?, [String: Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1688,7 +1687,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?], [String: Int?]?>("xyz"), input: [Optional(1), nil]) { response in
                         self.assertInput(request: response.request, expected: "[1,null]")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1698,7 +1697,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[Int?]?, [String: Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1708,7 +1707,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int], [String: Int?]?>("xyz"), input: ["a": 1]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":1}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1718,7 +1717,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int]?, [String: Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1728,7 +1727,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?], [String: Int?]?>("xyz"), input: ["a": nil]) { response in
                         self.assertInput(request: response.request, expected: "{\"a\":null}")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1738,7 +1737,7 @@ class Fetcher_RequestTest: QuickSpec {
                 it("works") {
                     self.fetcher(response: "").request(POST<[String: Int?]?, [String: Int?]?>("xyz"), input: nil) { response in
                         self.assertInput(request: response.request, expected: "")
-                        expect("\(response.result.value)") == "Optional(nil)"
+                        expect("\(String(describing: response.result.value))") == "Optional(nil)"
                         called = true
                     }
                     expect(called).toEventually(beTrue())
@@ -1747,7 +1746,7 @@ class Fetcher_RequestTest: QuickSpec {
         }
     }
 
-    private func assertInput(request: Request, expected: String, file: FileString = #file, line: UInt = #line) {
+    private func assertInput(request: Request, expected: String, file: String = #file, line: UInt = #line) {
         expect(request.httpBody, file: file, line: line).toNot(beNil())
         if let input = request.httpBody, let json = String(data: input, encoding: .utf8) {
             expect(json, file: file, line: line) == expected
