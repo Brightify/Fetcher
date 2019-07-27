@@ -71,7 +71,7 @@ class ResponseVerifierTest: QuickSpec {
         
         let error: FetcherError?
         
-        func verify(response: Response<SupportedType>) -> FetcherError? {
+        func verify(response: Response<Data>) -> FetcherError? {
             return error
         }
     }

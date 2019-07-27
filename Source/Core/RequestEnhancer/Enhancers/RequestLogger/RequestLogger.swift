@@ -23,14 +23,14 @@ public final class RequestLogger: RequestEnhancer {
         request.modifiers.append(RequestLoggerTimestamp(time: Date()))
     }
     
-    public func deenhance(response: inout Response<SupportedType>) {
+    public func deenhance(response: inout Response<Data>) {
         let log = createLog(for: response)
         if !log.isEmpty {
             logFunction(log)
         }
     }
     
-    private func createLog(for response: Response<SupportedType>) -> String {
+    private func createLog(for response: Response<Data>) -> String {
         var result = ""
         let modifiers = response.request.modifiers.compactMap { $0 as? RequestLogging }
         let options = modifiers.count == 0 ? defaultOptions : modifiers.reduce(RequestLogging.disabled) { acc, element in acc.union(element) }

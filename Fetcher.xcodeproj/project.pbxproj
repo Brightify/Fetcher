@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
+		189075EA22EC703F00B9D03B /* Protobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075E922EC703F00B9D03B /* Protobuf+Request.swift */; };
+		189075ED22EC82FE00B9D03B /* RxProtobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */; };
 		18E484571BA8BFB1004CB09A /* Fetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* Fetcher.framework */; };
 		18F7988420D2AB3C00522E1E /* shim-Collection+compactMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F7988320D2AB3C00522E1E /* shim-Collection+compactMap.swift */; };
 		67D791B607BD885ED386A1E0 /* Pods_FetcherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2097300D98DE1D9862CD8833 /* Pods_FetcherTests.framework */; };
@@ -106,6 +108,8 @@
 
 /* Begin PBXFileReference section */
 		185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SupportedType+Equatable.swift"; path = "Utils/SupportedType+Equatable.swift"; sourceTree = "<group>"; };
+		189075E922EC703F00B9D03B /* Protobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protobuf+Request.swift"; sourceTree = "<group>"; };
+		189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxProtobuf+Request.swift"; sourceTree = "<group>"; };
 		18E4844D1BA8BFB1004CB09A /* Fetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E484561BA8BFB1004CB09A /* FetcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,7 +180,7 @@
 		DC4691561E37E904001C8540 /* CharsetHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharsetHeader.swift; sourceTree = "<group>"; };
 		DC4691581E38AC14001C8540 /* ResponseVerifierEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseVerifierEnhancer.swift; sourceTree = "<group>"; };
 		DC46915C1E3A019A001C8540 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		DC46915D1E3A019A001C8540 /* Fetcher.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fetcher.podspec; sourceTree = "<group>"; };
+		DC46915D1E3A019A001C8540 /* Fetcher.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Fetcher.podspec; sourceTree = "<group>"; };
 		DC46915E1E3A019A001C8540 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		DC46915F1E3A019A001C8540 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DC4691601E3A019A001C8540 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -251,6 +255,22 @@
 				DC46918A1E3A6254001C8540 /* Utils */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		189075E822EC702400B9D03B /* Protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				189075E922EC703F00B9D03B /* Protobuf+Request.swift */,
+			);
+			path = Protobuf;
+			sourceTree = "<group>";
+		};
+		189075EB22EC82DD00B9D03B /* RxProtobuf */ = {
+			isa = PBXGroup;
+			children = (
+				189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */,
+			);
+			path = RxProtobuf;
 			sourceTree = "<group>";
 		};
 		18E4845C1BA8BFB1004CB09A /* Tests */ = {
@@ -511,6 +531,8 @@
 				DC4690DE1E36A21D001C8540 /* AlamofireRequestPerformer */,
 				DC4690E51E36A227001C8540 /* Core */,
 				DC4691401E36A23B001C8540 /* RxFetcher */,
+				189075E822EC702400B9D03B /* Protobuf */,
+				189075EB22EC82DD00B9D03B /* RxProtobuf */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -776,6 +798,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/DataMapper/DataMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
@@ -784,6 +807,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
@@ -835,6 +859,7 @@
 				DC46911F1E36A227001C8540 /* ErrorHandler.swift in Sources */,
 				DC46911B1E36A227001C8540 /* EndpointProvider.swift in Sources */,
 				DC4691461E36A23B001C8540 /* ObservableConvertibleType+Response.swift in Sources */,
+				189075ED22EC82FE00B9D03B /* RxProtobuf+Request.swift in Sources */,
 				DC46911A1E36A227001C8540 /* Endpoint.swift in Sources */,
 				DC4691211E36A227001C8540 /* NoInternetErrorHandler.swift in Sources */,
 				DC4690E21E36A21D001C8540 /* AlamofireJsonDataEncoder.swift in Sources */,
@@ -852,6 +877,7 @@
 				DC46913B1E36A227001C8540 /* FetcherError.swift in Sources */,
 				DC46911E1E36A227001C8540 /* CompositeErrorHandler.swift in Sources */,
 				DC4691231E36A227001C8540 /* Header.swift in Sources */,
+				189075EA22EC703F00B9D03B /* Protobuf+Request.swift in Sources */,
 				DC4691221E36A227001C8540 /* RequestTimeOutErrorHandler.swift in Sources */,
 				DC46911D1E36A227001C8540 /* BaseStatusCodeErrorHandler.swift in Sources */,
 				DC4691361E36A227001C8540 /* DataEncoder.swift in Sources */,

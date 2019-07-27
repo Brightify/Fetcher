@@ -6,6 +6,7 @@ def shared
     pod 'Alamofire', '~> 4.8'
     pod 'RxSwift', '~> 5.0'
     pod 'DataMapper', :git => 'https://github.com/Brightify/DataMapper.git', :branch => 'preview/1.0.0'
+    pod 'SwiftProtobuf', '~> 1.0'
 end
 
 target 'Fetcher' do

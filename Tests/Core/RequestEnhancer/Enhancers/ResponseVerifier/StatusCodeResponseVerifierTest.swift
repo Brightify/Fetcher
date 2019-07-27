@@ -19,7 +19,7 @@ class StatusCodeResponseVerifierTest: QuickSpec {
             
             describe("verify") {
                 it("returns invalidStatusCode error if response does not have statusCode set in init") {
-                    let response: Response<SupportedType> = TestData.response(url: "a", result: .success(.int(1)), statusCode: 2)
+                    let response: Response<Data> = TestData.response(url: "a", result: .success(JsonSerializer().serialize(.int(1))), statusCode: 2)
                     
                     if let error = verifier.verify(response: response) {
                         switch error {
@@ -33,7 +33,7 @@ class StatusCodeResponseVerifierTest: QuickSpec {
                     }
                 }
                 it("returns nil otherwise") {
-                    let response: Response<SupportedType> = TestData.response(url: "a", result: .success(.int(1)), statusCode: 1)
+                    let response: Response<Data> = TestData.response(url: "a", result: .success(JsonSerializer().serialize(.int(1))), statusCode: 1)
                     
                     expect(verifier.verify(response: response)).to(beNil())
                 }

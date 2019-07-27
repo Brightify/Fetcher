@@ -15,11 +15,11 @@ private struct EndpointProviderStub: EndpointProvider {
 
 private struct ErrorHandlerStub: ErrorHandler {
     
-    func canResolveError(response: Response<SupportedType>) -> Bool {
+    func canResolveError(response: Response<Data>) -> Bool {
         return false
     }
     
-    func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) {
+    func resolveError(response: Response<Data>, callback: (Response<Data>) -> Void) {
     }
 }
 
@@ -46,7 +46,7 @@ private struct RequestModifierStub: RequestModifier {
 
 private struct ResponseVerifierStub: ResponseVerifier {
     
-    func verify(response: Response<SupportedType>) -> FetcherError? {
+    func verify(response: Response<Data>) -> FetcherError? {
         return nil
     }
 }

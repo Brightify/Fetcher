@@ -14,7 +14,7 @@ extension Fetcher {
     // Overloads have similar signiture to allow easier request generation.
     internal func run(
         endpoint: Endpoint<Data, Data>,
-        inputProvider: @escaping () -> (Data),
+        inputProvider: @escaping () throws -> (Data),
         outputProvider: @escaping (Data) -> Data,
         callback: @escaping (Response<Data>) -> Void
     ) -> Cancellable {
@@ -22,10 +22,14 @@ extension Fetcher {
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            request.httpBody = inputProvider()
-            self.requestEnhancers.forEach { $0.enhance(request: &request) }
-            self.perform(request: request)
-            cancellable.add(cancellable: request.cancellable)
+            do {
+                try request.httpBody = inputProvider()
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
         }
         return cancellable
     }
@@ -51,10 +55,32 @@ extension Fetcher {
         }
         return cancellable
     }
+
+    internal func run<IN>(
+        endpoint: Endpoint<IN, Data>,
+        inputProvider: @escaping () throws -> (Data),
+        outputProvider: @escaping (Data) -> Data,
+        callback: @escaping (Response<Data>) -> Void
+        ) -> Cancellable {
+        let cancellable = Cancellable()
+        callQueue.async {
+            let wrappedCallback = self.wrap(callback: callback)
+            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
+            do {
+                try request.httpBody = inputProvider()
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
+        }
+        return cancellable
+    }
     
     internal func run<OUT>(
         endpoint: Endpoint<Data, OUT>,
-        inputProvider: @escaping () -> (Data),
+        inputProvider: @escaping () throws -> (Data),
         outputProvider: @escaping (SupportedType) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
@@ -62,20 +88,112 @@ extension Fetcher {
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            request.httpBody = inputProvider()
-            self.requestEnhancers.forEach { $0.enhance(request: &request) }
-            self.perform(request: request)
-            cancellable.add(cancellable: request.cancellable)
+            do {
+                try request.httpBody = inputProvider()
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
         }
         return cancellable
     }
-    
+
+//    internal func run<OUT>(
+//        endpoint: Endpoint<Data, OUT>,
+//        inputProvider: @escaping () throws -> (Data),
+//        outputProvider: @escaping (SupportedType) throws -> OUT,
+//        callback: @escaping (Response<OUT>) -> Void
+//        ) -> Cancellable {
+//        let cancellable = Cancellable()
+//        callQueue.async {
+//            let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
+//            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
+//            do {
+//                try request.httpBody = inputProvider()
+//                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+//                self.perform(request: request)
+//                cancellable.add(cancellable: request.cancellable)
+//            } catch {
+//                self.rollback(request: request, error: error)
+//            }
+//        }
+//        return cancellable
+//    }
+
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
         inputProvider: @escaping () throws -> (SupportedType),
         outputProvider: @escaping (SupportedType) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
+        let cancellable = Cancellable()
+        callQueue.async {
+            let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
+            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
+            do {
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
+        }
+        return cancellable
+    }
+
+    internal func run<IN, OUT>(
+        endpoint: Endpoint<IN, OUT>,
+        inputProvider: @escaping () throws -> (Data),
+        outputProvider: @escaping (SupportedType) throws -> OUT,
+        callback: @escaping (Response<OUT>) -> Void
+        ) -> Cancellable {
+        let cancellable = Cancellable()
+        callQueue.async {
+            let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
+            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
+            do {
+                try request.httpBody = inputProvider()
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
+        }
+        return cancellable
+    }
+
+    internal func run<IN, OUT>(
+        endpoint: Endpoint<IN, OUT>,
+        inputProvider: @escaping () throws -> (Data),
+        outputProvider: @escaping (Data) throws -> OUT,
+        callback: @escaping (Response<OUT>) -> Void
+    ) -> Cancellable {
+        let cancellable = Cancellable()
+        callQueue.async {
+            let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
+            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
+            do {
+                try request.httpBody = inputProvider()
+                self.requestEnhancers.forEach { $0.enhance(request: &request) }
+                self.perform(request: request)
+                cancellable.add(cancellable: request.cancellable)
+            } catch {
+                self.rollback(request: request, error: error)
+            }
+        }
+        return cancellable
+    }
+
+    internal func run<IN, OUT>(
+        endpoint: Endpoint<IN, OUT>,
+        inputProvider: @escaping () throws -> (SupportedType),
+        outputProvider: @escaping (Data) throws -> OUT,
+        callback: @escaping (Response<OUT>) -> Void
+        ) -> Cancellable {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
@@ -124,7 +242,7 @@ extension Fetcher {
     }
     
     fileprivate func wrap(callback: @escaping (Response<Data>) -> Void) -> (Response<Data>) -> Void {
-        return wrap(callback: callback) { response in
+        return wrapData(callback: callback) { response in
             return response.flatMap { _ in
                 if let data = response.rawData {
                     return .success(data)
@@ -138,8 +256,21 @@ extension Fetcher {
     }
     
     fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                          with outputProvider: @escaping (SupportedType) throws -> OUT) -> (Response<Data>) -> Void {
-        return wrap(callback: callback) { response in
+                               with outputProvider: @escaping (SupportedType) throws -> OUT) -> (Response<Data>) -> Void {
+        return wrapSupportedType(callback: callback) { response in
+            return response.flatMap {
+                do {
+                    return .success(try outputProvider($0))
+                } catch {
+                    return .failure(FetcherError.custom(error))
+                }
+            }
+        }
+    }
+
+    fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
+                               with outputProvider: @escaping (Data) throws -> OUT) -> (Response<Data>) -> Void {
+        return wrapData(callback: callback) { response in
             return response.flatMap {
                 do {
                     return .success(try outputProvider($0))
@@ -157,18 +288,29 @@ extension Fetcher {
     fileprivate func perform(request: Request) {
         request.cancellable.add(cancellable: self.requestPerformer.perform(request: request, callback: request.callback))
     }
+
+    private func wrapSupportedType<OUT>(
+        callback: @escaping (Response<OUT>) -> Void,
+        mapResponse: @escaping (Response<SupportedType>) -> Response<OUT>
+    ) -> (Response<Data>) -> Void {
+        return wrapData(callback: callback) {
+            mapResponse(self.requestPerformer.dataEncoder.decode(response: $0))
+        }
+    }
     
-    private func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                      mapResponse: @escaping (Response<SupportedType>) -> Response<OUT>) -> (Response<Data>) -> Void {
+    private func wrapData<OUT>(
+        callback: @escaping (Response<OUT>) -> Void,
+        mapResponse: @escaping (Response<Data>) -> Response<OUT>
+    ) -> (Response<Data>) -> Void {
         return { response in
             self.callQueue.async {
-                var decodedResponse = self.requestPerformer.dataEncoder.decode(response: response)
-                self.requestEnhancers.forEach { $0.deenhance(response: &decodedResponse) }
-                let mappedResponse = mapResponse(decodedResponse)
+                var mutableResponse = response
+                self.requestEnhancers.forEach { $0.deenhance(response: &mutableResponse) }
+                let mappedResponse = mapResponse(mutableResponse)
                 
                 // Used if mappedResponse contains error. So this is only cast of generic type.
                 // Allows ErrorHandler to respond to .nilValue.
-                let mappedResponseForErrorHandler = mappedResponse.map { _ in SupportedType.null }
+                let mappedResponseForErrorHandler = mappedResponse.map { _ in mutableResponse.rawData ?? Data() }
                 if case .failure = mappedResponse.result, self.errorHandler.canResolveError(response: mappedResponseForErrorHandler) {
                     self.errorHandler.resolveError(response: mappedResponseForErrorHandler) {
                         // ErrorHandler can change response, so its neccesary to remap it again.

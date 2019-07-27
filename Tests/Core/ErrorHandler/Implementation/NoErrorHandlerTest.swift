@@ -26,7 +26,7 @@ class NoErrorHandlerTest: QuickSpec {
                     let request = TestData.request(url: "a") { _,_,_,_  in
                         retryCalled = true
                     }
-                    let response: Response<SupportedType> = TestData.response(request: request)
+                    let response: Response<Data> = TestData.response(request: request)
                     
                     NoErrorHandler().resolveError(response: response, callback: { _ in })
                     

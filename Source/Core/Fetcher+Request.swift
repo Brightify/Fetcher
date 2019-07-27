@@ -40,32 +40,32 @@ extension Fetcher {
 
     @discardableResult
     public func request(_ endpoint: Endpoint<SupportedType, Void>, input: SupportedType, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
     public func request(_ endpoint: Endpoint<Void, Void>, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
     public func request(_ endpoint: Endpoint<Data, Void>, input: Data, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
     public func request<IN: Serializable>(_ endpoint: Endpoint<IN, Void>, input: IN, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
     public func request<IN: Encodable>(_ endpoint: Endpoint<IN, Void>, input: IN, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { try self.objectMapper.encode(input) }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { try self.objectMapper.encode(input) }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
     public func request<IN: Serializable & Encodable>(_ endpoint: Endpoint<IN, Void>, input: IN, callback: @escaping (Response<Void>) -> Void) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { _ in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { self.objectMapper.serialize(input) }, outputProvider: { (_: Data) in Void() }, callback: callback)
     }
 }
 

@@ -28,11 +28,12 @@ open class BaseStatusCodeErrorHandler: ErrorHandler {
         self.codes = Set([code])
     }
     
-    public final func canResolveError(response: Response<SupportedType>) -> Bool {
+    public final func canResolveError(response: Response<Data>) -> Bool {
         return (response.rawResponse?.statusCode).map(codes.contains) ?? false
     }
     
-    open func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) -> Void {
+    open func resolveError(response: Response<Data>, callback: (Response<Data>) -> Void) -> Void {
+        #warning("Not implemented.")
         fatalError("Not implemented.")
     }
 }

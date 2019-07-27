@@ -10,5 +10,5 @@ import DataMapper
 
 public protocol ResponseVerifier: RequestModifier {
 
-    func verify(response: Response<SupportedType>) -> FetcherError?
+    func verify(response: Response<Data>) -> FetcherError?
 }

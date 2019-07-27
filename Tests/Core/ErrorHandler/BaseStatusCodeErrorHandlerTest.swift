@@ -39,7 +39,7 @@ class BaseStatusCodeErrorHandlerImplementationTest: QuickSpec {
                 
                 it("returns true if response has statusCode set in init") {
                     for code in self.codes {
-                        let response: Response<SupportedType> = TestData.response(url: "a", statusCode: code)
+                        let response: Response<Data> = TestData.response(url: "a", statusCode: code)
                         
                         expect(handler.canResolveError(response: response)).to(beTrue())
                     }
@@ -47,7 +47,7 @@ class BaseStatusCodeErrorHandlerImplementationTest: QuickSpec {
                 it("returns false otherwise") {
                     let code = (self.codes.sorted().last ?? 0) + 1
                     
-                    let response: Response<SupportedType> = TestData.response(url: "a", statusCode: code)
+                    let response: Response<Data> = TestData.response(url: "a", statusCode: code)
                         
                     expect(handler.canResolveError(response: response)).to(beFalse())
                 }
@@ -65,7 +65,7 @@ class BaseStatusCodeErrorHandlerImplementationTest: QuickSpec {
     
     func testRetry(handler: ErrorHandler, maxRepetitions: Int, delay: Int, file: FileString = #file, line: UInt = #line) {
         var requestFromClosure: Request?
-        var responseFromCallback: Response<SupportedType>?
+        var responseFromCallback: Response<Data>?
         var actualMaxRepetitions: Int?
         var actualDelay: DispatchTimeInterval?
         
@@ -75,7 +75,7 @@ class BaseStatusCodeErrorHandlerImplementationTest: QuickSpec {
             actualDelay = $2
             $3()
         }
-        let response: Response<SupportedType> = TestData.response(request: request)
+        let response: Response<Data> = TestData.response(request: request)
         
         handler.resolveError(response: response, callback: { responseFromCallback = $0 })
         

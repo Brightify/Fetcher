@@ -42,5 +42,18 @@ Pod::Spec.new do |spec|
         subspec.source_files = 'Source/RxFetcher/**/*.swift'
     end
 
+    spec.subspec 'Protobuf' do |subspec|
+        subspec.dependency 'Fetcher/Core'
+        subspec.dependency 'SwiftProtobuf', '~> 1.0'
+        subspec.source_files = 'Source/Protobuf'
+    end
+
+    spec.subspec 'RxProtobuf' do |subspec|
+        subspec.dependency 'Fetcher/Core'
+        subspec.dependency 'Fetcher/Protobuf'
+        subspec.dependency 'Fetcher/RxFetcher'
+        subspec.source_files = 'Source/RxProtobuf'
+    end
+
     spec.default_subspecs = 'Core', 'AlamofireRequestPerformer'
 end

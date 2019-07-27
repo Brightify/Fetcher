@@ -13,10 +13,10 @@ public struct NoErrorHandler: ErrorHandler {
     public init() {
     }
     
-    public func canResolveError(response: Response<SupportedType>) -> Bool {
+    public func canResolveError(response: Response<Data>) -> Bool {
         return false
     }
     
-    public func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) -> Void {
+    public func resolveError(response: Response<Data>, callback: (Response<Data>) -> Void) -> Void {
     }
 }

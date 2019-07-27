@@ -20,11 +20,11 @@ public struct CompositeErrorHandler: ErrorHandler {
         self.init(handlers: handlers)
     }
     
-    public func canResolveError(response: Response<SupportedType>) -> Bool {
+    public func canResolveError(response: Response<Data>) -> Bool {
         return handlers.reduce(false) { $0 || $1.canResolveError(response: response) }
     }
     
-    public func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) {
+    public func resolveError(response: Response<Data>, callback: (Response<Data>) -> Void) {
         for handler in handlers {
             if handler.canResolveError(response: response) {
                 handler.resolveError(response: response, callback: callback)

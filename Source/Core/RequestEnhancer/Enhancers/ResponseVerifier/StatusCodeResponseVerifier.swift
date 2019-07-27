@@ -28,7 +28,7 @@ public struct StatusCodeResponseVerifier: ResponseVerifier {
         self.init(codes: [code])
     }
     
-    public func verify(response: Response<SupportedType>) -> FetcherError? {
+    public func verify(response: Response<Data>) -> FetcherError? {
         return (response.rawResponse?.statusCode).map(codes.contains) == false ? .invalidStatusCode : nil
     }
 }

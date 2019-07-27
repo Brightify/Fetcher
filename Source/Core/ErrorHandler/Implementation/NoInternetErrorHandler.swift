@@ -21,7 +21,7 @@ public final class NoInternetErrorHandler: BaseStatusCodeErrorHandler {
         super.init(code: 599)
     }
     
-    public override func resolveError(response: Response<SupportedType>, callback: (Response<SupportedType>) -> Void) {
+    public override func resolveError(response: Response<Data>, callback: (Response<Data>) -> Void) {
         response.request.retry(max: maxRepetitions, delay: delay) { callback(response) }
     }
 }

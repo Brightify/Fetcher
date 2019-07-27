@@ -16,7 +16,7 @@ public protocol RequestEnhancer {
     
     func enhance(request: inout Request)
     
-    func deenhance(response: inout Response<SupportedType>)
+    func deenhance(response: inout Response<Data>)
 }
 
 extension RequestEnhancer {
@@ -32,6 +32,6 @@ extension RequestEnhancer {
     public func enhance(request: inout Request) {
     }
     
-    public func deenhance(response: inout Response<SupportedType>) {
+    public func deenhance(response: inout Response<Data>) {
     }
 }
