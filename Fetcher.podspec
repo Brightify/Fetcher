@@ -38,7 +38,7 @@ Pod::Spec.new do |spec|
 
     spec.subspec 'RxFetcher' do |subspec|
         subspec.dependency 'Fetcher/Core'
-        subspec.dependency 'RxSwift', '~> 4.0'
+        subspec.dependency 'RxSwift', '> 4.0'
         subspec.source_files = 'Source/RxFetcher/**/*.swift'
     end
 
