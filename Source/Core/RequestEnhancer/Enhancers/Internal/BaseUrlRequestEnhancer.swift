@@ -26,6 +26,10 @@ internal struct BaseUrlRequestEnhancer: RequestEnhancer {
             urlComponents.host = baseUrl.host
         }
 
+        if urlComponents.port == nil {
+            urlComponents.port = baseUrl.port
+        }
+
         urlComponents.path = baseUrl.appendingPathComponent(urlComponents.path.removingFirst(ifEqualTo: "/")).path
         
         guard let newUrl = urlComponents.url else { return }
