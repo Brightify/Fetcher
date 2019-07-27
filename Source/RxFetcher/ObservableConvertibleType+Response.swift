@@ -9,12 +9,12 @@
 import RxSwift
 import Foundation
 
-extension PrimitiveSequenceType where Trait == SingleTrait, Element: ResponseProtocol {
-    public func asResult() -> Single<FetcherResult<Element.BodyType>> {
+extension PrimitiveSequenceType where TraitType == SingleTrait, ElementType: ResponseProtocol {
+    public func asResult() -> Single<FetcherResult<ElementType.BodyType>> {
         return map { $0.result }
     }
 
-    public func asBody() -> Single<Element.BodyType> {
+    public func asBody() -> Single<ElementType.BodyType> {
         return flatMap { response in
             switch response.result {
             case .success(let body):
@@ -26,7 +26,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait, Element: ResponsePro
     }
 }
 
-extension PrimitiveSequenceType where Trait == SingleTrait, Element: ResponseProtocol, Element.BodyType == Void {
+extension PrimitiveSequenceType where TraitType == SingleTrait, ElementType: ResponseProtocol, ElementType.BodyType == Void {
     public func asCompleted() -> Completable {
         return asBody().asCompletable()
     }
