@@ -47,7 +47,7 @@ public final class Fetcher {
         requestModifiers = fetcher.requestModifiers
     }
     
-    public func register(requestEnhancers: [RequestEnhancer]) {
+    public func register(requestEnhancers: [ChainingRequestEnhancer]) {
         syncQueue.sync {
             self.requestEnhancers.append(contentsOf: requestEnhancers)
             self.requestEnhancers.sort {
@@ -58,7 +58,7 @@ public final class Fetcher {
         }
     }
     
-    public func register(requestEnhancers: RequestEnhancer...) {
+    public func register(requestEnhancers: ChainingRequestEnhancer...) {
         register(requestEnhancers: requestEnhancers)
     }
     
