@@ -24,11 +24,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try request.httpBody = inputProvider()
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -46,11 +45,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -68,11 +66,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try request.httpBody = inputProvider()
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -90,37 +87,14 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try request.httpBody = inputProvider()
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
     }
-
-//    internal func run<OUT>(
-//        endpoint: Endpoint<Data, OUT>,
-//        inputProvider: @escaping () throws -> (Data),
-//        outputProvider: @escaping (SupportedType) throws -> OUT,
-//        callback: @escaping (Response<OUT>) -> Void
-//        ) -> Cancellable {
-//        let cancellable = Cancellable()
-//        callQueue.async {
-//            let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-//            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-//            do {
-//                try request.httpBody = inputProvider()
-//                self.requestEnhancers.forEach { $0.enhance(request: &request) }
-//                self.perform(request: request)
-//                cancellable.add(cancellable: request.cancellable)
-//            } catch {
-//                self.rollback(request: request, error: error)
-//            }
-//        }
-//        return cancellable
-//    }
 
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
@@ -134,11 +108,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -156,11 +129,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try request.httpBody = inputProvider()
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -178,11 +150,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try request.httpBody = inputProvider()
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -200,11 +171,10 @@ extension Fetcher {
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider())
-                self.requestEnhancers.forEach { $0.enhance(request: &request) }
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
-                self.rollback(request: request, error: error)
+                cancellable.add(cancellable: self.rollback(request: request, error: error))
             }
         }
         return cancellable
@@ -213,7 +183,7 @@ extension Fetcher {
 
 extension Fetcher {
     
-    fileprivate func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, callback: @escaping (Response<Data>) -> Void) -> Request {
+    fileprivate func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, callback: @escaping (Response<Data>) -> Cancellable) -> Request {
         guard let url = URL(string: endpoint.path) else {
             fatalError("Path \(endpoint.path) from endpoint doesn`t resolve to valid url.")
         }
@@ -241,7 +211,7 @@ extension Fetcher {
         }
     }
     
-    fileprivate func wrap(callback: @escaping (Response<Data>) -> Void) -> (Response<Data>) -> Void {
+    fileprivate func wrap(callback: @escaping (Response<Data>) -> Void) -> (Response<Data>) -> Cancellable {
         return wrapData(callback: callback) { response in
             return response.flatMap { _ in
                 if let data = response.rawData {
@@ -256,7 +226,7 @@ extension Fetcher {
     }
     
     fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                               with outputProvider: @escaping (SupportedType) throws -> OUT) -> (Response<Data>) -> Void {
+                               with outputProvider: @escaping (SupportedType) throws -> OUT) -> (Response<Data>) -> Cancellable {
         return wrapSupportedType(callback: callback) { response in
             return response.flatMap {
                 do {
@@ -269,7 +239,7 @@ extension Fetcher {
     }
 
     fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                               with outputProvider: @escaping (Data) throws -> OUT) -> (Response<Data>) -> Void {
+                               with outputProvider: @escaping (Data) throws -> OUT) -> (Response<Data>) -> Cancellable {
         return wrapData(callback: callback) { response in
             return response.flatMap {
                 do {
@@ -281,18 +251,26 @@ extension Fetcher {
         }
     }
 
-    fileprivate func rollback(request: Request, error: Error) {
-        request.callback(Response<Data>(result: .failure(error), rawResponse: nil, rawData: nil, request: request))
+    fileprivate func rollback(request: Request, error: Error) -> Cancellable {
+        return request.callback(Response<Data>(result: .failure(error), rawResponse: nil, rawData: nil, request: request))
     }
     
     fileprivate func perform(request: Request) {
-        request.cancellable.add(cancellable: self.requestPerformer.perform(request: request, callback: request.callback))
+        request.cancellable.add(cancellable:
+            self.chain(request: request, enhancers: requestEnhancers) { result in
+                switch result {
+                case .success(let finalRequest):
+                    return self.requestPerformer.perform(request: finalRequest, callback: request.callback)
+                case .failure(let error):
+                    return self.rollback(request: request, error: error)
+                }
+            })
     }
 
     private func wrapSupportedType<OUT>(
         callback: @escaping (Response<OUT>) -> Void,
         mapResponse: @escaping (Response<SupportedType>) -> Response<OUT>
-    ) -> (Response<Data>) -> Void {
+    ) -> (Response<Data>) -> Cancellable {
         return wrapData(callback: callback) {
             mapResponse(self.requestPerformer.dataEncoder.decode(response: $0))
         }
@@ -301,26 +279,31 @@ extension Fetcher {
     private func wrapData<OUT>(
         callback: @escaping (Response<OUT>) -> Void,
         mapResponse: @escaping (Response<Data>) -> Response<OUT>
-    ) -> (Response<Data>) -> Void {
+    ) -> (Response<Data>) -> Cancellable {
         return { response in
+            let parentCancellable = Cancellable()
             self.callQueue.async {
-                var mutableResponse = response
-                self.requestEnhancers.forEach { $0.deenhance(response: &mutableResponse) }
-                let mappedResponse = mapResponse(mutableResponse)
-                
-                // Used if mappedResponse contains error. So this is only cast of generic type.
-                // Allows ErrorHandler to respond to .nilValue.
-                let mappedResponseForErrorHandler = mappedResponse.map { _ in mutableResponse.rawData ?? Data() }
-                if case .failure = mappedResponse.result, self.errorHandler.canResolveError(response: mappedResponseForErrorHandler) {
-                    self.errorHandler.resolveError(response: mappedResponseForErrorHandler) {
-                        // ErrorHandler can change response, so its neccesary to remap it again.
-                        let mappedResponse = mapResponse($0)
+                let cancellable = self.chain(response: response, enhancers: self.requestEnhancers) { newResponse in
+                    let mappedResponse = mapResponse(newResponse)
+
+                    // Used if mappedResponse contains error. So this is only cast of generic type.
+                    // Allows ErrorHandler to respond to .nilValue.
+                    let mappedResponseForErrorHandler = mappedResponse.map { _ in newResponse.rawData ?? Data() }
+                    if case .failure = mappedResponse.result, self.errorHandler.canResolveError(response: mappedResponseForErrorHandler) {
+                        self.errorHandler.resolveError(response: mappedResponseForErrorHandler) {
+                            // ErrorHandler can change response, so its neccesary to remap it again.
+                            let mappedResponse = mapResponse($0)
+                            self.callbackQueue.async { callback(mappedResponse) }
+                        }
+                    } else {
                         self.callbackQueue.async { callback(mappedResponse) }
                     }
-                } else {
-                    self.callbackQueue.async { callback(mappedResponse) }
+
+                    return Cancellable()
                 }
+                parentCancellable.add(cancellable: cancellable)
             }
+            return parentCancellable
         }
     }
     
@@ -334,5 +317,42 @@ extension Fetcher {
             requestCopy.retried += 1
             self.perform(request: requestCopy)
         }
+    }
+
+    private func chain<C: Collection>(request: Request, enhancers: C, done: @escaping (Result<Request, Error>) -> Cancellable) -> Cancellable where C.Element == ChainingRequestEnhancer {
+        guard let nextEnhancer = enhancers.first else {
+            return done(.success(request))
+        }
+
+        let parentCancellable = Cancellable()
+        let childCancellable = nextEnhancer.enhance(request: request) { result in
+            guard !parentCancellable.isCancelled else { return }
+
+            switch result {
+            case .success(let newRequest):
+                let grandchildCancellable = self.chain(request: newRequest, enhancers: enhancers.dropFirst(), done: done)
+                parentCancellable.add(cancellable: grandchildCancellable)
+            case .failure(let error):
+                parentCancellable.add(cancellable: done(.failure(error)))
+            }
+        }
+        parentCancellable.add(cancellable: childCancellable)
+        return parentCancellable
+    }
+
+    private func chain<C: Collection>(response: Response<Data>, enhancers: C, done: @escaping (Response<Data>) -> Cancellable) -> Cancellable where C.Element == ChainingRequestEnhancer {
+        guard let nextEnhancer = enhancers.first else {
+            return done(response)
+        }
+
+        let parentCancellable = Cancellable()
+        let childCancellable = nextEnhancer.deenhance(response: response) { newResponse in
+            guard !parentCancellable.isCancelled else { return }
+
+            let grandchildCancellable = self.chain(response: newResponse, enhancers: enhancers.dropFirst(), done: done)
+            parentCancellable.add(cancellable: grandchildCancellable)
+        }
+        parentCancellable.add(cancellable: childCancellable)
+        return parentCancellable
     }
 }

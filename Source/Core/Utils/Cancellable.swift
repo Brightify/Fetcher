@@ -10,13 +10,13 @@ import Foundation
 
 /// Can be used to cancel requests.
 public final class Cancellable {
-    
+    public private(set) var isCancelled = false
+
     private let syncQueue = DispatchQueue(label: "Cancellable_syncQueue")
     
     private var cancelAction: () -> Void
     private var cancellables: [Cancellable] = []
-    private var shouldCancel = false
-    
+
     public init(cancelAction: @escaping () -> Void = {}) {
         self.cancelAction = cancelAction
     }
@@ -30,14 +30,14 @@ public final class Cancellable {
     public func add(cancellable: Cancellable) {
         syncQueue.sync {
             cancellables.append(cancellable)
-            if (shouldCancel) {
+            if (isCancelled) {
                 cancelNotSynchronized()
             }
         }
     }
     
     private func cancelNotSynchronized() {
-        shouldCancel = true
+        isCancelled = true
         cancelAction()
         cancellables.forEach { $0.cancelNotSynchronized() }
     }

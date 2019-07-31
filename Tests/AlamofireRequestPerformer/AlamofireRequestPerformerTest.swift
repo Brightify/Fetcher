@@ -24,6 +24,7 @@ class AlamofireRequestPerformerTest: QuickSpec {
                     _ = requestPerformer.perform(request: request) { response in
                         called = true
                         expect(response.result.value).toNot(beNil())
+                        return Cancellable()
                     }
                     
                     expect(called).toEventually(beTrue(), timeout: 10)
@@ -35,6 +36,7 @@ class AlamofireRequestPerformerTest: QuickSpec {
                     _ = requestPerformer.perform(request: request) { response in
                         called = true
                         expect(response.result.value).to(beNil())
+                        return Cancellable()
                     }
                     
                     expect(called).toEventually(beTrue(), timeout: 10)

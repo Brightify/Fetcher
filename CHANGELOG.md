@@ -8,6 +8,7 @@
 * Moved dependency on DataMapper to a separate subspec `DataMapper`.
 * Changed `Observable` to `Single` and `Completable` in `RxFetcher`.
 * Swift Package Manager support.
+* Reworked RequestEnhancers to be chainable, allowing asynchronous execution.
 
 ## 0.3.1
 * Fixed regression where `BaseUrl` encoded query parameters from endpoint's path.

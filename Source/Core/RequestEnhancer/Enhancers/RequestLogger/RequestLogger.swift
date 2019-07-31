@@ -18,7 +18,7 @@ public final class RequestLogger: RequestEnhancer {
         self.defaultOptions = defaultOptions
         self.logFunction = logFunction
     }
-    
+
     public func enhance(request: inout Request) {
         request.modifiers.append(RequestLoggerTimestamp(time: Date()))
     }

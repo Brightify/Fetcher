@@ -68,7 +68,7 @@ private struct RequestPerformerStub: RequestPerformer {
     
     let dataEncoder: DataEncoder
     
-    func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+    func perform(request: Request, callback: @escaping (Response<Data>) -> Cancellable) -> Cancellable {
         return Cancellable()
     }
 }

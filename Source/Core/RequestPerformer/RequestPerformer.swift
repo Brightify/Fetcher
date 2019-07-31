@@ -13,5 +13,5 @@ public protocol RequestPerformer {
     
     var dataEncoder: DataEncoder { get }
     
-    func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable
+    func perform(request: Request, callback: @escaping (Response<Data>) -> Cancellable) -> Cancellable
 }

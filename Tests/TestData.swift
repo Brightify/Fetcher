@@ -14,7 +14,7 @@ import Foundation
 struct TestData {
     
     static func request(url: String, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void = { _, _, _, _ in }) -> Request {
-        return Request(url: URL(string: url)!, retry: retry, callback: { _ in }, cancellable: Cancellable())
+        return Request(url: URL(string: url)!, retry: retry, callback: { _ in Cancellable() }, cancellable: Cancellable())
     }
     
     static func response<T>(url: String, result: FetcherResult<T> = .failure(FetcherError.unknown), statusCode: Int = 500, data: Data? = nil) -> Response<T> {
@@ -41,9 +41,8 @@ struct TestData {
         var result: FetcherResult<Data> = .success(Data())
         var data: Data = Data()
         
-        func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
-            callback(TestData.response(request: request, result: result, data: data))
-            return Cancellable()
+        func perform(request: Request, callback: @escaping (Response<Data>) -> Cancellable) -> Cancellable {
+            return callback(TestData.response(request: request, result: result, data: data))
         }
     }
 }

@@ -17,17 +17,19 @@ public struct AlamofireRequestPerformer: RequestPerformer {
         self.dataEncoder = dataEncoder
     }
     
-    public func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+    public func perform(request: Request, callback: @escaping (Response<Data>) -> Cancellable) -> Cancellable {
+        let parentCancellable = Cancellable()
         let alamofireRequest = Alamofire.request(request.urlRequest).responseData {
-            self.handleResponse(data: $0, request: request, callback: callback)
+            parentCancellable.add(cancellable: self.handleResponse(data: $0, request: request, callback: callback))
         }
-        
-        return Cancellable {
+        parentCancellable.add(cancellable: Cancellable {
             alamofireRequest.cancel()
-        }
+        })
+
+        return parentCancellable
     }
     
-    private func handleResponse(data: DataResponse<Data>, request: Request, callback: (Response<Data>) -> Void) {
+    private func handleResponse(data: DataResponse<Data>, request: Request, callback: (Response<Data>) -> Cancellable) -> Cancellable {
         let result: FetcherResult<Data>
         // Alamofire uses different type of Result.
         switch data.result {
@@ -43,6 +45,6 @@ public struct AlamofireRequestPerformer: RequestPerformer {
             rawData: data.data,
             request: request)
         
-        callback(response)
+        return callback(response)
     }
 }

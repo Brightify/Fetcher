@@ -20,7 +20,7 @@ public final class Fetcher {
     public let callQueue: DispatchQueue
     public let callbackQueue: DispatchQueue
     
-    public private(set) var requestEnhancers: [RequestEnhancer] = []
+    public private(set) var requestEnhancers: [ChainingRequestEnhancer] = []
     public private(set) var requestModifiers: [RequestModifier] = []
     
     public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil, errorHandler: ErrorHandler = NoErrorHandler(),
