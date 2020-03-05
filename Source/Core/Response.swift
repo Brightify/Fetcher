@@ -11,11 +11,11 @@ import Foundation
 
 public struct Response<T> {
     
-    public let result: FetcherResult<T>
-    public let rawResponse: HTTPURLResponse?
-    public let rawData: Data?
-    public let request: Request
-    public let contentType: Headers.ContentType?
+    public var result: FetcherResult<T>
+    public var rawResponse: HTTPURLResponse?
+    public var rawData: Data?
+    public var request: Request
+    public var contentType: Headers.ContentType?
     
     public init(result: FetcherResult<T>, rawResponse: HTTPURLResponse?, rawData: Data?, request: Request) {
         self.result = result
