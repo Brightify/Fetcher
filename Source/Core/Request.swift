@@ -85,6 +85,19 @@ public struct Request {
             urlRequest.httpMethod = newValue.rawValue
         }
     }
+
+    public var contentType: Headers.ContentType? {
+        get {
+            return urlRequest.allHTTPHeaderFields.flatMap { $0[Headers.ContentType.name] }.map(Headers.ContentType.init(value:))
+        }
+        set {
+            if let contentType = newValue {
+                setHeader(contentType)
+            } else {
+                removeHeader(named: Headers.ContentType.name)
+            }
+        }
+    }
     
     public var allHTTPHeaderFields: [String: String]? {
         get {
@@ -144,6 +157,10 @@ public struct Request {
     
     public mutating func setHeader(_ header: Header) {
         urlRequest.setValue(header.value, forHTTPHeaderField: header.name)
+    }
+
+    public mutating func removeHeader(named name: String) {
+        urlRequest.setValue(nil, forHTTPHeaderField: name)
     }
     
     public func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0), failCallback: () -> Void = {}) {

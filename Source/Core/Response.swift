@@ -15,12 +15,15 @@ public struct Response<T> {
     public let rawResponse: HTTPURLResponse?
     public let rawData: Data?
     public let request: Request
+    public let contentType: Headers.ContentType?
     
     public init(result: FetcherResult<T>, rawResponse: HTTPURLResponse?, rawData: Data?, request: Request) {
         self.result = result
         self.rawResponse = rawResponse
         self.rawData = rawData
         self.request = request
+
+        contentType = rawResponse.flatMap { $0.allHeaderFields[Headers.ContentType.name] as? String }.map(Headers.ContentType.init(value:))
     }
 }
 

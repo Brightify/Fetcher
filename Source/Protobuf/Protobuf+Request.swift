@@ -12,6 +12,25 @@ import SwiftProtobuf
 
 // Extension for input and output type SwiftProtobuf.Message.
 extension Fetcher {
+    internal func inputProvider<IN: Message>(input: IN) -> (Headers.ContentType?) throws -> Data {
+        return { contentType in
+            switch contentType {
+            case Headers.ContentType.protocolBuffers:
+                return try input.serializedData()
+            default:
+                return try input.jsonUTF8Data()
+            }
+        }
+    }
+
+    internal func outputProvider<OUT: Message>(contentType: Headers.ContentType?, data: Data) throws -> OUT {
+        switch contentType {
+        case Headers.ContentType.protocolBuffers:
+            return try OUT(serializedData: data)
+        default:
+            return try OUT(jsonUTF8Data: data)
+        }
+    }
 
     @discardableResult
     public func request<IN: SwiftProtobuf.Message, OUT: SwiftProtobuf.Message>(
@@ -21,8 +40,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { try input.serializedData() },
-            outputProvider: { try OUT(serializedData: $0) },
+            inputProvider: inputProvider(input: input),
+            outputProvider: outputProvider,
             callback: callback)
     }
 }
@@ -36,7 +55,7 @@ extension Fetcher {
         input: IN,
         callback: @escaping (Response<SupportedType>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { try input.serializedData() }, outputProvider: { $0 }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: inputProvider(input: input), outputProvider: { $1 }, callback: callback)
     }
 
     @discardableResult
@@ -45,7 +64,7 @@ extension Fetcher {
         input: IN,
         callback: @escaping (Response<Void>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { try input.serializedData() }, outputProvider: { (_: Data) in Void() }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: inputProvider(input: input), outputProvider: { (_, _: Data) in Void() }, callback: callback)
     }
 
     @discardableResult
@@ -54,7 +73,7 @@ extension Fetcher {
         input: IN,
         callback: @escaping (Response<Data>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { try input.serializedData() }, outputProvider: { $0 }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: inputProvider(input: input), outputProvider: { $1 }, callback: callback)
     }
 
     @discardableResult
@@ -65,8 +84,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { try input.serializedData() },
-            outputProvider: { try self.objectMapper.deserialize(OUT.self, from: $0) },
+            inputProvider: inputProvider(input: input),
+            outputProvider: { try self.objectMapper.deserialize(OUT.self, from: $1) },
             callback: callback)
     }
 
@@ -78,8 +97,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { try input.serializedData() },
-            outputProvider: { try self.objectMapper.decode(OUT.self, from: $0) },
+            inputProvider: inputProvider(input: input),
+            outputProvider: { try self.objectMapper.decode(OUT.self, from: $1) },
             callback: callback)
     }
 
@@ -91,8 +110,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { try input.serializedData() },
-            outputProvider: { try self.objectMapper.deserialize(OUT.self, from: $0) },
+            inputProvider: inputProvider(input: input),
+            outputProvider: { try self.objectMapper.deserialize(OUT.self, from: $1) },
             callback: callback)
     }
 }
@@ -106,7 +125,7 @@ extension Fetcher {
         input: SupportedType,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { try OUT(serializedData: $0) }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { _ in input }, outputProvider: outputProvider, callback: callback)
     }
 
     @discardableResult
@@ -114,7 +133,7 @@ extension Fetcher {
         _ endpoint: Endpoint<Void, OUT>,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { .null }, outputProvider: { try OUT(serializedData: $0) }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { _ in .null }, outputProvider: outputProvider, callback: callback)
     }
 
     @discardableResult
@@ -123,7 +142,7 @@ extension Fetcher {
         input: Data,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
-        return run(endpoint: endpoint, inputProvider: { input }, outputProvider: { try OUT(serializedData: $0) }, callback: callback)
+        return run(endpoint: endpoint, inputProvider: { _ in input }, outputProvider: outputProvider, callback: callback)
     }
 
     @discardableResult
@@ -134,8 +153,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { self.objectMapper.serialize(input) },
-            outputProvider: { try OUT(serializedData: $0) },
+            inputProvider: { _ in self.objectMapper.serialize(input) },
+            outputProvider: outputProvider,
             callback: callback)
     }
 
@@ -147,8 +166,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { try self.objectMapper.encode(input) },
-            outputProvider: { try OUT(serializedData: $0) },
+            inputProvider: { _ in try self.objectMapper.encode(input) },
+            outputProvider: outputProvider,
             callback: callback)
     }
 
@@ -160,8 +179,8 @@ extension Fetcher {
     ) -> Cancellable {
         return run(
             endpoint: endpoint,
-            inputProvider: { self.objectMapper.serialize(input) },
-            outputProvider: { try OUT(serializedData: $0) },
+            inputProvider: { _ in self.objectMapper.serialize(input) },
+            outputProvider: outputProvider,
             callback: callback)
     }
 }

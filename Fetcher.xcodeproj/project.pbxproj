@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800CA872410857A00942514 /* Headers+Protobuf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800CA862410857A00942514 /* Headers+Protobuf.swift */; };
 		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
 		189075EA22EC703F00B9D03B /* Protobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075E922EC703F00B9D03B /* Protobuf+Request.swift */; };
 		189075ED22EC82FE00B9D03B /* RxProtobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */; };
@@ -107,6 +108,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1800CA862410857A00942514 /* Headers+Protobuf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Headers+Protobuf.swift"; sourceTree = "<group>"; };
 		185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SupportedType+Equatable.swift"; path = "Utils/SupportedType+Equatable.swift"; sourceTree = "<group>"; };
 		189075E922EC703F00B9D03B /* Protobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protobuf+Request.swift"; sourceTree = "<group>"; };
 		189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxProtobuf+Request.swift"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				189075E922EC703F00B9D03B /* Protobuf+Request.swift */,
+				1800CA862410857A00942514 /* Headers+Protobuf.swift */,
 			);
 			path = Protobuf;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				18F7988420D2AB3C00522E1E /* shim-Collection+compactMap.swift in Sources */,
 				DC4691201E36A227001C8540 /* NoErrorHandler.swift in Sources */,
 				DC4691491E36A23B001C8540 /* RxFetcher+Request.swift in Sources */,
+				1800CA872410857A00942514 /* Headers+Protobuf.swift in Sources */,
 				DC46914C1E36A310001C8540 /* BaseUrl.swift in Sources */,
 				6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */,
 				DC46912B1E36A227001C8540 /* Request.swift in Sources */,
