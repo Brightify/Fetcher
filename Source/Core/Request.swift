@@ -98,6 +98,19 @@ public struct Request {
             }
         }
     }
+
+    public var accepts: Headers.Accept? {
+        get {
+            return urlRequest.allHTTPHeaderFields.flatMap { $0[Headers.Accept.name] }.map(Headers.Accept.init(value:))
+        }
+        set {
+            if let accepts = newValue {
+                setHeader(accepts)
+            } else {
+                removeHeader(named: Headers.Accept.name)
+            }
+        }
+    }
     
     public var allHTTPHeaderFields: [String: String]? {
         get {

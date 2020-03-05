@@ -6,16 +6,30 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 extension Headers {
     
     public struct Accept: Header {
+        public static let name = "Accept"
+
+        public let name: String = Accept.name
         
-        public let name = "Accept"
-        
-        public let value: String
+        public var value: String {
+            return types.joined(separator: ", ")
+        }
+        public let types: [String]
         
         public init(value: String) {
-            self.value = value
+            self.types = value.split(separator: ",").map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
+        }
+
+        public init(types: Headers.ContentType...) {
+            self.types = types.map { $0.value }
+        }
+
+        public init(types: String...) {
+            self.types = types
         }
     }
 }

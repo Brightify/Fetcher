@@ -14,8 +14,8 @@ extension Fetcher {
     // Overloads have similar signiture to allow easier request generation.
     internal func run(
         endpoint: Endpoint<Data, Data>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (Data),
-        outputProvider: @escaping (Headers.ContentType?, Data) -> Data,
+        inputProvider: @escaping (Request) throws -> (Data),
+        outputProvider: @escaping (Response<Data>, Data) -> Data,
         callback: @escaping (Response<Data>) -> Void
     ) -> Cancellable {
         let cancellable = Cancellable()
@@ -23,7 +23,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try request.httpBody = inputProvider(request.contentType)
+                try request.httpBody = inputProvider(request)
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -35,8 +35,8 @@ extension Fetcher {
     
     internal func run<IN>(
         endpoint: Endpoint<IN, Data>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (SupportedType),
-        outputProvider: @escaping (Headers.ContentType?, Data) -> Data,
+        inputProvider: @escaping (Request) throws -> (SupportedType),
+        outputProvider: @escaping (Response<Data>, Data) -> Data,
         callback: @escaping (Response<Data>) -> Void
     ) -> Cancellable {
         let cancellable = Cancellable()
@@ -44,7 +44,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request.contentType))
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -56,8 +56,8 @@ extension Fetcher {
 
     internal func run<IN>(
         endpoint: Endpoint<IN, Data>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (Data),
-        outputProvider: @escaping (Headers.ContentType?, Data) -> Data,
+        inputProvider: @escaping (Request) throws -> (Data),
+        outputProvider: @escaping (Response<Data>, Data) -> Data,
         callback: @escaping (Response<Data>) -> Void
         ) -> Cancellable {
         let cancellable = Cancellable()
@@ -65,7 +65,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try request.httpBody = inputProvider(request.contentType)
+                try request.httpBody = inputProvider(request)
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -77,8 +77,8 @@ extension Fetcher {
     
     internal func run<OUT>(
         endpoint: Endpoint<Data, OUT>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (Data),
-        outputProvider: @escaping (Headers.ContentType?, SupportedType) throws -> OUT,
+        inputProvider: @escaping (Request) throws -> (Data),
+        outputProvider: @escaping (Response<SupportedType>, SupportedType) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
         let cancellable = Cancellable()
@@ -86,7 +86,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try request.httpBody = inputProvider(request.contentType)
+                try request.httpBody = inputProvider(request)
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -98,8 +98,8 @@ extension Fetcher {
 
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (SupportedType),
-        outputProvider: @escaping (Headers.ContentType?, SupportedType) throws -> OUT,
+        inputProvider: @escaping (Request) throws -> (SupportedType),
+        outputProvider: @escaping (Response<SupportedType>, SupportedType) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
         let cancellable = Cancellable()
@@ -107,7 +107,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request.contentType))
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -119,8 +119,8 @@ extension Fetcher {
 
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (Data),
-        outputProvider: @escaping (Headers.ContentType?, SupportedType) throws -> OUT,
+        inputProvider: @escaping (Request) throws -> (Data),
+        outputProvider: @escaping (Response<SupportedType>, SupportedType) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
         ) -> Cancellable {
         let cancellable = Cancellable()
@@ -128,7 +128,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try request.httpBody = inputProvider(request.contentType)
+                try request.httpBody = inputProvider(request)
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -140,8 +140,8 @@ extension Fetcher {
 
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (Data),
-        outputProvider: @escaping (Headers.ContentType?, Data) throws -> OUT,
+        inputProvider: @escaping (Request) throws -> (Data),
+        outputProvider: @escaping (Response<Data>, Data) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
     ) -> Cancellable {
         let cancellable = Cancellable()
@@ -149,7 +149,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try request.httpBody = inputProvider(request.contentType)
+                try request.httpBody = inputProvider(request)
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -161,8 +161,8 @@ extension Fetcher {
 
     internal func run<IN, OUT>(
         endpoint: Endpoint<IN, OUT>,
-        inputProvider: @escaping (Headers.ContentType?) throws -> (SupportedType),
-        outputProvider: @escaping (Headers.ContentType?, Data) throws -> OUT,
+        inputProvider: @escaping (Request) throws -> (SupportedType),
+        outputProvider: @escaping (Response<Data>, Data) throws -> OUT,
         callback: @escaping (Response<OUT>) -> Void
         ) -> Cancellable {
         let cancellable = Cancellable()
@@ -170,7 +170,7 @@ extension Fetcher {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
             var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
             do {
-                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request.contentType))
+                try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
                 self.perform(request: request)
                 cancellable.add(cancellable: request.cancellable)
             } catch {
@@ -227,12 +227,12 @@ extension Fetcher {
     
     fileprivate func wrap<OUT>(
         callback: @escaping (Response<OUT>) -> Void,
-        with outputProvider: @escaping (Headers.ContentType?, SupportedType) throws -> OUT
+        with outputProvider: @escaping (Response<SupportedType>, SupportedType) throws -> OUT
     ) -> (Response<Data>) -> Cancellable {
         return wrapSupportedType(callback: callback) { response in
             return response.flatMap {
                 do {
-                    return .success(try outputProvider(response.contentType, $0))
+                    return .success(try outputProvider(response, $0))
                 } catch {
                     return .failure(FetcherError.custom(error))
                 }
@@ -241,11 +241,11 @@ extension Fetcher {
     }
 
     fileprivate func wrap<OUT>(callback: @escaping (Response<OUT>) -> Void,
-                               with outputProvider: @escaping (Headers.ContentType?, Data) throws -> OUT) -> (Response<Data>) -> Cancellable {
+                               with outputProvider: @escaping (Response<Data>, Data) throws -> OUT) -> (Response<Data>) -> Cancellable {
         return wrapData(callback: callback) { response in
             return response.flatMap {
                 do {
-                    return .success(try outputProvider(response.contentType, $0))
+                    return .success(try outputProvider(response, $0))
                 } catch {
                     return .failure(FetcherError.custom(error))
                 }

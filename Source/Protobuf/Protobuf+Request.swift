@@ -12,23 +12,42 @@ import SwiftProtobuf
 
 // Extension for input and output type SwiftProtobuf.Message.
 extension Fetcher {
-    internal func inputProvider<IN: Message>(input: IN) -> (Headers.ContentType?) throws -> Data {
-        return { contentType in
-            switch contentType {
-            case Headers.ContentType.protocolBuffers:
-                return try input.serializedData()
-            default:
+    public struct UnsupportedProtobufContentTypeError: Error {
+        public let contentType: String?
+
+        init(contentType: String?) {
+            self.contentType = contentType
+        }
+    }
+
+    internal func inputProvider<IN: Message>(input: IN) -> (Request) throws -> Data {
+        return { request in
+            switch request.contentType {
+            case Headers.ContentType.applicationJson?:
                 return try input.jsonUTF8Data()
+
+            // If no contentType hasn't been set (= nil), we'll always send binary
+            case Headers.ContentType.protocolBuffers?, nil:
+                return try input.serializedData()
+
+            // If the content type is not supported by ProtoBuf, we error out
+            default:
+                throw UnsupportedProtobufContentTypeError(contentType: request.contentType?.value)
             }
         }
     }
 
-    internal func outputProvider<OUT: Message>(contentType: Headers.ContentType?, data: Data) throws -> OUT {
-        switch contentType {
-        case Headers.ContentType.protocolBuffers:
+    internal func outputProvider<OUT: Message>(response: Response<Data>, data: Data) throws -> OUT {
+        let possibleContentType = response.contentType?.value ?? response.request.accepts?.types.first
+
+        switch possibleContentType {
+        case Headers.ContentType.applicationJson.value?:
+            return try OUT(jsonUTF8Data: data)
+        // If no contentType hasn't been set (= nil), we'll always assume it's binary
+        case Headers.ContentType.protocolBuffers.value?, nil:
             return try OUT(serializedData: data)
         default:
-            return try OUT(jsonUTF8Data: data)
+            throw UnsupportedProtobufContentTypeError(contentType: possibleContentType)
         }
     }
 
