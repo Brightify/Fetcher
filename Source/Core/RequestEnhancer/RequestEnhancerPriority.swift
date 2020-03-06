@@ -22,12 +22,12 @@ public enum RequestEnhancerPriority {
             return -100
         case .normal:
             return 0
+        case .bodyEmbedded:
+            return 50
         case .high:
             return 100
         case .fetcher:
             return 200
-        case .bodyEmbedded:
-            return 250
         case .max:
             return 300
         case .custom(let value):
