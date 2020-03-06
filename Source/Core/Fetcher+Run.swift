@@ -21,14 +21,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
-                try request.httpBody = inputProvider(request)
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
+                request.httpBody = try inputProvider(request)
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -42,14 +39,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -63,14 +57,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
-                try request.httpBody = inputProvider(request)
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
+                request.httpBody = try inputProvider(request)
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -84,14 +75,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
-                try request.httpBody = inputProvider(request)
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
+                request.httpBody = try inputProvider(request)
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -105,14 +93,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -126,14 +111,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
-                try request.httpBody = inputProvider(request)
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
+                request.httpBody = try inputProvider(request)
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -147,14 +129,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
-                try request.httpBody = inputProvider(request)
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
+                request.httpBody = try inputProvider(request)
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -168,14 +147,11 @@ extension Fetcher {
         let cancellable = Cancellable()
         callQueue.async {
             let wrappedCallback = self.wrap(callback: callback, with: outputProvider)
-            var request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback)
-            do {
+            let request = self.prepareRequest(endpoint: endpoint, callback: wrappedCallback, embedInput: { request in
                 try self.encodeInputData(to: &request, inputEncoding: endpoint.inputEncoding, input: inputProvider(request))
-                self.perform(request: request)
-                cancellable.add(cancellable: request.cancellable)
-            } catch {
-                cancellable.add(cancellable: self.rollback(request: request, error: error))
-            }
+            })
+            self.perform(request: request)
+            cancellable.add(cancellable: request.cancellable)
         }
         return cancellable
     }
@@ -183,15 +159,25 @@ extension Fetcher {
 
 extension Fetcher {
     
-    fileprivate func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, callback: @escaping (Response<Data>) -> Cancellable) -> Request {
+    fileprivate func prepareRequest<IN, OUT>(
+        endpoint: Endpoint<IN, OUT>,
+        callback: @escaping (Response<Data>) -> Cancellable,
+        embedInput: ((inout Request) throws -> Void)?
+    ) -> Request {
         guard let url = URL(string: endpoint.path) else {
             fatalError("Path \(endpoint.path) from endpoint doesn`t resolve to valid url.")
         }
         
         var request = Request(url: url, retry: retry, callback: callback, cancellable: Cancellable())
         request.httpMethod = endpoint.method
-        request.modifiers = [endpoint.modifiers, requestModifiers].flatMap { $0 }
-        
+        request.modifiers = [
+            endpoint.modifiers,
+            requestModifiers
+        ].flatMap { $0 }
+        if let embedInput = embedInput {
+            request.modifiers.append(EmbedRequestBodyModifier(embedInput: embedInput))
+        }
+
         return request
     }
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1800CA872410857A00942514 /* Headers+Protobuf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800CA862410857A00942514 /* Headers+Protobuf.swift */; };
+		1838EEEC2411B5F300B3E02F /* EmbedRequestBodyEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1838EEEB2411B5F300B3E02F /* EmbedRequestBodyEnhancer.swift */; };
 		185EDEDF1F9F7BC300F4CD01 /* SupportedType+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */; };
 		189075EA22EC703F00B9D03B /* Protobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075E922EC703F00B9D03B /* Protobuf+Request.swift */; };
 		189075ED22EC82FE00B9D03B /* RxProtobuf+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */; };
@@ -109,6 +110,7 @@
 
 /* Begin PBXFileReference section */
 		1800CA862410857A00942514 /* Headers+Protobuf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Headers+Protobuf.swift"; sourceTree = "<group>"; };
+		1838EEEB2411B5F300B3E02F /* EmbedRequestBodyEnhancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedRequestBodyEnhancer.swift; sourceTree = "<group>"; };
 		185EDEDE1F9F7BC300F4CD01 /* SupportedType+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SupportedType+Equatable.swift"; path = "Utils/SupportedType+Equatable.swift"; sourceTree = "<group>"; };
 		189075E922EC703F00B9D03B /* Protobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protobuf+Request.swift"; sourceTree = "<group>"; };
 		189075EC22EC82FE00B9D03B /* RxProtobuf+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxProtobuf+Request.swift"; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				689434A21FE44C6100E653D7 /* URLQueryItemRequestEnhancer.swift */,
 				DC4691011E36A227001C8540 /* HeaderRequestEnhancer.swift */,
 				DC4691581E38AC14001C8540 /* ResponseVerifierEnhancer.swift */,
+				1838EEEB2411B5F300B3E02F /* EmbedRequestBodyEnhancer.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 				6894349E1FE4415700E653D7 /* URL+withQueries.swift in Sources */,
 				DC46912B1E36A227001C8540 /* Request.swift in Sources */,
 				DC46914A1E36A23B001C8540 /* RxFetcher.swift in Sources */,
+				1838EEEC2411B5F300B3E02F /* EmbedRequestBodyEnhancer.swift in Sources */,
 				DC4691321E36A227001C8540 /* StatusCodeResponseVerifier.swift in Sources */,
 				DC46913D1E36A227001C8540 /* HTTPMethod.swift in Sources */,
 				DC4690E41E36A21D001C8540 /* FormInputEncoding.swift in Sources */,

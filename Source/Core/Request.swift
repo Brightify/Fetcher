@@ -10,6 +10,7 @@ import DataMapper
 import Foundation
 
 public struct Request {
+    public typealias RetryClosure = (Request, Int, DispatchTimeInterval, () -> Void) -> Void
     
     public var modifiers: [RequestModifier] = []
     
@@ -21,7 +22,7 @@ public struct Request {
     
     public var retried = 0
     
-    public var retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
+    public var retryClosure: RetryClosure
     
     public var url: URL? {
         get {
@@ -157,7 +158,7 @@ public struct Request {
         }
     }
     
-    public init(url: URL, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void, callback: @escaping (Response<Data>) -> Cancellable, cancellable: Cancellable) {
+    public init(url: URL, retry: @escaping RetryClosure, callback: @escaping (Response<Data>) -> Cancellable, cancellable: Cancellable) {
         urlRequest = URLRequest(url: url)
         retryClosure = retry
         self.callback = callback
